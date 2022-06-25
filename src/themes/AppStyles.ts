@@ -5,8 +5,9 @@ const AppStyles = {
         error: '#FF0000',
         white: '#FFFFFF',
         black: '#000000',
-        grey: '#808080',
+        gray: '#808080',
         transparent: 'transparent',
+        low_gray: '#E0E0E0',
     },
     font: {
         size: {
@@ -52,7 +53,7 @@ const AppStyles = {
         xxxxlarge: 6,
     },
     inputHeight: {
-        default: 50,
+        default: 45,
         small: 40,
         medium: 50,
         large: 60,

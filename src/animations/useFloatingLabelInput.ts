@@ -1,12 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { Animated, StyleSheet } from 'react-native';
-import AppStyles from '../theme/AppStyles';
+import AppStyles from '@src/themes/AppStyles';
 
 const useFloatingLabelInput = (value?: string) => {
     const [isFocused, setIsFocused] = useState(value ? true : false);
+    const [isBlur, setIsBlur] = useState(false);
     const [show, setShow] = useState(false);
 
-    const styles = ThisStyles(isFocused);
+    const styles = ThisStyles(isFocused, isBlur);
     const moveText = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
@@ -31,11 +32,13 @@ const useFloatingLabelInput = (value?: string) => {
         animStyle,
         show,
         setShow,
+        isBlur,
+        setIsBlur,
     }
 
 }
 
-const ThisStyles = (isFocused: boolean) => {
+const ThisStyles = (isFocused: boolean, isBlur: boolean) => {
     return StyleSheet.create({
         container: {
             width: '100%',
@@ -43,15 +46,9 @@ const ThisStyles = (isFocused: boolean) => {
             marginTop: AppStyles.margin.xlarge,
         },
         input: {
-            width: '100%',
-            height: AppStyles.inputHeight.default,
-            borderColor: isFocused ? AppStyles.colour.yellow : AppStyles.colour.grey,
-            borderWidth: 1.3,
-            borderRadius: AppStyles.inputBorderRadius.default,
+            borderColor: isFocused && isBlur ? AppStyles.colour.yellow : AppStyles.colour.low_gray,
             paddingLeft: AppStyles.padding.medium,
             paddingRight: AppStyles.padding.xxxxlarge,
-            fontSize: AppStyles.font.size.medium,
-            color: AppStyles.colour.grey
         },
         label: {
             position: 'absolute',
@@ -59,7 +56,7 @@ const ThisStyles = (isFocused: boolean) => {
             zIndex: isFocused ? 1 : 0,
             left: AppStyles.padding.large,
             fontSize: AppStyles.font.size.default,
-            color: isFocused ? AppStyles.colour.yellow : AppStyles.colour.grey,
+            color: isFocused ? AppStyles.colour.yellow : AppStyles.colour.low_gray,
         }
     })
 }

@@ -1,13 +1,18 @@
 import React from "react";
 import { TouchableHighlight, StyleSheet } from "react-native";
-import EyeShow from '../../assets/icons/EyeShow.svg';
-import EyeHidden from '../../assets/icons/EyeHidden.svg';
-import AppStyles from "../../theme/AppStyles";
+import EyeShow from '@src/assets/icons/EyeShow.svg';
+import EyeHidden from '@src/assets/icons/EyeHidden.svg';
+import AppStyles from "@src/themes/AppStyles";
 
-const ShowOrHiddenPassword = ({ show, onPress }: { show: boolean; onPress: () => void }) => {
+interface ShowOrHiddenPasswordProps {
+    show: boolean;
+    onPress: () => void;
+}
+
+const ShowOrHiddenPassword = ({ show, onPress }: ShowOrHiddenPasswordProps) => {
     return (
         <TouchableHighlight underlayColor={AppStyles.colour.transparent} style={styles.touchableOpacity} onPress={onPress}>
-            {show ? <EyeShow width={25} height={25} fill={AppStyles.colour.grey} /> : <EyeHidden width={25} height={25} fill={AppStyles.colour.grey} />}
+            {show ? <EyeShow width={25} height={25} fill={AppStyles.colour.low_gray} /> : <EyeHidden width={25} height={25} fill={AppStyles.colour.low_gray} />}
         </TouchableHighlight>
     );
 }

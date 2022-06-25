@@ -54,6 +54,8 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>WorkSans-Bold.ttf</string>
+		<string>Poppins-Light.ttf</string>
+		<string>Poppins-SemiBold.ttf</string>
 	</array>
 </dict>
 </plist>

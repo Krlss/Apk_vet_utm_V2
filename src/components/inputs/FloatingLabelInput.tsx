@@ -18,10 +18,6 @@ const FloatingLabelInput = ({ label, value, secureTextEntry, onChange, onSubmitE
 
     const { animStyle, setIsFocused, styles, setShow, show, setIsBlur } = useFloatingLabelInput(value);
 
-    const { ConfigState } = useContext(ConfigContext);
-
-    console.log({ ConfigState });
-
     return (
         <View style={styles.container}>
             <Animated.Text style={[styles.label, animStyle]}>{label}</Animated.Text>

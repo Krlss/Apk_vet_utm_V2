@@ -7,4 +7,4 @@ const Logo = () => {
         <Animated.Image style={boxStyle} source={require('./assets/imgs/adaptive-icon.png')} />
     )
 }
-export default Logo
+export default Logoz

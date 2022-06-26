@@ -60,6 +60,14 @@ const AppStyles = {
         xlarge: 70,
         xxlarge: 80,
         xxxxlarge: 90,
+    },
+    fontFamily: {
+        default: 'Roboto',
+        bold: 'Roboto-Bold',
+        light: 'Roboto-Light',
+        medium: 'Roboto-Medium',
+        black: 'Roboto-Black',
+        italic: 'Roboto-Italic',
     }
 }
 

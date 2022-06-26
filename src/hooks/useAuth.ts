@@ -15,9 +15,14 @@ const useAuth = () => {
         };
     }, []);
 
+    const KeyboardDissmiss = () => {
+        Keyboard.dismiss();
+    }
+
     return {
         keyboardStatus,
-        Keyboard
+        Keyboard,
+        KeyboardDissmiss
     }
 }
 

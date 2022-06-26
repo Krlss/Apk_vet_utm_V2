@@ -12,6 +12,7 @@ module.exports = {
         root: ['./src']
       }
     ],
-    'jest-hoist'
+    'jest-hoist',
+    'react-native-reanimated/plugin',
   ]
 };

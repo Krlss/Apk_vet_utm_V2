@@ -1,40 +1,40 @@
 import useData from "@src/hooks/useData";
-import useAuth from "@src/hooks/useAuth";
+import useAuth from "@src/hooks/useConfig";
 
-import useLogo from "@src/animations/useLogo";
-import React, { useContext } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, TouchableHighlight, Animated } from 'react-native';
 import FloatingLabelInput from '@src/components/inputs/FloatingLabelInput';
 import Logo from "@src/components/images/Logo";
 
 const Login = () => {
     const { data, handleChange } = useData();
-    const { KeyboardDissmiss, keyboardStatus } = useAuth();
-    const { boxStyle, paddingTopStyle } = useLogo(keyboardStatus);
+    const { KeyboardDissmiss } = useAuth();
 
     return (
-        <Animated.View style={[styles.container, paddingTopStyle]}>
+        <Animated.ScrollView contentContainerStyle={styles.container}>
             <Logo />
             <Text style={styles.text_logo}>FindsPets</Text>
             <FloatingLabelInput onSubmitEditing={KeyboardDissmiss} value={data?.email} onChange={(value) => handleChange('email', value)} label='Correo electrónico' />
             <FloatingLabelInput autoCorrect={false} onSubmitEditing={KeyboardDissmiss} value={data?.password} secureTextEntry onChange={(value) => handleChange('password', value)} label='Contraseña' />
             <View style={styles.container_links}>
-                <Text style={styles.text}>Registrarse</Text>
+                <Text style={[styles.text, { color: '#FFB509' }]}>Registrarse</Text>
                 <Text style={styles.text}>Olvidé mi contraseña</Text>
             </View>
             <TouchableHighlight style={styles.button_login}>
                 <Text style={styles.text_login}>Iniciar sesión</Text>
             </TouchableHighlight>
-        </Animated.View>
+        </Animated.ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
         backgroundColor: '#fff',
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
+        flexGrow: 1,
+        alignItems: 'center',
+        paddingTop: 50,
     },
     text_logo: {
         fontSize: 24,

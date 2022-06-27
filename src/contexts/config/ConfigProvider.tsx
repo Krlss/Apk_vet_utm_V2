@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useEffect } from 'react'
 import { KeyboardType, props } from '@src/types/declare'
 
 import INITIAL_STATE from './InitialState'

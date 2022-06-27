@@ -1,40 +1,30 @@
-import { useState, useEffect } from 'react';
-import { Animated, Dimensions } from 'react-native';
+import { useEffect, useContext } from 'react';
+import { useSharedValue, useAnimatedStyle, withSpring } from "react-native-reanimated";
+import ConfigContext from '@src/contexts/config/ConfigContext'
 
-const useLogo = (keyboardStatus: boolean) => {
 
-    const [logoAnimate, setLogoAnimate] = useState(new Animated.Value(150));
-    const [paddingTop, setPaddingTop] = useState(new Animated.Value(Dimensions.get('window').height / 4 - 100));
+const useLogo = () => {
 
+    const scale = useSharedValue(0);
+
+    const { ConfigState } = useContext(ConfigContext);
 
     useEffect(() => {
-        Animated.timing(logoAnimate, {
-            toValue: keyboardStatus ? 0 : 150,
-            duration: 100,
-            useNativeDriver: false,
-        }).start();
+        if (ConfigState.keyboardStatus) {
+            scale.value = withSpring(0, { stiffness: 300, damping: 30 });
+        } else {
+            scale.value = withSpring(125);
+        }
+    }, [ConfigState.keyboardStatus]);
 
-        Animated.timing(paddingTop, {
-            toValue: keyboardStatus ? 20 : Dimensions.get('window').height / 4 - 100,
-            duration: 100,
-            useNativeDriver: false,
-        }).start();
-    }, [keyboardStatus]);
+    const animatedScale = useAnimatedStyle(() => {
+        return {
+            width: scale.value,
+            height: scale.value,
+        };
+    })
 
-    const boxStyle = {
-        height: logoAnimate,
-        width: logoAnimate,
-    }
-
-    const paddingTopStyle = {
-        paddingTop: paddingTop,
-    }
-
-    return {
-        boxStyle,
-        paddingTopStyle,
-    }
-
+    return { animatedScale, scale };
 
 }
 

@@ -1,6 +1,9 @@
-import { useState, useRef, useEffect } from "react";
-import { Animated, StyleSheet } from 'react-native';
+import { useState, useEffect } from "react";
+import { StyleSheet } from 'react-native';
 import AppStyles from '@src/themes/AppStyles';
+import { useSharedValue, useAnimatedStyle, withTiming } from "react-native-reanimated";
+import { defaultPositionText, textPostionMove } from '@src/constants/FloatinLabelInput';
+
 
 const useFloatingLabelInput = (value?: string) => {
     const [isFocused, setIsFocused] = useState(value ? true : false);
@@ -8,28 +11,27 @@ const useFloatingLabelInput = (value?: string) => {
     const [show, setShow] = useState(false);
 
     const styles = ThisStyles(isFocused, isBlur);
-    const moveText = useRef(new Animated.Value(0)).current;
+    const moveText = useSharedValue(defaultPositionText);
 
     useEffect(() => {
-        Animated.timing(moveText, {
-            toValue: isFocused ? 1 : 0,
-            duration: 100,
-            useNativeDriver: true,
-        }).start();
+        if (isFocused) {
+            moveText.value = withTiming(defaultPositionText, { duration: 300 });
+        } else {
+            moveText.value = withTiming(textPostionMove, { duration: 300 });
+        }
     }, [isFocused]);
 
-    const yVal = moveText.interpolate({
-        inputRange: [0, 1],
-        outputRange: [AppStyles.inputHeight.default / 2 - (AppStyles.font.size.default / 1.5), -(AppStyles.font.size.default / 1.5)],
-    });
-
-    const animStyle = { transform: [{ translateY: yVal }] };
+    const animatedLabel = useAnimatedStyle(() => {
+        return {
+            transform: [{ translateY: moveText.value }]
+        };
+    })
 
     return {
         isFocused,
         setIsFocused,
         styles,
-        animStyle,
+        animatedLabel,
         show,
         setShow,
         isBlur,

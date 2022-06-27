@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
-import { View, Animated } from 'react-native';
+import { View } from 'react-native';
 import useFloatingLabelInput from '@src/animations/useFloatingLabelInput'
 import ShowOrHiddenPassword from './ShowOrHiddenPassword';
 import ConfigContext from "@src/contexts/config/ConfigContext";
+import Animated from "react-native-reanimated";
 
 import Input from './Input';
 interface FloatingLabelInputProps {
@@ -16,11 +17,11 @@ interface FloatingLabelInputProps {
 
 const FloatingLabelInput = ({ label, value, secureTextEntry, onChange, onSubmitEditing, ...props }: FloatingLabelInputProps) => {
 
-    const { animStyle, setIsFocused, styles, setShow, show, setIsBlur } = useFloatingLabelInput(value);
+    const { animatedLabel, setIsFocused, styles, setShow, show, setIsBlur } = useFloatingLabelInput(value);
 
     return (
         <View style={styles.container}>
-            <Animated.Text style={[styles.label, animStyle]}>{label}</Animated.Text>
+            <Animated.Text style={[styles.label, animatedLabel]}>{label}</Animated.Text>
             <Input
                 style={styles.input}
                 onFocus={() => {
@@ -34,7 +35,7 @@ const FloatingLabelInput = ({ label, value, secureTextEntry, onChange, onSubmitE
                 value={value}
                 onChangeText={onChange}
                 key={label}
-                secureTextEntry={secureTextEntry && show}
+                secureTextEntry={secureTextEntry && !show}
                 onSubmitEditing={onSubmitEditing}
                 {...props}
             />

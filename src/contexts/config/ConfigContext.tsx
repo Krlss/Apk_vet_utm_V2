@@ -5,7 +5,8 @@ import { ConfigContextType, KeyboardType } from '@src/types/declare';
 export type ConfigContextProps = {
     ConfigState: ConfigContextType,
     toggleKeyboardStatus: (status: boolean) => void,
-    toggleKeyboard: (Keyboard: KeyboardType) => void
+    toggleKeyboard: (Keyboard: KeyboardType) => void,
+    KeyboardDissmiss: () => void
 }
 
 const ConfigContext = createContext<ConfigContextProps>({} as ConfigContextProps);

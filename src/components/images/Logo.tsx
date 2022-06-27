@@ -8,7 +8,7 @@ const Logo = () => {
     const { animatedScale } = useLogo();
 
     return (
-        <Animated.Image source={require('@src/assets/imgs/adaptive-icon.png')} style={animatedScale} />
+        <Animated.Image source={require('@src/assets/imgs/icon.png')} style={animatedScale} />
     )
 }
 export default Logo

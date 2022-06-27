@@ -1,23 +1,25 @@
 import useData from "@src/hooks/useData";
-import useAuth from "@src/hooks/useConfig";
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet, TouchableHighlight, Animated } from 'react-native';
 import FloatingLabelInput from '@src/components/inputs/FloatingLabelInput';
 import Logo from "@src/components/images/Logo";
+import ConfigContext from "@src/contexts/config/ConfigContext";
 
 const Login = () => {
     const { data, handleChange } = useData();
-    const { KeyboardDissmiss } = useAuth();
+    const { KeyboardDissmiss } = useContext(ConfigContext);
 
     return (
         <Animated.ScrollView contentContainerStyle={styles.container}>
-            <Logo />
-            <Text style={styles.text_logo}>FindsPets</Text>
+            <View style={styles.container_header}>
+                <Logo />
+                <Text style={styles.text_logo}>FindsPets</Text>
+            </View>
             <FloatingLabelInput onSubmitEditing={KeyboardDissmiss} value={data?.email} onChange={(value) => handleChange('email', value)} label='Correo electrónico' />
             <FloatingLabelInput autoCorrect={false} onSubmitEditing={KeyboardDissmiss} value={data?.password} secureTextEntry onChange={(value) => handleChange('password', value)} label='Contraseña' />
             <View style={styles.container_links}>
-                <Text style={[styles.text, { color: '#FFB509' }]}>Registrarse</Text>
+                <Text style={[styles.text, { color: '#FFB509', fontWeight: '700' }]}>Registrarse</Text>
                 <Text style={styles.text}>Olvidé mi contraseña</Text>
             </View>
             <TouchableHighlight style={styles.button_login}>
@@ -36,11 +38,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 50,
     },
+    container_header: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 20,
+    },
     text_logo: {
         fontSize: 24,
         fontWeight: '900',
         color: '#FFB509',
         fontFamily: 'WorkSans-Bold',
+        marginTop: 10,
     },
     text: {
         fontSize: 14,
@@ -63,12 +71,12 @@ const styles = StyleSheet.create({
     },
     button_login: {
         width: '100%',
-        height: 45,
+        height: 50,
         backgroundColor: '#FFB509',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
-        marginTop: 10
+        marginTop: 40
     }
 })
 

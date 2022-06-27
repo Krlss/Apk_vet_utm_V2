@@ -12,7 +12,7 @@ interface ShowOrHiddenPasswordProps {
 const ShowOrHiddenPassword = ({ show, onPress }: ShowOrHiddenPasswordProps) => {
     return (
         <TouchableHighlight underlayColor={AppStyles.colour.transparent} style={styles.touchableOpacity} onPress={onPress}>
-            {show ? <EyeShow width={25} height={25} fill={AppStyles.colour.low_gray} /> : <EyeHidden width={25} height={25} fill={AppStyles.colour.low_gray} />}
+            {show ? <EyeHidden width={25} height={25} fill={AppStyles.colour.low_gray} /> : <EyeShow width={25} height={25} fill={AppStyles.colour.low_gray} />}
         </TouchableHighlight>
     );
 }

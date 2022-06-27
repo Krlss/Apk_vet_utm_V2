@@ -13,6 +13,8 @@ const Input = ({ style = {}, ...props }: InputProps) => {
     return (
         <TextInput
             style={inputStyles}
+            autoCapitalize='none'
+            autoCorrect={false}
             {...props}
         />
     )

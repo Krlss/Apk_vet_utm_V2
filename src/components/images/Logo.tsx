@@ -1,11 +1,11 @@
 import React from "react";
 import Animated from "react-native-reanimated";
 
-import useLogo from '@src/animations/useLogo'
+import animationLogo from '@src/animations/animationLogo'
 
 const Logo = () => {
 
-    const { animatedScale } = useLogo();
+    const { animatedScale } = animationLogo();
 
     return (
         <Animated.Image source={require('@src/assets/imgs/icon.png')} style={animatedScale} />

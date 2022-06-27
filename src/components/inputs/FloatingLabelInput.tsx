@@ -10,11 +10,10 @@ interface FloatingLabelInputProps {
     value?: string;
     secureTextEntry?: boolean;
     onChange?: (text: string) => void;
-    onSubmitEditing?: () => void;
     [x: string]: any;
 }
 
-const FloatingLabelInput = ({ label, value, secureTextEntry, onChange, onSubmitEditing, ...props }: FloatingLabelInputProps) => {
+const FloatingLabelInput = ({ label, value, secureTextEntry, onChange, ...props }: FloatingLabelInputProps) => {
 
     const { animatedLabel, setIsFocused, styles, setShow, show, setIsBlur } = animationFloatingLabelInput(value);
 
@@ -35,7 +34,6 @@ const FloatingLabelInput = ({ label, value, secureTextEntry, onChange, onSubmitE
                 onChangeText={onChange}
                 key={label}
                 secureTextEntry={secureTextEntry && !show}
-                onSubmitEditing={onSubmitEditing}
                 {...props}
             />
             {secureTextEntry && <ShowOrHiddenPassword show={show} onPress={() => setShow(!show)} />}

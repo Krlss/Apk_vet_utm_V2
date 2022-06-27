@@ -1,37 +1,43 @@
 import useData from "@src/hooks/useData";
 
 import React, { useContext } from 'react';
-import { View, Text, StyleSheet, TouchableHighlight, Animated } from 'react-native';
+import { View, Text, StyleSheet, TouchableHighlight, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import FloatingLabelInput from '@src/components/inputs/FloatingLabelInput';
 import Logo from "@src/components/images/Logo";
 import ConfigContext from "@src/contexts/config/ConfigContext";
+import animationPaddingTop from '@src/animations/animationPaddingTop'
+import Animated from "react-native-reanimated";
 
 const Login = () => {
     const { data, handleChange } = useData();
     const { KeyboardDissmiss } = useContext(ConfigContext);
+    const { animatedPaddingTop } = animationPaddingTop();
 
     return (
-        <Animated.ScrollView contentContainerStyle={styles.container}>
-            <View style={styles.container_header}>
-                <Logo />
-                <Text style={styles.text_logo}>FindsPets</Text>
-            </View>
-            <FloatingLabelInput onSubmitEditing={KeyboardDissmiss} value={data?.email} onChange={(value) => handleChange('email', value)} label='Correo electrónico' />
-            <FloatingLabelInput autoCorrect={false} onSubmitEditing={KeyboardDissmiss} value={data?.password} secureTextEntry onChange={(value) => handleChange('password', value)} label='Contraseña' />
-            <View style={styles.container_links}>
-                <Text style={[styles.text, { color: '#FFB509', fontWeight: '700' }]}>Registrarse</Text>
-                <Text style={styles.text}>Olvidé mi contraseña</Text>
-            </View>
-            <TouchableHighlight style={styles.button_login}>
-                <Text style={styles.text_login}>Iniciar sesión</Text>
-            </TouchableHighlight>
-        </Animated.ScrollView>
+        <TouchableWithoutFeedback onPress={KeyboardDissmiss} accessible={false}>
+            <ScrollView keyboardShouldPersistTaps='handled'>
+                <Animated.View style={[styles.container, animatedPaddingTop]}>
+                    <View style={styles.container_header}>
+                        <Logo />
+                        <Text style={styles.text_logo}>FindsPets</Text>
+                    </View>
+                    <FloatingLabelInput autoComplete='email' value={data?.email} onChange={(value) => handleChange('email', value)} label='Correo electrónico' />
+                    <FloatingLabelInput value={data?.password} secureTextEntry onChange={(value) => handleChange('password', value)} label='Contraseña' />
+                    <View style={styles.container_links}>
+                        <Text style={[styles.text, { color: '#FFB509', fontWeight: '700' }]}>Registrarse</Text>
+                        <Text style={styles.text}>Olvidé mi contraseña</Text>
+                    </View>
+                    <TouchableHighlight style={styles.button_login}>
+                        <Text style={styles.text_login}>Iniciar sesión</Text>
+                    </TouchableHighlight>
+                </Animated.View>
+            </ScrollView>
+        </TouchableWithoutFeedback>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: '#fff',
         paddingHorizontal: 20,
         flexGrow: 1,

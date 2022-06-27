@@ -22,7 +22,7 @@ const useFloatingLabelInput = (value?: string) => {
         } else {
             moveText.value = withTiming(textPostionMove, { duration });
         }
-    }, [isFocused]);
+    }, [ConfigState.keyboardStatus]);
 
     const animatedLabel = useAnimatedStyle(() => {
         return {
@@ -51,7 +51,7 @@ const ThisStyles = (isFocused: boolean, isBlur: boolean, keyboardStatus: boolean
             marginTop: AppStyles.margin.xlarge,
         },
         input: {
-            borderColor: isFocused && !isBlur && keyboardStatus ? AppStyles.colour.yellow : AppStyles.colour.low_gray,
+            borderColor: isFocused && !isBlur ? AppStyles.colour.yellow : AppStyles.colour.low_gray,
             paddingLeft: AppStyles.padding.medium,
             paddingRight: AppStyles.padding.xxxxlarge,
         },
@@ -61,7 +61,7 @@ const ThisStyles = (isFocused: boolean, isBlur: boolean, keyboardStatus: boolean
             zIndex: isFocused && keyboardStatus ? 1 : 0,
             left: AppStyles.padding.large,
             fontSize: AppStyles.font.size.default,
-            color: isFocused && keyboardStatus ? AppStyles.colour.yellow : AppStyles.colour.low_gray,
+            color: isFocused ? AppStyles.colour.yellow : AppStyles.colour.low_gray,
         }
     })
 }

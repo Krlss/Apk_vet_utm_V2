@@ -8,7 +8,12 @@ interface ShowOrHiddenPasswordProps {
   show: boolean
   onPress: () => void
 }
-
+/**
+ *
+ * @param show (true or false) show or hidden password
+ * @param onPress function to show or hidden password
+ * @returns JSX.Element ShowOrHiddenPassword
+ */
 const ShowOrHiddenPassword = ({show, onPress}: ShowOrHiddenPasswordProps) => {
   return (
     <TouchableHighlight

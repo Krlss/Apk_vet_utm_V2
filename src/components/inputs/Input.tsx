@@ -6,7 +6,10 @@ interface InputProps {
   style?: {}
   [x: string]: any
 }
-
+/**
+ * @param style if exist
+ * @returns JSX.Element Input
+ */
 const Input = ({style = {}, ...props}: InputProps) => {
   const inputStyles = [styles.input, style]
   return (

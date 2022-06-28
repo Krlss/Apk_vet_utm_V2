@@ -1,6 +1,6 @@
 import { KeyboardStatic } from "react-native";
 
-export type justyContentType = 'flex-start' | 'flex-end' | 'space-between' | 'space-around' | 'center' | 'space-evenly' | undefined;
+export type justifyContentType = 'flex-start' | 'flex-end' | 'space-between' | 'space-around' | 'center' | 'space-evenly' | undefined;
 
 export type props = {
     [key: string]: any;

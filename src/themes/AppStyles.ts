@@ -1,5 +1,5 @@
 const AppStyles = {
-    colour: {
+    color: {
         yellow: '#FFB509',
         placeholder: '#E0E0E0',
         error: '#FF0000',
@@ -8,6 +8,9 @@ const AppStyles = {
         gray: '#808080',
         transparent: 'transparent',
         low_gray: '#E0E0E0',
+        dark_mode: '#1A1A1A',
+        bg_low_gray: '#F5F7FA',
+        default_bg: '#F5F7FA',
     },
     font: {
         size: {
@@ -68,6 +71,15 @@ const AppStyles = {
         medium: 'Roboto-Medium',
         black: 'Roboto-Black',
         italic: 'Roboto-Italic',
+    },
+    borderRadius: {
+        default: 5,
+        small: 1,
+        medium: 2,
+        large: 3,
+        xlarge: 4,
+        xxlarge: 5,
+        xxxxlarge: 6,
     }
 }
 

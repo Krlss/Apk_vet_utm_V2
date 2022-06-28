@@ -5,12 +5,20 @@ import { useSharedValue, useAnimatedStyle, withTiming } from "react-native-reani
 import { defaultPositionText, textPositionMove } from '@src/constants/FloatingLabelInput';
 import { duration } from "@src/constants/animations";
 
-const useFloatingLabelInput = (value?: string) => {
+
+/**
+ * Input with floating label. Animation for floating label.
+ * @param value
+ * @param error
+ * @return Animation for floating label.
+ */
+
+const useFloatingLabelInput = (value?: string, error?: string) => {
     const [isFocused, setIsFocused] = useState(value ? true : false);
     const [isBlur, setIsBlur] = useState(false);
     const [show, setShow] = useState(false);
 
-    const styles = ThisStyles(isFocused, isBlur);
+    const styles = ThisStyles({ isFocused, isBlur, error });
     const moveText = useSharedValue(defaultPositionText);
 
     useEffect(() => {
@@ -40,7 +48,26 @@ const useFloatingLabelInput = (value?: string) => {
 
 }
 
-const ThisStyles = (isFocused: boolean, isBlur: boolean) => {
+interface ThisStylesProps {
+    /** Focus in input */
+    isFocused: boolean;
+    /** Press out of input */
+    isBlur: boolean;
+    /** Error in input */
+    error?: string;
+}
+
+/** Styles for input and label. */
+const ThisStyles = ({ isFocused, isBlur, error }: ThisStylesProps) => {
+
+    const colorError = error && isFocused && AppStyles.color.error;
+    const colorFocus = isFocused && AppStyles.color.yellow;
+    const colorNormal = isBlur && AppStyles.color.low_gray;
+
+    const borderError = error && isFocused && !isBlur && AppStyles.color.error;
+    const borderFocus = isFocused && !isBlur && AppStyles.color.yellow;
+    const borderNormal = isBlur && !isFocused && AppStyles.color.low_gray;
+
     return StyleSheet.create({
         container: {
             width: '100%',
@@ -48,7 +75,7 @@ const ThisStyles = (isFocused: boolean, isBlur: boolean) => {
             marginTop: AppStyles.margin.xlarge,
         },
         input: {
-            borderColor: isFocused && !isBlur ? AppStyles.color.yellow : AppStyles.color.low_gray,
+            borderColor: borderError || borderFocus || borderNormal || AppStyles.color.low_gray,
             paddingLeft: AppStyles.padding.medium,
             paddingRight: AppStyles.padding.xxxxlarge,
         },
@@ -58,7 +85,7 @@ const ThisStyles = (isFocused: boolean, isBlur: boolean) => {
             zIndex: isFocused ? 1 : 0,
             left: AppStyles.padding.large,
             fontSize: AppStyles.font.size.default,
-            color: isFocused ? AppStyles.color.yellow : AppStyles.color.low_gray,
+            color: colorError || colorFocus || colorNormal || AppStyles.color.low_gray,
         }
     })
 }

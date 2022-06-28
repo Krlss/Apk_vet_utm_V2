@@ -2,7 +2,7 @@ const AppStyles = {
     color: {
         yellow: '#FFB509',
         placeholder: '#E0E0E0',
-        error: '#FF0000',
+        error: '#FF8282',
         white: '#FFFFFF',
         black: '#000000',
         gray: '#808080',

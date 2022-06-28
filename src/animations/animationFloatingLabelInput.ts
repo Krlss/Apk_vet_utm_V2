@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { StyleSheet } from 'react-native';
 import AppStyles from '@src/themes/AppStyles';
 import { useSharedValue, useAnimatedStyle, withTiming } from "react-native-reanimated";
-import { defaultPositionText, textPostionMove } from '@src/constants/FloatinLabelInput';
+import { defaultPositionText, textPositionMove } from '@src/constants/FloatingLabelInput';
 import { duration } from "@src/constants/animations";
 
 const useFloatingLabelInput = (value?: string) => {
@@ -17,7 +17,7 @@ const useFloatingLabelInput = (value?: string) => {
         if (isFocused) {
             moveText.value = withTiming(defaultPositionText, { duration });
         } else {
-            moveText.value = withTiming(textPostionMove, { duration });
+            moveText.value = withTiming(textPositionMove, { duration });
         }
     }, [isFocused]);
 
@@ -48,17 +48,17 @@ const ThisStyles = (isFocused: boolean, isBlur: boolean) => {
             marginTop: AppStyles.margin.xlarge,
         },
         input: {
-            borderColor: isFocused && !isBlur ? AppStyles.colour.yellow : AppStyles.colour.low_gray,
+            borderColor: isFocused && !isBlur ? AppStyles.color.yellow : AppStyles.color.low_gray,
             paddingLeft: AppStyles.padding.medium,
             paddingRight: AppStyles.padding.xxxxlarge,
         },
         label: {
             position: 'absolute',
-            backgroundColor: isFocused ? AppStyles.colour.white : AppStyles.colour.transparent,
+            backgroundColor: isFocused ? AppStyles.color.default_bg : AppStyles.color.transparent,
             zIndex: isFocused ? 1 : 0,
             left: AppStyles.padding.large,
             fontSize: AppStyles.font.size.default,
-            color: isFocused ? AppStyles.colour.yellow : AppStyles.colour.low_gray,
+            color: isFocused ? AppStyles.color.yellow : AppStyles.color.low_gray,
         }
     })
 }

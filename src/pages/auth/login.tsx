@@ -1,88 +1,70 @@
-import useData from "@src/hooks/useData";
-
-import React, { useContext } from 'react';
-import { View, Text, StyleSheet, TouchableHighlight, ScrollView, TouchableWithoutFeedback } from 'react-native';
-import FloatingLabelInput from '@src/components/inputs/FloatingLabelInput';
-import Logo from "@src/components/images/Logo";
-import ConfigContext from "@src/contexts/config/ConfigContext";
+import useData from '@src/hooks/useData'
+import React, {useContext} from 'react'
+import {StyleSheet, ScrollView, View, Text} from 'react-native'
+import Animated from 'react-native-reanimated'
+import FloatingLabelInput from '@src/components/inputs/FloatingLabelInput'
+import LogoAndNameApp from '@src/components/headers/LogoAndNameApp'
+import ConfigContext from '@src/contexts/config/ConfigContext'
 import animationPaddingTop from '@src/animations/animationPaddingTop'
-import Animated from "react-native-reanimated";
+import AppStyles from '@src/themes/AppStyles'
+import LinkFash from '@src/components/buttons/LinkFash'
+import TextLink from '@src/components/labels/TextLink'
+import ChangeScreenAuth from '@src/components/buttons/ChangeScreenAuth'
+import LongButton from '@src/components/buttons/LongButton'
+import FooterUTM from '@src/components/footer/UTM'
 
 const Login = () => {
-    const { data, handleChange } = useData();
-    const { KeyboardDissmiss } = useContext(ConfigContext);
-    const { animatedPaddingTop } = animationPaddingTop();
+  const {data, handleChange} = useData()
+  const {KeyboardDismiss} = useContext(ConfigContext)
+  const {animatedPaddingTop} = animationPaddingTop()
 
-    return (
-        <TouchableWithoutFeedback onPress={KeyboardDissmiss} accessible={false}>
-            <ScrollView keyboardShouldPersistTaps='handled'>
-                <Animated.View style={[styles.container, animatedPaddingTop]}>
-                    <View style={styles.container_header}>
-                        <Logo />
-                        <Text style={styles.text_logo}>FindsPets</Text>
-                    </View>
-                    <FloatingLabelInput autoComplete='email' value={data?.email} onChange={(value) => handleChange('email', value)} label='Correo electrónico' />
-                    <FloatingLabelInput value={data?.password} secureTextEntry onChange={(value) => handleChange('password', value)} label='Contraseña' />
-                    <View style={styles.container_links}>
-                        <Text style={[styles.text, { color: '#FFB509', fontWeight: '700' }]}>Registrarse</Text>
-                        <Text style={styles.text}>Olvidé mi contraseña</Text>
-                    </View>
-                    <TouchableHighlight style={styles.button_login}>
-                        <Text style={styles.text_login}>Iniciar sesión</Text>
-                    </TouchableHighlight>
-                </Animated.View>
-            </ScrollView>
-        </TouchableWithoutFeedback>
-    )
+  return (
+    <ScrollView
+      keyboardShouldPersistTaps="handled"
+      style={styles.container_base}>
+      <Animated.View style={[styles.container, animatedPaddingTop]}>
+        <LogoAndNameApp />
+
+        <FloatingLabelInput
+          autoComplete="email"
+          value={data?.email}
+          onChange={value => handleChange('email', value)}
+          label="Correo electrónico"
+        />
+        <FloatingLabelInput
+          value={data?.password}
+          secureTextEntry
+          onChange={value => handleChange('password', value)}
+          label="Contraseña"
+        />
+
+        <LinkFash onPress={() => console.log('Show lost password interface')}>
+          <TextLink TEXT="¿Olvidaste tu contraseña?" />
+        </LinkFash>
+
+        <LongButton onPress={() => console.log('Login')} text="ACCEDER" />
+
+        <ChangeScreenAuth
+          onPress={() => console.log('Show register interface')}
+          text="Registrarse"
+          label="¿No tienes una cuenta?"
+        />
+
+        <FooterUTM />
+      </Animated.View>
+    </ScrollView>
+  )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#fff',
-        paddingHorizontal: 20,
-        flexGrow: 1,
-        alignItems: 'center',
-    },
-    container_header: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 20,
-    },
-    text_logo: {
-        fontSize: 24,
-        fontWeight: '900',
-        color: '#FFB509',
-        fontFamily: 'WorkSans-Bold',
-        marginTop: 10,
-    },
-    text: {
-        fontSize: 14,
-        fontWeight: '500',
-        color: '#E0E0E0',
-        fontFamily: 'WorkSans-Regular',
-    },
-    container_links: {
-        width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingHorizontal: 5,
-        marginTop: 10
-    },
-    text_login: {
-        fontSize: 22,
-        color: 'white',
-        fontWeight: '700',
-        fontFamily: 'Poppins-SemiBold',
-    },
-    button_login: {
-        width: '100%',
-        height: 50,
-        backgroundColor: '#FFB509',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 10,
-        marginTop: 40
-    }
+  container_base: {
+    backgroundColor: AppStyles.color.default_bg,
+  },
+  container: {
+    backgroundColor: AppStyles.color.default_bg,
+    paddingHorizontal: AppStyles.padding.xlarge,
+    alignItems: 'center',
+  },
 })
 
-export default Login;
+export default Login

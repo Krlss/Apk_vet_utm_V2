@@ -1,19 +1,16 @@
-import React from 'react';
-import ConfigProvider from '@src/contexts/config/ConfigProvider';
-import { StatusBar } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import React from 'react'
+import ConfigProvider from '@src/contexts/config/ConfigProvider'
+import {NavigationContainer} from '@react-navigation/native'
 
-import StackAuth from '@src/navigations/stackAuth';
+import StackAuth from '@src/navigations/stackAuth'
 
-const Aplication = () => {
-
-    return (
-        <ConfigProvider>
-            <NavigationContainer>
-                <StackAuth />
-                <StatusBar backgroundColor='black' />
-            </NavigationContainer>
-        </ConfigProvider>
-    )
+const Application = () => {
+  return (
+    <ConfigProvider>
+      <NavigationContainer>
+        <StackAuth />
+      </NavigationContainer>
+    </ConfigProvider>
+  )
 }
-export default Aplication
+export default Application

@@ -1,22 +1,24 @@
 import React, {useContext} from 'react'
 import {StyleSheet, ScrollView} from 'react-native'
 import Animated from 'react-native-reanimated'
-import LogoAndNameApp from '@src/components/headers/LogoAndNameApp'
-import ConfigContext from '@src/contexts/config/ConfigContext'
-import animationPaddingTop from '@src/animations/animationPaddingTop'
-import AppStyles from '@src/themes/AppStyles'
-import LinkFash from '@src/components/buttons/LinkFash'
-import TextLink from '@src/components/labels/TextLink'
-import ChangeScreenAuth from '@src/components/buttons/ChangeScreenAuth'
-import LongButton from '@src/components/buttons/LongButton'
-import FooterUTM from '@src/components/footer/UTM'
-import FormikFloatingLabelInput from '@src/components/formik/formikFloatingLabelInput'
-import {loginSchema} from '@src/schemas/schemas'
-import {initialValuesLogin} from '@src/constants/formik'
 import {Formik} from 'formik'
 import {NativeStackScreenProps} from '@react-navigation/native-stack'
+import AppStyles from '@src/themes/AppStyles'
+import {animationPaddingTop} from '@src/animations'
+import {loginSchema} from '@src/schemas/schemas'
+import ConfigContext from '@src/contexts/config/ConfigContext'
 import {AuthStackProps} from '@src/types/declare'
 import {halfThird} from '@src/constants/animations'
+import {initialValuesLogin} from '@src/constants/formik'
+import {
+  ButtonChangeScreenAuth,
+  ButtonLinkFash,
+  ButtonLongButton,
+  FooterUTM,
+  FormikFloatingLabelInput,
+  LogoAndNameApp,
+  LabelTextLink,
+} from '@src/components'
 /**
  * Screen for login
  * @returns JSX.Element Screen Login
@@ -47,18 +49,18 @@ const Login = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
                 label="Contraseña"
                 secureTextEntry
               />
-              <LinkFash
+              <ButtonLinkFash
                 onPress={() => console.log('Show lost password interface')}>
-                <TextLink TEXT="¿Olvidaste tu contraseña?" />
-              </LinkFash>
+                <LabelTextLink TEXT="¿Olvidaste tu contraseña?" />
+              </ButtonLinkFash>
 
-              <LongButton
+              <ButtonLongButton
                 isValid={isValid}
                 onPress={handleSubmit}
                 text="ACCEDER"
               />
 
-              <ChangeScreenAuth
+              <ButtonChangeScreenAuth
                 onPress={() => {
                   navigation.navigate('REGISTER')
                 }}

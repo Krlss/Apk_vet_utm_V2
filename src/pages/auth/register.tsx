@@ -1,19 +1,22 @@
 import React, {useContext} from 'react'
 import {StyleSheet, ScrollView} from 'react-native'
 import Animated from 'react-native-reanimated'
-import LogoAndNameApp from '@src/components/headers/LogoAndNameApp'
 import ConfigContext from '@src/contexts/config/ConfigContext'
-import animationPaddingTop from '@src/animations/animationPaddingTop'
 import AppStyles from '@src/themes/AppStyles'
-import ChangeScreenAuth from '@src/components/buttons/ChangeScreenAuth'
-import LongButton from '@src/components/buttons/LongButton'
-import FooterUTM from '@src/components/footer/UTM'
-import FormikFloatingLabelInput from '@src/components/formik/formikFloatingLabelInput'
 import {registerSchema} from '@src/schemas/schemas'
 import {initialValuesRegister} from '@src/constants/formik'
 import {Formik} from 'formik'
 import {NativeStackScreenProps} from '@react-navigation/native-stack'
 import {AuthStackProps} from '@src/types/declare'
+
+import {
+  LogoAndNameApp,
+  FormikFloatingLabelInput,
+  FooterUTM,
+  ButtonLongButton,
+  ButtonChangeScreenAuth,
+} from '@src/components'
+import {animationPaddingTop} from '@src/animations'
 
 /**
  * Screen for Register
@@ -64,13 +67,13 @@ const Register = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
                 secureTextEntry
               />
 
-              <LongButton
+              <ButtonLongButton
                 isValid={isValid}
                 onPress={handleSubmit}
                 text="REGISTRAR"
               />
 
-              <ChangeScreenAuth
+              <ButtonChangeScreenAuth
                 onPress={() => {
                   navigation.navigate('LOGIN')
                 }}

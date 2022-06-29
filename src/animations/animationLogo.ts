@@ -12,7 +12,7 @@ const useLogo = () => {
         if (ConfigState.keyboardStatus) {
             scale.value = withTiming(0, { duration });
         } else {
-            scale.value = withSpring(85, { stiffness: 100, damping: 30 });
+            scale.value = withTiming(85, { duration });
         }
     }, [ConfigState.keyboardStatus]);
 

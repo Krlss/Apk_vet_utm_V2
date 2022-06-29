@@ -22,7 +22,7 @@ import {AuthStackProps} from '@src/types/declare'
 
 const Register = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
   const {KeyboardDismiss} = useContext(ConfigContext)
-  const {animatedPaddingTop} = animationPaddingTop(20)
+  const {animatedPaddingTop} = animationPaddingTop(10)
 
   return (
     <ScrollView keyboardShouldPersistTaps="handled">

@@ -13,3 +13,7 @@ export type ConfigContextType = {
     Keyboard: KeyboardType;
 }
 
+export type AuthStackProps = {
+    LOGIN,
+    REGISTER,
+}

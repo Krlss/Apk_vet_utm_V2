@@ -8,6 +8,7 @@ const FooterUTM = () => {
       <Text style={styles.footer_text}>
         © 2022 Facultad de Ciencias Informáticas.
       </Text>
+      <Text style={styles.footer_text}>Universidad Técnica de Manabí.</Text>
     </View>
   )
 }

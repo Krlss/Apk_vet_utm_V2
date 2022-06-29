@@ -14,26 +14,30 @@ import AppStyles from '@src/themes/AppStyles'
 
 const formikFloatingLabelInput = ({
   name,
+  label,
   ...props
 }: {
   name: string
+  label: string
   [x: string]: any
 }) => {
   const [field, meta, helpers] = useField(name)
   return (
     <>
       <FloatingLabelInput
+        label={label}
         value={field.value}
         onChange={value => helpers.setValue(value)}
         {...props}
         error={meta.error}
       />
-      {meta.error && meta.touched ? (
+      {meta.error ? (
         <Text
           style={{
             color: AppStyles.color.error,
-            fontSize: AppStyles.font.size.medium,
+            fontSize: AppStyles.font.size.error,
             alignSelf: 'flex-start',
+            paddingHorizontal: AppStyles.padding.medium,
           }}>
           {meta.error}
         </Text>

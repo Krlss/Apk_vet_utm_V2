@@ -5,26 +5,24 @@ import LogoAndNameApp from '@src/components/headers/LogoAndNameApp'
 import ConfigContext from '@src/contexts/config/ConfigContext'
 import animationPaddingTop from '@src/animations/animationPaddingTop'
 import AppStyles from '@src/themes/AppStyles'
-import LinkFash from '@src/components/buttons/LinkFash'
-import TextLink from '@src/components/labels/TextLink'
 import ChangeScreenAuth from '@src/components/buttons/ChangeScreenAuth'
 import LongButton from '@src/components/buttons/LongButton'
 import FooterUTM from '@src/components/footer/UTM'
 import FormikFloatingLabelInput from '@src/components/formik/formikFloatingLabelInput'
-import {loginSchema} from '@src/schemas/schemas'
-import {initialValuesLogin} from '@src/constants/formik'
+import {registerSchema} from '@src/schemas/schemas'
+import {initialValuesRegister} from '@src/constants/formik'
 import {Formik} from 'formik'
 import {NativeStackScreenProps} from '@react-navigation/native-stack'
 import {AuthStackProps} from '@src/types/declare'
-import {halfThird} from '@src/constants/animations'
+
 /**
- * Screen for login
- * @returns JSX.Element Screen Login
+ * Screen for Register
+ * @returns JSX.Element Screen Register
  */
 
-const Login = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
+const Register = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
   const {KeyboardDismiss} = useContext(ConfigContext)
-  const {animatedPaddingTop} = animationPaddingTop(halfThird)
+  const {animatedPaddingTop} = animationPaddingTop(20)
 
   return (
     <ScrollView keyboardShouldPersistTaps="handled">
@@ -32,38 +30,52 @@ const Login = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
         <LogoAndNameApp />
 
         <Formik
-          validationSchema={loginSchema}
-          initialValues={initialValuesLogin}
+          validationSchema={registerSchema}
+          initialValues={initialValuesRegister}
           onSubmit={values => console.log(values)}>
           {({handleSubmit, isValid}) => (
             <>
               <FormikFloatingLabelInput
+                name="user_id"
+                label="Cédula o RUC"
+                keyboardType="numeric"
+              />
+
+              <FormikFloatingLabelInput
+                name="full_name"
+                label="Nombre completo"
+                autoCapitalize="words"
+              />
+
+              <FormikFloatingLabelInput
+                name="phone"
+                label="Teléfono"
+                keyboardType="phone-pad"
+              />
+
+              <FormikFloatingLabelInput
                 name="email"
                 label="Correo electrónico"
-                autoComplete="email"
               />
+
               <FormikFloatingLabelInput
                 name="password"
                 label="Contraseña"
                 secureTextEntry
               />
-              <LinkFash
-                onPress={() => console.log('Show lost password interface')}>
-                <TextLink TEXT="¿Olvidaste tu contraseña?" />
-              </LinkFash>
 
               <LongButton
                 isValid={isValid}
                 onPress={handleSubmit}
-                text="ACCEDER"
+                text="REGISTRAR"
               />
 
               <ChangeScreenAuth
                 onPress={() => {
-                  navigation.navigate('REGISTER')
+                  navigation.navigate('LOGIN')
                 }}
-                text="Registrarse"
-                label="¿No tienes una cuenta?"
+                text="Iniciar sesión"
+                label="¿Ya tienes una cuenta?"
               />
             </>
           )}
@@ -79,7 +91,8 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: AppStyles.padding.xlarge,
     alignItems: 'center',
+    paddingBottom: AppStyles.padding.large,
   },
 })
 
-export default Login
+export default Register

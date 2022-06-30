@@ -1,5 +1,6 @@
 import * as yup from 'yup';
 import { fullnameRegex, lowercase, number, uppercase, onlyNumber } from '@src/constants/regex'
+import { validate_user_id } from '@src/utils/utils'
 
 export const email = yup.string()
     .email('El email no es válido')
@@ -21,8 +22,11 @@ export const user_id = yup.string()
     .min(10, 'La CI/RUC es muy corta')
     .max(13, 'La CI/RUC es muy larga')
     .required('Digita una CI/RUC')
+    .test("isValidUserID", "La CI/RUC debe ser válido", (user_id?: string | null) => {
+        return user_id && validate_user_id(user_id) ? true : false
+    })
 
-export const full_name = yup.string()
+export const fullname = yup.string()
     .min(3, 'El nombre completo es muy corto')
     .max(50, 'El nombre completo es muy largo')
     .required('Digita un nombre completo')

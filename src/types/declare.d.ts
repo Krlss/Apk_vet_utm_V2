@@ -33,16 +33,12 @@ export interface LAuth {
     password: string;
 }
 
-export interface IAuth {
-    USER: {
-        user_id?: string;
-        fullname?: string;
-        phone?: string;
-        email: string;
-        password: string;
-    };
-    url: string;
+export interface RAuth extends LAuth {
+    user_id: string,
+    fullname: string,
+    phone: string
 }
+
 export interface user {
     user_id: string,
     profile_photo_path?: string,

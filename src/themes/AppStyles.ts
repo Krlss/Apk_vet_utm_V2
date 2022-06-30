@@ -8,6 +8,7 @@ const AppStyles = {
         gray: '#808080',
         transparent: 'transparent',
         low_gray: '#E0E0E0',
+        dark_gray: '#404040',
         dark_mode: '#1A1A1A',
         bg_low_gray: '#F5F7FA',
         default_bg: '#F5F7FA',

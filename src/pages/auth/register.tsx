@@ -25,8 +25,7 @@ import {animationPaddingTop} from '@src/animations'
 
 const Register = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
   const {KeyboardDismiss} = useContext(ConfigContext)
-  const {animatedPaddingTop} = animationPaddingTop(10)
-
+  const {animatedPaddingTop} = animationPaddingTop(20)
   return (
     <ScrollView keyboardShouldPersistTaps="handled">
       <Animated.View style={[styles.container, animatedPaddingTop]}>
@@ -45,7 +44,7 @@ const Register = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
               />
 
               <FormikFloatingLabelInput
-                name="full_name"
+                name="fullname"
                 label="Nombre completo"
                 autoCapitalize="words"
               />
@@ -65,6 +64,7 @@ const Register = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
                 name="password"
                 label="Contraseña"
                 secureTextEntry
+                onSubmitEditing={handleSubmit}
               />
 
               <ButtonLongButton

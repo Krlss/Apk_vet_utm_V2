@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import {StyleSheet, ScrollView} from 'react-native'
 import Animated from 'react-native-reanimated'
 import {Formik} from 'formik'
@@ -6,7 +6,6 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack'
 import AppStyles from '@src/themes/AppStyles'
 import {animationPaddingTop} from '@src/animations'
 import {loginSchema} from '@src/schemas/schemas'
-import ConfigContext from '@src/contexts/config/ConfigContext'
 import {AuthStackProps} from '@src/types/declare'
 import {halfThird} from '@src/constants/animations'
 import {initialValuesLogin} from '@src/constants/formik'
@@ -27,7 +26,6 @@ import useAuth from '@src/hooks/useAuth'
  */
 
 const Login = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
-  const {KeyboardDismiss} = useContext(ConfigContext)
   const {animatedPaddingTop} = animationPaddingTop(halfThird)
   const {login, fetchState} = useAuth()
   return (
@@ -50,6 +48,7 @@ const Login = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
                 name="password"
                 label="Contraseña"
                 secureTextEntry
+                onSubmitEditing={handleSubmit}
               />
               <ButtonLinkFash
                 onPress={() => console.log('Show lost password interface')}>

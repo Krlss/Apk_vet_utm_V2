@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { fetchState, LAuth } from '@src/types/declare'
+import { fetchState, LAuth, RAuth } from '@src/types/declare'
 import { LOGIN } from '@src/services/auth'
 import Toast from '@src/components/toast/Toast';
 import AuthContext from '@src/contexts/auth/AuthContext';
@@ -26,8 +26,10 @@ const useAuth = () => {
         }
     }
 
+    const register = async ({ email, password }: RAuth) => { }
 
-    return { fetchState, login }
+
+    return { fetchState, login, register }
 }
 
 export default useAuth

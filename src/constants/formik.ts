@@ -11,7 +11,7 @@ export const initialValuesLogin = {
 */
 export const initialValuesRegister = {
     user_id: '',
-    full_name: '',
+    fullname: '',
     phone: '',
     email: '',
     password: '',

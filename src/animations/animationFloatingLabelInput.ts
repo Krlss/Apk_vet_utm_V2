@@ -84,7 +84,8 @@ const ThisStyles = ({ isFocused, isBlur, error }: ThisStylesProps) => {
             backgroundColor: isFocused ? AppStyles.color.default_bg : AppStyles.color.transparent,
             zIndex: isFocused ? 1 : 0,
             left: AppStyles.padding.large,
-            fontSize: AppStyles.font.size.default,
+            fontWeight: isFocused ? 'bold' : 'normal',
+            fontSize: isFocused ? AppStyles.font.size.error : AppStyles.font.size.default,
             color: colorError || colorFocus || colorNormal || AppStyles.color.low_gray,
         }
     })

@@ -4,7 +4,8 @@ import {NavigationContainer, DefaultTheme} from '@react-navigation/native'
 import AppStyles from './themes/AppStyles'
 import StackAuth from '@src/navigations/stackAuth'
 import SplashScreen from 'react-native-splash-screen'
-
+import Toast from 'react-native-toast-message'
+import {toastConfig} from '@src/components/toast/Custom'
 const MyTheme = {
   ...DefaultTheme,
   colors: {
@@ -22,6 +23,7 @@ const Application = () => {
       <NavigationContainer theme={MyTheme}>
         <StackAuth />
       </NavigationContainer>
+      <Toast config={toastConfig} />
     </ConfigProvider>
   )
 }

@@ -17,3 +17,20 @@ export type AuthStackProps = {
     LOGIN,
     REGISTER,
 }
+
+export type fetchState = 'loading' | 'success' | 'error' | undefined;
+export interface LAuth {
+    email: string;
+    password: string;
+}
+
+export interface IAuth {
+    USER: {
+        user_id?: string;
+        fullname?: string;
+        phone?: string;
+        email: string;
+        password: string;
+    };
+    url: string;
+}

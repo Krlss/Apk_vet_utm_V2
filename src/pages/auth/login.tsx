@@ -19,6 +19,8 @@ import {
   LogoAndNameApp,
   LabelTextLink,
 } from '@src/components'
+import useAuth from '@src/hooks/useAuth'
+
 /**
  * Screen for login
  * @returns JSX.Element Screen Login
@@ -27,6 +29,7 @@ import {
 const Login = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
   const {KeyboardDismiss} = useContext(ConfigContext)
   const {animatedPaddingTop} = animationPaddingTop(halfThird)
+  const {login, fetchState} = useAuth()
 
   return (
     <ScrollView keyboardShouldPersistTaps="handled">
@@ -36,7 +39,7 @@ const Login = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
         <Formik
           validationSchema={loginSchema}
           initialValues={initialValuesLogin}
-          onSubmit={values => console.log(values)}>
+          onSubmit={values => login(values)}>
           {({handleSubmit, isValid}) => (
             <>
               <FormikFloatingLabelInput

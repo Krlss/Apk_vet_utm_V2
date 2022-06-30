@@ -150,3 +150,14 @@ export const validate_user_id = (numero: string) => {
     }
     return true;
 }
+
+export const separateFullname = (fullname: string): string[] => {
+    if (!fullname) return []
+    else {
+        const names = fullname.split(' ');
+        const name = names[0] + ' ' + names[1];
+        const last_name1 = names[2];
+        const last_name2 = names[3];
+        return [name, last_name1, last_name2];
+    }
+}

@@ -1,7 +1,6 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import {StyleSheet, ScrollView} from 'react-native'
 import Animated from 'react-native-reanimated'
-import ConfigContext from '@src/contexts/config/ConfigContext'
 import AppStyles from '@src/themes/AppStyles'
 import {registerSchema} from '@src/schemas/schemas'
 import {initialValuesRegister} from '@src/constants/formik'
@@ -17,15 +16,15 @@ import {
   ButtonChangeScreenAuth,
 } from '@src/components'
 import {animationPaddingTop} from '@src/animations'
-
+import useAuth from '@src/hooks/useAuth'
 /**
  * Screen for Register
  * @returns JSX.Element Screen Register
  */
 
 const Register = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
-  const {KeyboardDismiss} = useContext(ConfigContext)
   const {animatedPaddingTop} = animationPaddingTop(20)
+  const {register, fetchState} = useAuth()
   return (
     <ScrollView keyboardShouldPersistTaps="handled">
       <Animated.View style={[styles.container, animatedPaddingTop]}>
@@ -34,7 +33,21 @@ const Register = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
         <Formik
           validationSchema={registerSchema}
           initialValues={initialValuesRegister}
-          onSubmit={values => console.log(values)}>
+          onSubmit={(values, actions) => {
+            register(values).then(res => {
+              if (res?.errors) {
+                actions.setErrors({
+                  user_id: res?.errors.user_id,
+                  fullname: '',
+                  phone: res?.errors.phone,
+                  email: res?.errors.email,
+                  password: '',
+                })
+              } else if (res?.type === 'success') {
+                navigation.navigate('LOGIN')
+              }
+            })
+          }}>
           {({handleSubmit, isValid}) => (
             <>
               <FormikFloatingLabelInput
@@ -47,17 +60,20 @@ const Register = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
                 name="fullname"
                 label="Nombre completo"
                 autoCapitalize="words"
+                autoComplete="name"
               />
 
               <FormikFloatingLabelInput
                 name="phone"
                 label="Teléfono"
                 keyboardType="phone-pad"
+                autoComplete="tel"
               />
 
               <FormikFloatingLabelInput
                 name="email"
                 label="Correo electrónico"
+                autoComplete="email"
               />
 
               <FormikFloatingLabelInput
@@ -71,6 +87,7 @@ const Register = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
                 isValid={isValid}
                 onPress={handleSubmit}
                 text="REGISTRAR"
+                loading={fetchState}
               />
 
               <ButtonChangeScreenAuth

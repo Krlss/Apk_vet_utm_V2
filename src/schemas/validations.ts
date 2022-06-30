@@ -1,6 +1,6 @@
 import * as yup from 'yup';
-import { fullnameRegex, lowercase, number, uppercase, onlyNumber } from '@src/constants/regex'
-import { validate_user_id } from '@src/utils/utils'
+import { lowercase, number, uppercase, onlyNumber } from '@src/constants/regex'
+import { validate_user_id, separateFullname } from '@src/utils/utils'
 
 export const email = yup.string()
     .email('El email no es válido')
@@ -22,7 +22,7 @@ export const user_id = yup.string()
     .min(10, 'La CI/RUC es muy corta')
     .max(13, 'La CI/RUC es muy larga')
     .required('Digita una CI/RUC')
-    .test("isValidUserID", "La CI/RUC debe ser válido", (user_id?: string | null) => {
+    .test("isValidUserID", "La CI/RUC es incorrecta", (user_id?: string | null) => {
         return user_id && validate_user_id(user_id) ? true : false
     })
 
@@ -30,7 +30,10 @@ export const fullname = yup.string()
     .min(3, 'El nombre completo es muy corto')
     .max(50, 'El nombre completo es muy largo')
     .required('Digita un nombre completo')
-    .matches(fullnameRegex, 'El nombre completo no es válido (Al menos un nombre y dos apellidos)')
+    .test("isValidFullName", "Son dos nombres y dos apellidos", (fullname: any) => {
+        const [name, lastname1, lastname2] = separateFullname(fullname)
+        return fullname && name && lastname1 && lastname2 ? true : false
+    })
 
 export const phone = yup.string()
     .matches(onlyNumber, 'El teléfono debe contener solo números')

@@ -33,9 +33,16 @@ export interface LAuth {
     password: string;
 }
 
+export interface ServiceRAuth extends LAuth {
+    user_id: string;
+    fullname: string;
+    phone: string;
+}
 export interface RAuth extends LAuth {
     user_id: string,
-    fullname: string,
+    name: string,
+    last_name1: string,
+    last_name2: string,
     phone: string
 }
 

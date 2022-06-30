@@ -1,20 +1,25 @@
 import { KeyboardStatic } from 'react-native';
+import { boolean } from 'yup';
 
 export type justifyContentType = 'flex-start' | 'flex-end' | 'space-between' | 'space-around' | 'center' | 'space-evenly' | undefined;
 
-export type props = {
+export interface props {
     [key: string]: any;
 }
 
 export type KeyboardType = KeyboardStatic;
 
-export type ConfigContextType = {
+export interface ConfigContextType {
     keyboardStatus: boolean;
     Keyboard: KeyboardType;
 }
 
-export type AuthContextType = {
+export interface AuthContextType {
     user: user
+}
+
+export interface Response {
+    [key: string]: any;
 }
 
 export type AuthStackProps = {
@@ -22,7 +27,7 @@ export type AuthStackProps = {
     REGISTER,
 }
 
-export type fetchState = 'loading' | 'success' | 'error' | undefined;
+export type fetchState = true | false;
 export interface LAuth {
     email: string;
     password: string;

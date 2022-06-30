@@ -30,7 +30,6 @@ const Login = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
   const {KeyboardDismiss} = useContext(ConfigContext)
   const {animatedPaddingTop} = animationPaddingTop(halfThird)
   const {login, fetchState} = useAuth()
-
   return (
     <ScrollView keyboardShouldPersistTaps="handled">
       <Animated.View style={[styles.container, animatedPaddingTop]}>
@@ -61,6 +60,7 @@ const Login = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
                 isValid={isValid}
                 onPress={handleSubmit}
                 text="ACCEDER"
+                loading={fetchState}
               />
 
               <ButtonChangeScreenAuth

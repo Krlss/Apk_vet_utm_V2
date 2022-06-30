@@ -9,6 +9,7 @@ interface Props {
   /** is valid only  */
   isValid: boolean
   [x: string]: any
+  loading?: boolean
 }
 
 /**
@@ -18,33 +19,33 @@ interface Props {
  * @param isValid
  * @returns JSX.Element Button
  */
-const LongButton = ({onPress, text, isValid}: Props) => {
-  const styles = ThisStyles(isValid)
+const LongButton = ({onPress, text, isValid, loading}: Props) => {
+  const styles = ThisStyles(isValid, loading)
 
   return (
     <TouchableOpacity
       style={styles.button}
       onPress={onPress}
-      disabled={!isValid}>
-      <Text style={styles.text}>{text}</Text>
+      disabled={!isValid || loading}>
+      <Text style={styles.text}>{loading ? 'Cargando...' : text}</Text>
     </TouchableOpacity>
   )
 }
 
-const ThisStyles = (isValid: boolean) =>
+const ThisStyles = (isValid: boolean, loading?: boolean) =>
   StyleSheet.create({
     text: {
       fontSize: AppStyles.font.size.large,
-      color: isValid ? AppStyles.color.black : AppStyles.color.white,
+      color:
+        isValid && !loading ? AppStyles.color.black : AppStyles.color.white,
       fontWeight: 'bold',
       fontFamily: AppStyles.fontFamily.default,
     },
     button: {
       width: '100%',
       height: AppStyles.inputHeight.medium,
-      backgroundColor: isValid
-        ? AppStyles.color.yellow
-        : AppStyles.color.low_gray,
+      backgroundColor:
+        isValid && !loading ? AppStyles.color.yellow : AppStyles.color.low_gray,
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: AppStyles.borderRadius.default,

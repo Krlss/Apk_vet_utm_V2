@@ -1,10 +1,10 @@
 import {createContext} from 'react'
 
-import {AuthContextType} from '@src/types/declare'
+import {user, AuthContextType} from '@src/types/declare'
 
 export type AuthContextProps = {
   AuthState: AuthContextType
-  setDataUser: (data: AuthContextType) => void
+  setDataUser: (data: user) => void
 }
 
 const AuthContext = createContext<AuthContextProps>({} as AuthContextProps)

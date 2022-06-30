@@ -36,13 +36,9 @@ const Register = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
           onSubmit={(values, actions) => {
             register(values).then(res => {
               if (res?.errors) {
-                actions.setErrors({
-                  user_id: res?.errors.user_id,
-                  fullname: '',
-                  phone: res?.errors.phone,
-                  email: res?.errors.email,
-                  password: '',
-                })
+                actions.setFieldError('user_id', res?.errors.user_id)
+                actions.setFieldError('email', res?.errors.email)
+                actions.setFieldError('phone', res?.errors.phone)
               } else if (res?.type === 'success') {
                 navigation.navigate('LOGIN')
               }

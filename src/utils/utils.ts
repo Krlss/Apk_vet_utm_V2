@@ -159,9 +159,11 @@ export const separateFullname = (fullname: string): string[] => {
     if (!fullname) return []
     else {
         const names = fullname.split(' ');
-        const name = names[0] + ' ' + names[1];
-        const last_name1 = names[2];
-        const last_name2 = names[3];
+        const last_name1 = names[0];
+        names[0] = ''
+        const last_name2 = names[1];
+        names[1] = ''
+        const name = names.filter(e => e).join(' ')
         return [name, last_name1, last_name2];
     }
 }

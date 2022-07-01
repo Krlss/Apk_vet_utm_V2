@@ -30,7 +30,7 @@ export const fullname = yup.string()
     .min(3, 'El nombre completo es muy corto')
     .max(50, 'El nombre completo es muy largo')
     .required('Digita un nombre completo')
-    .test("isValidFullName", "Son dos nombres y dos apellidos", (fullname: any) => {
+    .test("isValidFullName", "Dos apellidos y al menos un nombre", (fullname: any) => {
         const [name, lastname1, lastname2] = separateFullname(fullname)
         return fullname && name && lastname1 && lastname2 ? true : false
     })

@@ -13,7 +13,13 @@ const StackHome = () => {
         gestureEnabled: true,
         animation: 'slide_from_right',
       }}>
-      <Stack.Screen name="HOME" component={Home} />
+      <Stack.Screen
+        name="HOME"
+        component={Home}
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack.Navigator>
   )
 }

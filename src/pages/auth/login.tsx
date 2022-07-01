@@ -27,7 +27,7 @@ import useAuth from '@src/hooks/useAuth'
 
 const Login = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
   const {animatedPaddingTop} = animationPaddingTop(halfThird)
-  const {login, fetchState} = useAuth()
+  const {login} = useAuth()
   return (
     <ScrollView keyboardShouldPersistTaps="handled">
       <Animated.View style={[styles.container, animatedPaddingTop]}>
@@ -36,7 +36,13 @@ const Login = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
         <Formik
           validationSchema={loginSchema}
           initialValues={initialValuesLogin}
-          onSubmit={values => login(values)}>
+          onSubmit={values => {
+            login(values).then(res => {
+              if (res?.user) {
+                navigation.navigate('STACK_HOME')
+              }
+            })
+          }}>
           {({handleSubmit, isValid}) => (
             <>
               <FormikFloatingLabelInput
@@ -59,7 +65,6 @@ const Login = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
                 isValid={isValid}
                 onPress={handleSubmit}
                 text="ACCEDER"
-                loading={fetchState}
               />
 
               <ButtonChangeScreenAuth
@@ -68,6 +73,14 @@ const Login = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
                 }}
                 text="Registrarse"
                 label="¿No tienes una cuenta?"
+              />
+
+              <ButtonChangeScreenAuth
+                onPress={() => {
+                  navigation.navigate('STACK_HOME')
+                }}
+                text="continuar sin iniciar sesión"
+                stylesLink={{color: AppStyles.color.cyan}}
               />
             </>
           )}

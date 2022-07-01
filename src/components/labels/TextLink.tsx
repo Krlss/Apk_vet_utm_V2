@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {Text, StyleSheet} from 'react-native'
 import AppStyles from '@src/themes/AppStyles'
-
+import ConfigContext from '@src/contexts/config/ConfigContext'
 interface TextLinkProps {
   TEXT: string
   style?: {}
@@ -14,14 +14,18 @@ interface TextLinkProps {
  * @returns JSX.Element Text
  *  */
 const TextLink = ({TEXT, style}: TextLinkProps) => {
-  return <Text style={[styles.link, style]}>{TEXT}</Text>
+  const {ConfigState} = useContext(ConfigContext)
+  return (
+    <Text style={[styles.link, style, ConfigState.loading && {opacity: 0.5}]}>
+      {TEXT}
+    </Text>
+  )
 }
 
 const styles = StyleSheet.create({
   link: {
-    fontSize: AppStyles.font.size.medium,
     fontWeight: '500',
-    color: AppStyles.color.placeholder,
+    color: AppStyles.color.black,
     fontFamily: AppStyles.fontFamily.default,
   },
 })

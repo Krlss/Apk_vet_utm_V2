@@ -1,3 +1,7 @@
+import { Response } from '@src/types/declare'
+import Toast from '@src/components/toast/Toast';
+
+
 /** Código de Mario Andrés https://github.com/macool */
 export const validate_user_id = (numero: string) => {
     var sum = 0;
@@ -159,5 +163,21 @@ export const separateFullname = (fullname: string): string[] => {
         const last_name1 = names[2];
         const last_name2 = names[3];
         return [name, last_name1, last_name2];
+    }
+}
+
+export const getDataFromStatus = async (response: Response) => {
+    if (response.status === 200 || response.status === 401 || response.status === 500 || response.status === 301 || response.status === 404) {
+        const res = await response.json();
+        Toast(res)
+        return res;
+    } else if (response.status === 422) {
+        const res = await response.json();
+        Toast({
+            type: 'error',
+            title: 'Validaciones',
+            message: 'Algunos campos no cumplen con las validaciones',
+        })
+        return res;
     }
 }

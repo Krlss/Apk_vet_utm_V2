@@ -8,12 +8,10 @@ const headers = {
 
 export const LOGIN = async ({ email, password }: LAuth) => {
     const response = await fetch(api_url_default + 'login', { method: 'POST', headers, body: JSON.stringify({ email, password }) })
-    const data = await response.json() as AuthContextType
-    return data;
+    return response;
 };
 
 export const REGISTER = async ({ user_id, name, last_name1, last_name2, phone, email, password }: RAuth) => {
     const response = await fetch(api_url_default + 'register', { method: 'POST', headers, body: JSON.stringify({ user_id, name, last_name1, last_name2, phone, email, password }) })
-    const data = await response.json() as Response
-    return data;
+    return response;
 }

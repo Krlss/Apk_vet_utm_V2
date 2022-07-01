@@ -1,8 +1,5 @@
 import { ConfigContextType } from "@src/types/declare";
-import { KeyboardType } from '@src/types/declare';
-
-type ConfigActionType = | { type: "SET_KEYBOARD_STATUS"; payload: boolean } | { type: "SET_KEYBOARD"; payload: KeyboardType };
-
+import { ConfigActionType } from '@src/types/declare';
 
 export default (state: ConfigContextType, action: ConfigActionType) => {
     const { type, payload } = action;
@@ -17,6 +14,11 @@ export default (state: ConfigContextType, action: ConfigActionType) => {
             return {
                 ...state,
                 Keyboard: payload,
+            };
+        case "SET_LOADING":
+            return {
+                ...state,
+                loading: payload,
             };
         default:
             return state;

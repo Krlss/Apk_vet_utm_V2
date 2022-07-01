@@ -12,6 +12,7 @@ export type KeyboardType = KeyboardStatic;
 export interface ConfigContextType {
     keyboardStatus: boolean;
     Keyboard: KeyboardType;
+    loading: boolean;
 }
 
 export interface AuthContextType {
@@ -25,6 +26,11 @@ export interface Response {
 export type AuthStackProps = {
     LOGIN,
     REGISTER,
+    STACK_HOME
+}
+
+export type HomeStackProps = {
+    HOME
 }
 
 export type fetchState = true | false;
@@ -102,4 +108,6 @@ export interface canton extends basic {
 
 export interface parish extends basic {
     id_canton: number;
-} 
+}
+
+export type ConfigActionType = | { type: "SET_KEYBOARD_STATUS"; payload: boolean } | { type: "SET_KEYBOARD"; payload: KeyboardType } | { type: "SET_LOADING"; payload: boolean };

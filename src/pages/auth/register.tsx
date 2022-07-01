@@ -24,7 +24,7 @@ import useAuth from '@src/hooks/useAuth'
 
 const Register = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
   const {animatedPaddingTop} = animationPaddingTop(20)
-  const {register, fetchState} = useAuth()
+  const {register} = useAuth()
   return (
     <ScrollView keyboardShouldPersistTaps="handled">
       <Animated.View style={[styles.container, animatedPaddingTop]}>
@@ -83,7 +83,6 @@ const Register = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
                 isValid={isValid}
                 onPress={handleSubmit}
                 text="REGISTRAR"
-                loading={fetchState}
               />
 
               <ButtonChangeScreenAuth

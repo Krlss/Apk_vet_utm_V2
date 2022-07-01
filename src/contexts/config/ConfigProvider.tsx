@@ -1,6 +1,6 @@
 import React, {useReducer, useEffect, useState} from 'react'
 import {KeyboardType, props} from '@src/types/declare'
-import {Keyboard} from 'react-native'
+import {Keyboard, BackHandler} from 'react-native'
 import INITIAL_STATE from './InitialState'
 import ConfigReducer from './ConfigReducer'
 import ConfigContext from './ConfigContext'
@@ -22,6 +22,15 @@ const ConfigProvider = (props: props) => {
     }
   }, [])
 
+  // disabled back button keyboard
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => ConfigState.loading,
+    )
+    return () => backHandler.remove()
+  }, [ConfigState.loading])
+
   const toggleKeyboardStatus = (status: boolean) => {
     dispatch({
       type: 'SET_KEYBOARD_STATUS',
@@ -36,6 +45,13 @@ const ConfigProvider = (props: props) => {
     })
   }
 
+  const toggleLoading = (status: boolean) => {
+    dispatch({
+      type: 'SET_LOADING',
+      payload: status,
+    })
+  }
+
   const KeyboardDismiss = () => {
     Keyboard.dismiss()
   }
@@ -47,6 +63,7 @@ const ConfigProvider = (props: props) => {
         toggleKeyboardStatus,
         toggleKeyboard,
         KeyboardDismiss: KeyboardDismiss,
+        toggleLoading,
       }}>
       {props.children}
     </ConfigContext.Provider>

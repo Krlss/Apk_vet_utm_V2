@@ -1,22 +1,38 @@
 import {View, Text, StyleSheet} from 'react-native'
-import React from 'react'
+import React, {useContext} from 'react'
 import AppStyles from '@src/themes/AppStyles'
 import LinkFash from './LinkFash'
 import TextLink from '../labels/TextLink'
-
+import ConfigContext from '@src/contexts/config/ConfigContext'
 interface Props {
   onPress: () => void
   text: string
   label?: string
+  stylesLink?: {}
+  stylesContainer?: {}
 }
 
-const ChangeScreenAuth = ({onPress, text, label}: Props) => {
+const ChangeScreenAuth = ({
+  onPress,
+  text,
+  label,
+  stylesLink,
+  stylesContainer,
+}: Props) => {
+  const {ConfigState} = useContext(ConfigContext)
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, stylesContainer]}>
       <Text style={styles.label}>{label}</Text>
 
       <LinkFash onPress={onPress} style={{marginTop: 0}}>
-        <TextLink TEXT={text} style={styles.text} />
+        <TextLink
+          TEXT={text}
+          style={[
+            styles.text,
+            stylesLink,
+            ConfigState.loading && {opacity: 0.5},
+          ]}
+        />
       </LinkFash>
     </View>
   )

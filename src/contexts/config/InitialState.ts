@@ -5,6 +5,7 @@ import { ConfigContextType } from '@src/types/declare'
 const InitialState: ConfigContextType = {
     keyboardStatus: false,
     Keyboard: null,
+    loading: false,
 }
 
 export default InitialState

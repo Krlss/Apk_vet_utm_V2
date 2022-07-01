@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {View} from 'react-native'
 import animationFloatingLabelInput from '@src/animations/animationFloatingLabelInput'
 import ShowOrHiddenPassword from './ShowOrHiddenPassword'
 import Animated from 'react-native-reanimated'
-
+import ConfigContext from '@src/contexts/config/ConfigContext'
 import Input from './Input'
 interface FloatingLabelInputProps {
   label: string
@@ -36,6 +36,7 @@ const FloatingLabelInput = ({
 }: FloatingLabelInputProps) => {
   const {animatedLabel, setIsFocused, styles, setShow, show, setIsBlur} =
     animationFloatingLabelInput(value, error)
+  const {ConfigState} = useContext(ConfigContext)
 
   return (
     <View style={styles.container}>
@@ -55,11 +56,14 @@ const FloatingLabelInput = ({
         value={value}
         onChangeText={onChange}
         key={label}
-        secureTextEntry={secureTextEntry && !show}
+        secureTextEntry={secureTextEntry && (!show || ConfigState.loading)}
         {...props}
       />
       {secureTextEntry && (
-        <ShowOrHiddenPassword show={show} onPress={() => setShow(!show)} />
+        <ShowOrHiddenPassword
+          show={show && !ConfigState.loading}
+          onPress={() => setShow(!show)}
+        />
       )}
     </View>
   )

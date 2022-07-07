@@ -9,4 +9,4 @@ export { default as InputFloatingLabel } from './inputs/FloatingLabelInput';
 export { default as Input } from './inputs/Input';
 export { default as ShowOrHiddenPassword } from './inputs/ShowOrHiddenPassword';
 export { default as LabelTextLink } from './labels/TextLink';
-export { default as LogoSmallWithName } from './images/LogoSmallWithName';
+export { default as NameApplication } from './images/NameApplication';

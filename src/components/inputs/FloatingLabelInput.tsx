@@ -1,10 +1,11 @@
 import React, {useContext} from 'react'
-import {View} from 'react-native'
+import {View, Text} from 'react-native'
 import animationFloatingLabelInput from '@src/animations/animationFloatingLabelInput'
 import ShowOrHiddenPassword from './ShowOrHiddenPassword'
 import Animated from 'react-native-reanimated'
 import ConfigContext from '@src/contexts/config/ConfigContext'
 import Input from './Input'
+import AppStyles from '@src/themes/AppStyles'
 interface FloatingLabelInputProps {
   label: string
   value?: string
@@ -35,7 +36,7 @@ const FloatingLabelInput = ({
   ...props
 }: FloatingLabelInputProps) => {
   const {animatedLabel, setIsFocused, styles, setShow, show, setIsBlur} =
-    animationFloatingLabelInput(value, error)
+    animationFloatingLabelInput(value, error, secureTextEntry)
   const {ConfigState} = useContext(ConfigContext)
 
   return (

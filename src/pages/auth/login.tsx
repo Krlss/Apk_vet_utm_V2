@@ -25,7 +25,7 @@ import useAuth from '@src/hooks/useAuth'
  * @returns JSX.Element Screen Login
  */
 
-const Login = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
+const Login = ({navigation, route}: NativeStackScreenProps<AuthStackProps>) => {
   const {animatedPaddingTop} = animationPaddingTop(halfThird)
   const {login} = useAuth()
   return (
@@ -39,7 +39,7 @@ const Login = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
           onSubmit={values => {
             login(values).then(res => {
               if (res?.user) {
-                navigation.navigate('STACK_HOME')
+                navigation.navigate('HOME_DRAWER')
               }
             })
           }}>
@@ -77,7 +77,7 @@ const Login = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
 
               <ButtonChangeScreenAuth
                 onPress={() => {
-                  navigation.navigate('STACK_HOME')
+                  navigation.navigate('HOME_DRAWER')
                 }}
                 text="continuar sin iniciar sesión"
                 stylesLink={{color: AppStyles.color.cyan}}

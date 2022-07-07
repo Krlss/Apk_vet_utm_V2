@@ -13,25 +13,29 @@ import { duration } from "@src/constants/animations";
  * @return Animation for floating label.
  */
 
-const useFloatingLabelInput = (value?: string, error?: string) => {
+const useFloatingLabelInput = (value?: string, error?: string, secureTextEntry?: boolean) => {
     const [isFocused, setIsFocused] = useState(value ? true : false);
     const [isBlur, setIsBlur] = useState(false);
     const [show, setShow] = useState(false);
 
-    const styles = ThisStyles({ isFocused, isBlur, error });
+    const styles = ThisStyles({ isFocused, isBlur, error, secureTextEntry });
     const moveText = useSharedValue(defaultPositionText);
+    const fontSize = useSharedValue(AppStyles.font.size.default);
 
     useEffect(() => {
         if (isFocused) {
             moveText.value = withTiming(defaultPositionText, { duration });
+            fontSize.value = withTiming(AppStyles.font.size.error, { duration });
         } else {
             moveText.value = withTiming(textPositionMove, { duration });
+            fontSize.value = withTiming(AppStyles.font.size.default, { duration });
         }
     }, [isFocused]);
 
     const animatedLabel = useAnimatedStyle(() => {
         return {
-            transform: [{ translateY: moveText.value }]
+            transform: [{ translateY: moveText.value }],
+            fontSize: fontSize.value,
         };
     })
 
@@ -43,7 +47,7 @@ const useFloatingLabelInput = (value?: string, error?: string) => {
         show,
         setShow,
         isBlur,
-        setIsBlur,
+        setIsBlur
     }
 
 }
@@ -55,10 +59,12 @@ interface ThisStylesProps {
     isBlur: boolean;
     /** Error in input */
     error?: string;
+    /** Secure text entry */
+    secureTextEntry?: boolean;
 }
 
 /** Styles for input and label. */
-const ThisStyles = ({ isFocused, isBlur, error }: ThisStylesProps) => {
+const ThisStyles = ({ isFocused, isBlur, error, secureTextEntry }: ThisStylesProps) => {
 
     const colorError = error && isFocused && AppStyles.color.error;
     const colorFocus = isFocused && AppStyles.color.yellow;
@@ -77,7 +83,7 @@ const ThisStyles = ({ isFocused, isBlur, error }: ThisStylesProps) => {
         input: {
             borderColor: borderError || borderFocus || borderNormal || AppStyles.color.low_gray,
             paddingLeft: AppStyles.padding.medium,
-            paddingRight: AppStyles.padding.xxxxlarge,
+            paddingRight: secureTextEntry ? AppStyles.padding.xxxxlarge : AppStyles.padding.medium,
         },
         label: {
             position: 'absolute',

@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { LAuth, ServiceRAuth, AuthContextType } from '@src/types/declare'
-import { LOGIN, REGISTER } from '@src/services/auth'
+import { LOGIN, REGISTER, GET_USER_DATA } from '@src/services/auth'
 import AuthContext from '@src/contexts/auth/AuthContext';
 import ConfigContext from '@src/contexts/config/ConfigContext';
 import { separateFullname } from '@src/utils/utils'
@@ -37,8 +37,21 @@ const useAuth = () => {
         }
     }
 
+    const get_profile = async (api_token: string, user_id: string) => {
+        KeyboardDismiss() // Hide keyboard
+        toggleLoading(true)
+        try {
+            const response = await GET_USER_DATA({ api_token, user_id })
+            const res = await getDataFromStatus(response) as AuthContextType
+            toggleLoading(false)
+            if (res?.user) return res
+            return res
+        } catch (error) {
+            toggleLoading(false)
+        }
+    }
 
-    return { login, register }
+    return { login, register, get_profile }
 }
 
 export default useAuth

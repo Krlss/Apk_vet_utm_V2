@@ -26,11 +26,20 @@ export interface Response {
 export type AuthStackProps = {
     LOGIN,
     REGISTER,
-    STACK_HOME
+    HOME_DRAWER,
+    LOADING
+}
+
+export type HomeDrawerProps = {
+    HOME,
+    REPORT,
+    PROFILE,
+    MAP,
+    LOGOUT
 }
 
 export type HomeStackProps = {
-    HOME
+    HOME: undefined,
 }
 
 export type fetchState = true | false;
@@ -91,6 +100,7 @@ export interface pet {
     id_fur?: number,
     user_id?: string,
     characteristic?: string
+    images?: [image]
 }
 
 export interface basic {
@@ -111,3 +121,36 @@ export interface parish extends basic {
 }
 
 export type ConfigActionType = | { type: "SET_KEYBOARD_STATUS"; payload: boolean } | { type: "SET_KEYBOARD"; payload: KeyboardType } | { type: "SET_LOADING"; payload: boolean };
+
+export interface IconProps {
+    width?: number;
+    height?: number;
+    fill?: string;
+    active?: boolean;
+}
+
+export type DrawerContentProps = DrawerContentComponentProps & {
+    selectedTab: string
+    setSelectedTab: (selectedTab: string) => void
+}
+
+export interface StorageAuth {
+    user_id: string;
+    api_token: string;
+    profile_photo_path?: string,
+    name: string,
+    last_name1?: string,
+    last_name2?: string,
+}
+
+export interface AllPetLost extends pet {
+    image_specie?: string,
+}
+
+export interface image {
+    id: number,
+    id_image: string,
+    url: string,
+    name: string,
+    external_id: string
+}

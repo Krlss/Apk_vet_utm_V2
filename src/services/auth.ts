@@ -15,3 +15,8 @@ export const REGISTER = async ({ user_id, name, last_name1, last_name2, phone, e
     const response = await fetch(api_url_default + 'register', { method: 'POST', headers, body: JSON.stringify({ user_id, name, last_name1, last_name2, phone, email, password }) })
     return response;
 }
+
+export const GET_USER_DATA = async ({ api_token, user_id }: { api_token: string, user_id: string }) => {
+    const response = await fetch(api_url_default + 'users/' + user_id, { method: 'GET', headers: { ...headers, 'Authorization': api_token } })
+    return response;
+}

@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler'
 import React, {useEffect} from 'react'
 import ConfigProvider from '@src/contexts/config/ConfigProvider'
 import AuthProvider from '@src/contexts/auth/AuthProvider'
@@ -11,7 +12,7 @@ const MyTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: AppStyles.color.bg_low_gray,
+    background: AppStyles.color.white,
   },
 }
 

@@ -42,7 +42,13 @@ const CustomDrawer = () => {
             title: 'INICIO',
           }}
         />
-        <Drawer.Screen name="REPORT" component={Report} />
+        <Drawer.Screen
+          name="REPORT"
+          component={Report}
+          options={{
+            title: 'REPORTE',
+          }}
+        />
       </Drawer.Navigator>
     </View>
   )

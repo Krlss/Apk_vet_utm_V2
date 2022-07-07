@@ -103,6 +103,14 @@ export interface pet {
     images?: [image]
 }
 
+export interface specie {
+    id: number,
+    name: string,
+    active?: boolean,
+    uri?: string,
+    pets?: [pet]
+}
+
 export interface basic {
     id: number,
     name: string
@@ -142,11 +150,6 @@ export interface StorageAuth {
     last_name1?: string,
     last_name2?: string,
 }
-
-export interface AllPetLost extends pet {
-    image_specie?: string,
-}
-
 export interface image {
     id: number,
     id_image: string,

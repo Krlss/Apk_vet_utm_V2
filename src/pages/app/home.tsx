@@ -1,14 +1,17 @@
 import React from 'react'
-import {View} from 'react-native'
+import {View, Text} from 'react-native'
 import useData from '@src/hooks/useData'
+import HeaderSpecies from '@src/components/headers/Species'
 const Home = () => {
-  const {data} = useData()
+  const {species, pressSpecie} = useData()
   return (
     <View
       style={{
         flex: 1,
         backgroundColor: '#fff',
-      }}></View>
+      }}>
+      <HeaderSpecies data={species} onPress={pressSpecie} />
+    </View>
   )
 }
 

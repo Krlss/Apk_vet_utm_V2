@@ -1,0 +1,16 @@
+export const options = {
+    mediaType: 'image/*',
+    usedCameraButton: true,
+    selectedColor: '#FFB509',
+    allowedVideo: false,
+    maxSelectedAssets: 6,
+    cancelTitle: 'Cancelar',
+    doneTitle: 'Seleccionar',
+    emptyMessage: 'No hay fotos',
+    tapHereToChange: 'Toca aquí para cambiar',
+    selectMessage: 'Selecciona una foto',
+    maximumMessageTitle: 'No puedes seleccionar más',
+    maximumMessage: 'Solo se pueden seleccionar 6 fotos',
+    messageTitleButton: 'OK',
+    maxVideo: 0,
+}

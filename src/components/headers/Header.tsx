@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, TouchableOpacity} from 'react-native'
+import {View, Text, TouchableOpacity, Image} from 'react-native'
 import MenuHomeIcon from '@src/components/icons/MenuHome'
 import {DrawerHeaderProps} from '@react-navigation/drawer'
 import AppStyles from '@src/themes/AppStyles'
@@ -14,7 +14,7 @@ const Header = ({options, route, navigation}: Props) => {
     <View
       style={{
         flexDirection: 'row',
-        paddingTop: 20,
+        paddingVertical: 20,
         paddingHorizontal: 20,
         alignItems: 'center',
         backgroundColor: AppStyles.color.white,
@@ -46,7 +46,10 @@ const Header = ({options, route, navigation}: Props) => {
           {title}
         </Text>
       </View>
-      <View style={{width: 40}} />
+      <Image
+        source={require('@src/assets/img/icon.png')}
+        style={{width: 40, height: 40}}
+      />
     </View>
   )
 }

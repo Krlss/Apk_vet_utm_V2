@@ -4,7 +4,7 @@ import ReportIcon from './Report'
 import Map from './Map'
 import Logout from './Logout'
 import SearchIcon from './Search'
-
+import PhotoSteep from './PhotoSteep'
 interface IconProps {
   name: string
   active?: boolean
@@ -56,6 +56,16 @@ const IconSwitch = ({name, active, ...props}: IconProps) => {
     case 'search':
       return (
         <SearchIcon
+          width={24}
+          height={24}
+          fill={active ? '#fff' : '#000'}
+          active={active}
+          {...props}
+        />
+      )
+    case 'photo':
+      return (
+        <PhotoSteep
           width={24}
           height={24}
           fill={active ? '#fff' : '#000'}

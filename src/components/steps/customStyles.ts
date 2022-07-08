@@ -1,0 +1,25 @@
+import AppStyles from '@src/themes/AppStyles'
+
+export const customStyles = {
+    stepIndicatorSize: 40,
+    currentStepIndicatorSize: 45,
+    separatorStrokeWidth: 2,
+    currentStepStrokeWidth: 3,
+    stepStrokeCurrentColor: AppStyles.color.yellow,
+    stepStrokeWidth: 2,
+    stepStrokeFinishedColor: AppStyles.color.yellow,
+    stepStrokeUnFinishedColor: AppStyles.color.gray,
+    separatorFinishedColor: AppStyles.color.yellow,
+    separatorUnFinishedColor: AppStyles.color.gray,
+    stepIndicatorFinishedColor: AppStyles.color.yellow,
+    stepIndicatorUnFinishedColor: AppStyles.color.white,
+    stepIndicatorCurrentColor: AppStyles.color.white,
+    stepIndicatorLabelFontSize: 13,
+    currentStepIndicatorLabelFontSize: 13,
+    stepIndicatorLabelCurrentColor: AppStyles.color.yellow,
+    stepIndicatorLabelFinishedColor: AppStyles.color.low_gray,
+    stepIndicatorLabelUnFinishedColor: AppStyles.color.low_gray,
+    labelColor: AppStyles.color.gray,
+    labelSize: 13,
+    currentStepLabelColor: AppStyles.color.yellow,
+}

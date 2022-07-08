@@ -11,7 +11,7 @@ interface Props {
 const HeaderSpecies = ({data, onPress}: Props) => {
   console.log(data)
   return (
-    <View style={{paddingLeft: 20, marginTop: 20}}>
+    <View style={{paddingLeft: 20}}>
       <Text style={{fontSize: 20, fontWeight: 'bold', color: 'black'}}>
         Especies
       </Text>

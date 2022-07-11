@@ -9,7 +9,7 @@ import PhotosReport from '@src/components/report/Photos'
 
 const labels = ['Fotos', 'Ubicación']
 
-const Unknown = () => {
+const Unknown = (props: any) => {
   const {currentPosition, nextPosition, prevPosition, chooseFile, filePath} =
     useReport()
 
@@ -21,7 +21,7 @@ const Unknown = () => {
         paddingHorizontal: 20,
       }}>
       <Step currentPosition={currentPosition} labels={labels} />
-      {currentPosition === 0 && <PhotosReport filePath={filePath} />}
+      {currentPosition === 0 && <PhotosReport filePath={filePath} {...props} />}
       <UnknownFooter
         currentPosition={currentPosition}
         chooseFile={chooseFile}

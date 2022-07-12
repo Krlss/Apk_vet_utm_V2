@@ -6,9 +6,16 @@ interface IProps {
   chooseFile: () => void
   next?: () => void
   prev?: () => void
+  nextActive?: boolean
 }
 
-const UnknownFooter = ({currentPosition, chooseFile, next, prev}: IProps) => {
+const UnknownFooter = ({
+  currentPosition,
+  chooseFile,
+  next,
+  prev,
+  nextActive,
+}: IProps) => {
   return (
     <View
       style={{
@@ -18,6 +25,9 @@ const UnknownFooter = ({currentPosition, chooseFile, next, prev}: IProps) => {
         paddingHorizontal: 20,
         paddingVertical: 10,
         marginBottom: 20,
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
       }}>
       {currentPosition === 0 ? (
         <>
@@ -35,8 +45,16 @@ const UnknownFooter = ({currentPosition, chooseFile, next, prev}: IProps) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={next}
+            disabled={!nextActive}
             style={{paddingHorizontal: 20, paddingVertical: 15}}>
-            <Text style={{color: 'black', fontWeight: 'bold'}}>Siguiente</Text>
+            <Text
+              style={{
+                color: 'black',
+                fontWeight: 'bold',
+                opacity: nextActive ? 1 : 0.5,
+              }}>
+              Siguiente
+            </Text>
           </TouchableOpacity>
         </>
       ) : (

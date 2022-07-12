@@ -1,7 +1,7 @@
 import React from 'react'
 import {customStyles} from './customStyles'
 import StepIndicator from 'react-native-step-indicator'
-
+import {View} from 'react-native'
 import IconSwitch from '@src/components/icons/IconSwitch'
 
 interface IProps {
@@ -35,17 +35,27 @@ const renderStepIndicator = (params: any) => (
 interface StepProps {
   currentPosition: number
   labels: string[]
+  absolutePosition?: boolean
 }
 
-const Step = ({currentPosition, labels}: StepProps) => {
+const Step = ({currentPosition, labels, absolutePosition}: StepProps) => {
   return (
-    <StepIndicator
-      stepCount={2}
-      customStyles={customStyles}
-      currentPosition={currentPosition}
-      renderStepIndicator={renderStepIndicator}
-      labels={labels}
-    />
+    <View
+      style={{
+        position: absolutePosition ? 'absolute' : 'relative',
+        top: absolutePosition ? 20 : undefined,
+        left: absolutePosition ? 0 : undefined,
+        zIndex: absolutePosition ? 1 : undefined,
+        width: '100%',
+      }}>
+      <StepIndicator
+        stepCount={2}
+        customStyles={customStyles}
+        currentPosition={currentPosition}
+        renderStepIndicator={renderStepIndicator}
+        labels={labels}
+      />
+    </View>
   )
 }
 

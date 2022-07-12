@@ -59,5 +59,8 @@
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<key>NSCameraUsageDescription</key>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 </dict>
 </plist>

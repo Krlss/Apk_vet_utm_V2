@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {View} from 'react-native'
 import {createDrawerNavigator} from '@react-navigation/drawer'
 
@@ -9,10 +9,12 @@ import CustomDrawerContent from './content/CustomDrawerContent'
 import {HomeDrawerProps} from '@src/types/declare'
 import Header from '@src/components/headers/Header'
 import ReportTabs from './ReportTabs'
+import ConfigContext from '@src/contexts/config/ConfigContext'
 
 const Drawer = createDrawerNavigator<HomeDrawerProps>()
 
 const CustomDrawer = () => {
+  const {ConfigState} = useContext(ConfigContext)
   return (
     <View style={{flex: 1, backgroundColor: AppStyles.color.bg_low_gray}}>
       <Drawer.Navigator
@@ -32,6 +34,9 @@ const CustomDrawer = () => {
             backgroundColor: AppStyles.color.transparent,
           },
           header: props => <Header {...props} />,
+          gestureHandlerProps: {
+            enabled: !ConfigState.loading,
+          },
         }}>
         <Drawer.Screen
           name="HOME"

@@ -16,10 +16,10 @@ const Unknown = (props: any) => {
     prevPosition,
     chooseFile,
     filePath,
-    setFilePath,
     setLocation,
     location,
     requestLocationPermission,
+    send,
   } = useReport()
 
   return (
@@ -55,6 +55,7 @@ const Unknown = (props: any) => {
         next={nextPosition}
         prev={prevPosition}
         nextActive={filePath && filePath.length > 0}
+        send={send}
       />
     </ScrollView>
   )

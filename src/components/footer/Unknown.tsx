@@ -1,5 +1,6 @@
-import React from 'react'
-import {View, Text, TouchableOpacity} from 'react-native'
+import React, {useContext} from 'react'
+import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native'
+import ConfigContext from '@src/contexts/config/ConfigContext'
 
 interface IProps {
   currentPosition: number
@@ -7,6 +8,7 @@ interface IProps {
   next?: () => void
   prev?: () => void
   nextActive?: boolean
+  send?: () => void
 }
 
 const UnknownFooter = ({
@@ -15,7 +17,9 @@ const UnknownFooter = ({
   next,
   prev,
   nextActive,
+  send,
 }: IProps) => {
+  const {ConfigState} = useContext(ConfigContext)
   return (
     <View
       style={{
@@ -33,11 +37,15 @@ const UnknownFooter = ({
         <>
           <TouchableOpacity
             onPress={chooseFile}
+            disabled={ConfigState.loading}
             style={{
               backgroundColor: '#FFB509',
               paddingHorizontal: 20,
               paddingVertical: 15,
               borderRadius: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+              opacity: ConfigState.loading ? 0.5 : 1,
             }}>
             <Text style={{color: 'white', fontWeight: 'bold'}}>
               Seleccionar fotos
@@ -45,13 +53,13 @@ const UnknownFooter = ({
           </TouchableOpacity>
           <TouchableOpacity
             onPress={next}
-            disabled={!nextActive}
+            disabled={!nextActive || ConfigState.loading}
             style={{paddingHorizontal: 20, paddingVertical: 15}}>
             <Text
               style={{
                 color: 'black',
                 fontWeight: 'bold',
-                opacity: nextActive ? 1 : 0.5,
+                opacity: nextActive || !ConfigState.loading ? 1 : 0.5,
               }}>
               Siguiente
             </Text>
@@ -61,18 +69,36 @@ const UnknownFooter = ({
         <>
           <TouchableOpacity
             onPress={prev}
+            disabled={ConfigState.loading}
             style={{paddingHorizontal: 20, paddingVertical: 15}}>
-            <Text style={{color: 'black', fontWeight: 'bold'}}>Anterior</Text>
+            <Text
+              style={{
+                color: 'black',
+                fontWeight: 'bold',
+                opacity: ConfigState.loading ? 0.5 : 1,
+              }}>
+              Anterior
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => console.log('enviar')}
+            onPress={send}
+            disabled={ConfigState.loading}
             style={{
               backgroundColor: '#FFB509',
               paddingHorizontal: 20,
               paddingVertical: 15,
               borderRadius: 10,
+              opacity: ConfigState.loading ? 0.5 : 1,
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}>
-            <Text style={{color: 'white', fontWeight: 'bold'}}>Finalizar</Text>
+            <Text style={{color: 'black', fontWeight: 'bold'}}>
+              {ConfigState.loading ? 'Enviando ' : 'Finalizar'}
+            </Text>
+            {ConfigState.loading && (
+              <ActivityIndicator size="small" color="black" />
+            )}
           </TouchableOpacity>
         </>
       )}

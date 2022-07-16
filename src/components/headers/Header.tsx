@@ -1,15 +1,16 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {View, Text, TouchableOpacity, Image} from 'react-native'
 import MenuHomeIcon from '@src/components/icons/MenuHome'
 import {DrawerHeaderProps} from '@react-navigation/drawer'
 import AppStyles from '@src/themes/AppStyles'
 import {getHeaderTitle} from '@react-navigation/elements'
+import ConfigContext from '@src/contexts/config/ConfigContext'
 
 interface Props extends DrawerHeaderProps {}
 
 const Header = ({options, route, navigation}: Props) => {
   const title = getHeaderTitle(options, route.name)
-
+  const {ConfigState} = useContext(ConfigContext)
   return (
     <View
       style={{
@@ -21,6 +22,7 @@ const Header = ({options, route, navigation}: Props) => {
       }}>
       <TouchableOpacity
         onPress={navigation.openDrawer}
+        disabled={ConfigState.loading}
         style={{
           borderColor: AppStyles.color.gray,
           borderWidth: 1,

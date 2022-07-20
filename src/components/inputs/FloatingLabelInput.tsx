@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import {View, Text} from 'react-native'
 import animationFloatingLabelInput from '@src/animations/animationFloatingLabelInput'
 import ShowOrHiddenPassword from './ShowOrHiddenPassword'
@@ -14,6 +14,7 @@ interface FloatingLabelInputProps {
   /** password input */
   secureTextEntry?: boolean
   onChange?: (text: string) => void
+  style?: {}
   [x: string]: any
 }
 
@@ -33,11 +34,17 @@ const FloatingLabelInput = ({
   error,
   secureTextEntry,
   onChange,
+  style,
   ...props
 }: FloatingLabelInputProps) => {
   const {animatedLabel, setIsFocused, styles, setShow, show, setIsBlur} =
-    animationFloatingLabelInput(value, error, secureTextEntry)
+    animationFloatingLabelInput(value ? true : false, error, secureTextEntry)
   const {ConfigState} = useContext(ConfigContext)
+
+  useEffect(() => {
+    setIsFocused(value ? true : false)
+    setIsBlur(true)
+  }, [value])
 
   return (
     <View style={styles.container}>
@@ -45,7 +52,8 @@ const FloatingLabelInput = ({
         {label}
       </Animated.Text>
       <Input
-        style={styles.input}
+        selectionColor={AppStyles.color.yellow}
+        style={[styles.input, style]}
         onFocus={() => {
           setIsFocused(true)
           setIsBlur(false)
@@ -60,6 +68,17 @@ const FloatingLabelInput = ({
         secureTextEntry={secureTextEntry && (!show || ConfigState.loading)}
         {...props}
       />
+      {error && (
+        <Text
+          style={{
+            color: AppStyles.color.error,
+            fontSize: AppStyles.font.size.error,
+            alignSelf: 'flex-start',
+            paddingHorizontal: AppStyles.padding.medium,
+          }}>
+          {error}
+        </Text>
+      )}
       {secureTextEntry && (
         <ShowOrHiddenPassword
           show={show && !ConfigState.loading}

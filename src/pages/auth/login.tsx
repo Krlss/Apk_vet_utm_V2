@@ -1,7 +1,7 @@
 import React from 'react'
 import {StyleSheet, ScrollView} from 'react-native'
 import Animated from 'react-native-reanimated'
-import {Formik} from 'formik'
+import {useFormik} from 'formik'
 import {NativeStackScreenProps} from '@react-navigation/native-stack'
 import AppStyles from '@src/themes/AppStyles'
 import {animationPaddingTop} from '@src/animations'
@@ -14,11 +14,11 @@ import {
   ButtonLinkFash,
   ButtonLongButton,
   FooterUTM,
-  FormikFloatingLabelInput,
   LogoAndNameApp,
   LabelTextLink,
 } from '@src/components'
 import useAuth from '@src/hooks/useAuth'
+import FloatingLabelInput from '@src/components/inputs/FloatingLabelInput'
 
 /**
  * Screen for login
@@ -28,63 +28,63 @@ import useAuth from '@src/hooks/useAuth'
 const Login = ({navigation, route}: NativeStackScreenProps<AuthStackProps>) => {
   const {animatedPaddingTop} = animationPaddingTop(halfThird)
   const {login} = useAuth()
+
+  const formik = useFormik({
+    initialValues: initialValuesLogin,
+    validationSchema: loginSchema,
+    onSubmit: async values => {
+      await login(values)
+    },
+  })
+
   return (
     <ScrollView keyboardShouldPersistTaps="handled">
       <Animated.View style={[styles.container, animatedPaddingTop]}>
         <LogoAndNameApp />
 
-        <Formik
-          validationSchema={loginSchema}
-          initialValues={initialValuesLogin}
-          onSubmit={values => {
-            login(values).then(res => {
-              if (res?.user) {
-                navigation.navigate('HOME_DRAWER')
-              }
-            })
-          }}>
-          {({handleSubmit, isValid}) => (
-            <>
-              <FormikFloatingLabelInput
-                name="email"
-                label="Correo electrónico"
-                autoComplete="email"
-              />
-              <FormikFloatingLabelInput
-                name="password"
-                label="Contraseña"
-                secureTextEntry
-                onSubmitEditing={handleSubmit}
-              />
-              <ButtonLinkFash
-                onPress={() => console.log('Show lost password interface')}>
-                <LabelTextLink TEXT="¿Olvidaste tu contraseña?" />
-              </ButtonLinkFash>
+        <FloatingLabelInput
+          label="Correo electrónico"
+          onChange={formik.handleChange('email')}
+          error={formik.errors.email}
+          value={formik.values.email}
+          autoComplete="email"
+        />
 
-              <ButtonLongButton
-                isValid={isValid}
-                onPress={handleSubmit}
-                text="ACCEDER"
-              />
+        <FloatingLabelInput
+          label="Contraseña"
+          secureTextEntry
+          onChange={formik.handleChange('password')}
+          error={formik.errors.password}
+          value={formik.values.password}
+          onSubmitEditing={formik.handleSubmit}
+        />
 
-              <ButtonChangeScreenAuth
-                onPress={() => {
-                  navigation.navigate('REGISTER')
-                }}
-                text="Registrarse"
-                label="¿No tienes una cuenta?"
-              />
+        <ButtonLinkFash
+          onPress={() => console.log('Show lost password interface')}>
+          <LabelTextLink TEXT="¿Olvidaste tu contraseña?" />
+        </ButtonLinkFash>
 
-              <ButtonChangeScreenAuth
-                onPress={() => {
-                  navigation.navigate('HOME_DRAWER')
-                }}
-                text="continuar sin iniciar sesión"
-                stylesLink={{color: AppStyles.color.cyan}}
-              />
-            </>
-          )}
-        </Formik>
+        <ButtonLongButton
+          isValid={formik.isValid}
+          onPress={formik.handleSubmit}
+          text="ACCEDER"
+        />
+
+        <ButtonChangeScreenAuth
+          onPress={() => {
+            navigation.navigate('REGISTER')
+          }}
+          text="Registrarse"
+          label="¿No tienes una cuenta?"
+        />
+
+        <ButtonChangeScreenAuth
+          onPress={() => {
+            navigation.navigate('HOME_DRAWER')
+          }}
+          text="continuar sin iniciar sesión"
+          stylesLink={{color: AppStyles.color.cyan}}
+        />
 
         <FooterUTM />
       </Animated.View>
@@ -95,7 +95,6 @@ const Login = ({navigation, route}: NativeStackScreenProps<AuthStackProps>) => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: AppStyles.padding.xlarge,
-    alignItems: 'center',
   },
 })
 

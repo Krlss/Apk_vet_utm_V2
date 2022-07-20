@@ -4,6 +4,7 @@ import {Keyboard, BackHandler} from 'react-native'
 import INITIAL_STATE from './InitialState'
 import ConfigReducer from './ConfigReducer'
 import ConfigContext from './ConfigContext'
+import {SELECTS} from '@src/services/general'
 
 const ConfigProvider = (props: props) => {
   const [ConfigState, dispatch] = useReducer(ConfigReducer, INITIAL_STATE)
@@ -15,6 +16,15 @@ const ConfigProvider = (props: props) => {
     const keyboardDidHide = Keyboard.addListener('keyboardDidHide', () =>
       toggleKeyboardStatus(false),
     )
+
+    SELECTS()
+      .then(res => res.json())
+      .then(res => {
+        dispatch({
+          type: 'SET_SELECTS',
+          payload: res.data,
+        })
+      })
 
     return () => {
       keyboardDidShow.remove()

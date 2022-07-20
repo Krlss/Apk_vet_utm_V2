@@ -13,9 +13,9 @@ const AppStyles = {
         dark_mode: '#1A1A1A',
         bg_low_gray: '#F5F7FA',
         default_bg: '#fff',
-        info: '#00C1FB',
+        info: '#00D1FC',
         success: '#00B865',
-        cyan: '#00C1FB',
+        cyan: '#00D1FC',
     },
     font: {
         size: {

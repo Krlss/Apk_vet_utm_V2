@@ -5,6 +5,8 @@ import Known from '@src/pages/app/report/Known'
 import Unknown from '@src/pages/app/report/Unknown'
 import AppStyles from '@src/themes/AppStyles'
 import Photos from '@src/components/photos/Photos'
+import ReportProvider from '@src/contexts/report/ReportProvider'
+
 const Tab = createMaterialTopTabNavigator()
 const Stack = createNativeStackNavigator()
 
@@ -23,34 +25,36 @@ const UnknownStack = () => {
 
 const ReportTabs = () => {
   return (
-    <Tab.Navigator
-      keyboardDismissMode="on-drag"
-      screenOptions={{
-        tabBarIndicatorContainerStyle: {
-          backgroundColor: AppStyles.color.bg_low_gray,
-        },
-      }}>
-      <Tab.Screen
-        name="UnknownStack"
-        component={UnknownStack}
-        options={{
-          tabBarLabel: 'Desconocida',
-          tabBarIndicatorStyle: {
-            backgroundColor: AppStyles.color.yellow,
+    <ReportProvider>
+      <Tab.Navigator
+        keyboardDismissMode="on-drag"
+        screenOptions={{
+          tabBarIndicatorContainerStyle: {
+            backgroundColor: AppStyles.color.bg_low_gray,
           },
-        }}
-      />
-      <Tab.Screen
-        name="Known"
-        component={Known}
-        options={{
-          tabBarLabel: 'Conocida',
-          tabBarIndicatorStyle: {
-            backgroundColor: AppStyles.color.yellow,
-          },
-        }}
-      />
-    </Tab.Navigator>
+        }}>
+        <Tab.Screen
+          name="UnknownStack"
+          options={{
+            tabBarLabel: 'Desconocida',
+            tabBarIndicatorStyle: {
+              backgroundColor: AppStyles.color.yellow,
+            },
+          }}
+          component={UnknownStack}
+        />
+        <Tab.Screen
+          name="Known"
+          options={{
+            tabBarLabel: 'Conocida',
+            tabBarIndicatorStyle: {
+              backgroundColor: AppStyles.color.yellow,
+            },
+          }}
+          component={Known}
+        />
+      </Tab.Navigator>
+    </ReportProvider>
   )
 }
 

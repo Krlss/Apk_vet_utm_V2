@@ -1,9 +1,9 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {ScrollView} from 'react-native'
 import Step from '@src/components/steps/Step'
 import useReport from '@src/hooks/useReport'
 import UnknownFooter from '@src/components/footer/Unknown'
-
+import renderStepIndicatorUnknown from '@src/components/steps/StepUnknown'
 import PhotosReport from '@src/components/report/Photos'
 import MapReport from '@src/components/report/Map'
 
@@ -16,8 +16,8 @@ const Unknown = (props: any) => {
     prevPosition,
     chooseFile,
     filePath,
-    setLocation,
     location,
+    setLocation,
     requestLocationPermission,
     send,
   } = useReport()
@@ -35,6 +35,7 @@ const Unknown = (props: any) => {
       <Step
         currentPosition={currentPosition}
         labels={labels}
+        renderStepIndicator={renderStepIndicatorUnknown}
         absolutePosition={currentPosition === 1}
       />
       {currentPosition === 0 && <PhotosReport filePath={filePath} {...props} />}

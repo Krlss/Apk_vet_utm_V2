@@ -62,6 +62,38 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
             active={false}
             onPress={() => console.log('Mapa')}
           />
+
+          {!AuthState?.user?.user_id ? (
+            <>
+              {/* separate line */}
+              <View
+                style={{
+                  height: 1,
+                  backgroundColor: AppStyles.color.low_gray,
+                  marginVertical: AppStyles.padding.small,
+                  marginHorizontal: AppStyles.padding.small,
+                }}
+              />
+
+              <ItemsDrawer
+                label="Iniciar Sesión"
+                nameIcon="login"
+                active={props.state.index === 3}
+                onPress={() => {
+                  props.navigation.navigate('LOGIN')
+                }}
+              />
+
+              <ItemsDrawer
+                label="Registrarse"
+                nameIcon="signup"
+                active={props.state.index === 4}
+                onPress={() => {
+                  props.navigation.navigate('REGISTER')
+                }}
+              />
+            </>
+          ) : null}
         </ContainerItemsDrawer>
 
         {AuthState?.user?.user_id ? (

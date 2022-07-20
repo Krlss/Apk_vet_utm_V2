@@ -20,6 +20,16 @@ export default (state: ConfigContextType, action: ConfigActionType) => {
                 ...state,
                 loading: payload,
             };
+        case "SET_SELECTS":
+            return {
+                ...state,
+                cantons: payload.cantons,
+                furs: payload.furs,
+                parishes: payload.parishes,
+                provinces: payload.provinces,
+                races: payload.races,
+                species: payload.species,
+            };
         default:
             return state;
     }

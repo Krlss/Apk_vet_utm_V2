@@ -1,4 +1,4 @@
-import {Text} from 'react-native'
+import {Text, View} from 'react-native'
 import React from 'react'
 import {useField} from 'formik'
 import FloatingLabelInput from '@src/components/inputs/FloatingLabelInput'
@@ -23,7 +23,7 @@ const formikFloatingLabelInput = ({
 }) => {
   const [field, meta, helpers] = useField(name)
   return (
-    <>
+    <View style={{flex: 1}}>
       <FloatingLabelInput
         label={label}
         value={field.value}
@@ -42,7 +42,7 @@ const formikFloatingLabelInput = ({
           {meta.error}
         </Text>
       ) : null}
-    </>
+    </View>
   )
 }
 

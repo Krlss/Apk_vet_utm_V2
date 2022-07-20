@@ -13,6 +13,71 @@ export interface ConfigContextType {
     keyboardStatus: boolean;
     Keyboard: KeyboardType;
     loading: boolean;
+    provinces: provinces_select[],
+    cantons: cantons_select[]
+    parishes: parishes_select[],
+    species: species_select[],
+    races: races_select[]
+    furs: furs_select[]
+}
+
+export interface ReportContextType {
+    user: user | undefined,
+    pet: pet | undefined,
+    location: location,
+    images: images[] | undefined
+}
+
+export interface images {
+    uri: string,
+    name: string,
+    type: string
+}
+export interface location {
+    latitude: number,
+    longitude: number,
+    latitudeDelta: number,
+    longitudeDelta: number,
+}
+
+export interface provinces_select {
+    id: number;
+    name: string;
+    active?: boolean
+}
+
+export interface cantons_select {
+    id: number;
+    name: string;
+    id_province: number;
+    active?: boolean
+}
+
+export interface parishes_select {
+    id: number;
+    name: string;
+    id_canton: number;
+    active?: boolean
+}
+
+export interface species_select {
+    id: number;
+    name: string;
+    active?: boolean
+}
+
+export interface races_select {
+    id: number,
+    name: string,
+    id_specie?: number
+    active?: boolean
+}
+
+export interface furs_select {
+    id: number,
+    name: string,
+    id_specie: number[]
+    active?: boolean
 }
 
 export interface AuthContextType {
@@ -62,12 +127,13 @@ export interface RAuth extends LAuth {
 }
 
 export interface user {
-    user_id: string,
+    user_id?: string,
     profile_photo_path?: string,
-    name: string,
+    name?: string,
     last_name1?: string,
     last_name2?: string,
-    email: string,
+    fullname?: string,
+    email?: string,
     id_parish?: number,
     id_canton?: number,
     id_province?: number,
@@ -79,9 +145,9 @@ export interface user {
     street_2_sec?: string,
     address_ref?: string,
     pets?: [pet],
-    canton?: [canton],
-    province?: [province],
-    parish?: [parish],
+    canton?: canton,
+    province?: province,
+    parish?: parish,
 }
 
 export interface pet {
@@ -121,15 +187,15 @@ export interface province extends basic {
 }
 
 export interface canton extends basic {
-    id_province: number;
+    id_province: number | undefined;
 }
 
 export interface parish extends basic {
-    id_canton: number;
+    id_canton: number | undefined;
 }
 
-export type ConfigActionType = | { type: "SET_KEYBOARD_STATUS"; payload: boolean } | { type: "SET_KEYBOARD"; payload: KeyboardType } | { type: "SET_LOADING"; payload: boolean };
-
+export type ConfigActionType = | { type: "SET_KEYBOARD_STATUS"; payload: boolean } | { type: "SET_KEYBOARD"; payload: KeyboardType } | { type: "SET_LOADING"; payload: boolean } | typeof SELECTS
+export type ReportActionType = | { type: "SET_USER"; payload: user | undefined } | { type: "SET_PET"; payload: pet | undefined } | { type: "SET_LOCATION"; payload: location } | { type: "SET_IMAGES"; payload: images[] | undefined }
 export interface IconProps {
     width?: number;
     height?: number;

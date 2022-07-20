@@ -13,8 +13,8 @@ import { duration } from "@src/constants/animations";
  * @return Animation for floating label.
  */
 
-const useFloatingLabelInput = (value?: string, error?: string, secureTextEntry?: boolean) => {
-    const [isFocused, setIsFocused] = useState(value ? true : false);
+const useFloatingLabelInput = (value: boolean, error?: string, secureTextEntry?: boolean) => {
+    const [isFocused, setIsFocused] = useState(value);
     const [isBlur, setIsBlur] = useState(false);
     const [show, setShow] = useState(false);
 
@@ -76,9 +76,10 @@ const ThisStyles = ({ isFocused, isBlur, error, secureTextEntry }: ThisStylesPro
 
     return StyleSheet.create({
         container: {
-            width: '100%',
+            flex: 1,
             height: AppStyles.inputHeight.default,
             marginTop: AppStyles.margin.xlarge,
+            marginBottom: error ? AppStyles.margin.medium : AppStyles.margin.small,
         },
         input: {
             borderColor: borderError || borderFocus || borderNormal || AppStyles.color.low_gray,

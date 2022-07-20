@@ -1,6 +1,7 @@
 import React, {useContext} from 'react'
 import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native'
 import ConfigContext from '@src/contexts/config/ConfigContext'
+import AppStyles from '@src/themes/AppStyles'
 
 interface IProps {
   currentPosition: number
@@ -40,8 +41,7 @@ const UnknownFooter = ({
             disabled={ConfigState.loading}
             style={{
               backgroundColor: '#FFB509',
-              paddingHorizontal: 20,
-              paddingVertical: 15,
+              padding: 10,
               borderRadius: 10,
               alignItems: 'center',
               justifyContent: 'center',
@@ -54,12 +54,16 @@ const UnknownFooter = ({
           <TouchableOpacity
             onPress={next}
             disabled={!nextActive || ConfigState.loading}
-            style={{paddingHorizontal: 20, paddingVertical: 15}}>
+            style={{
+              padding: 10,
+              backgroundColor: AppStyles.color.info,
+              borderRadius: 10,
+            }}>
             <Text
               style={{
-                color: 'black',
+                color: 'white',
                 fontWeight: 'bold',
-                opacity: nextActive || !ConfigState.loading ? 1 : 0.5,
+                opacity: nextActive ? 1 : 0.5,
               }}>
               Siguiente
             </Text>
@@ -70,10 +74,14 @@ const UnknownFooter = ({
           <TouchableOpacity
             onPress={prev}
             disabled={ConfigState.loading}
-            style={{paddingHorizontal: 20, paddingVertical: 15}}>
+            style={{
+              padding: 10,
+              backgroundColor: '#F44335',
+              borderRadius: 10,
+            }}>
             <Text
               style={{
-                color: 'black',
+                color: 'white',
                 fontWeight: 'bold',
                 opacity: ConfigState.loading ? 0.5 : 1,
               }}>
@@ -85,8 +93,7 @@ const UnknownFooter = ({
             disabled={ConfigState.loading}
             style={{
               backgroundColor: '#FFB509',
-              paddingHorizontal: 20,
-              paddingVertical: 15,
+              padding: 10,
               borderRadius: 10,
               opacity: ConfigState.loading ? 0.5 : 1,
               flexDirection: 'row',

@@ -9,7 +9,7 @@ interface IProps {
   longitude: number
   latitudeDelta: number
   longitudeDelta: number
-  requestLocationPermission: () => Promise<void>
+  requestLocationPermission: () => void
   setLocation: (location: any) => void
 }
 

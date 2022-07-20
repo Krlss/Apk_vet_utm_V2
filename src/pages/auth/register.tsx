@@ -1,16 +1,16 @@
 import React from 'react'
-import {StyleSheet, ScrollView} from 'react-native'
+import {StyleSheet, ScrollView, View} from 'react-native'
 import Animated from 'react-native-reanimated'
 import AppStyles from '@src/themes/AppStyles'
 import {registerSchema} from '@src/schemas/schemas'
 import {initialValuesRegister} from '@src/constants/formik'
-import {Formik} from 'formik'
+import {useFormik} from 'formik'
 import {NativeStackScreenProps} from '@react-navigation/native-stack'
 import {AuthStackProps} from '@src/types/declare'
 
 import {
   LogoAndNameApp,
-  FormikFloatingLabelInput,
+  InputFloatingLabel,
   FooterUTM,
   ButtonLongButton,
   ButtonChangeScreenAuth,
@@ -25,76 +25,85 @@ import useAuth from '@src/hooks/useAuth'
 const Register = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
   const {animatedPaddingTop} = animationPaddingTop(20)
   const {register} = useAuth()
+
+  const formik = useFormik({
+    initialValues: initialValuesRegister,
+    validationSchema: registerSchema,
+    onSubmit: async (values, actions) => {
+      const res = await register(values)
+      if (res?.errors) {
+        actions.setFieldError('user_id', res?.errors.user_id)
+        actions.setFieldError('email', res?.errors.email)
+        actions.setFieldError('phone', res?.errors.phone)
+      } else if (res?.type === 'success') {
+        navigation.navigate('LOGIN')
+      }
+    },
+  })
+
   return (
     <ScrollView keyboardShouldPersistTaps="handled">
       <Animated.View style={[styles.container, animatedPaddingTop]}>
         <LogoAndNameApp />
 
-        <Formik
-          validationSchema={registerSchema}
-          initialValues={initialValuesRegister}
-          onSubmit={(values, actions) => {
-            register(values).then(res => {
-              if (res?.errors) {
-                actions.setFieldError('user_id', res?.errors.user_id)
-                actions.setFieldError('email', res?.errors.email)
-                actions.setFieldError('phone', res?.errors.phone)
-              } else if (res?.type === 'success') {
-                navigation.navigate('LOGIN')
-              }
-            })
-          }}>
-          {({handleSubmit, isValid}) => (
-            <>
-              <FormikFloatingLabelInput
-                name="user_id"
-                label="Cédula o RUC"
-                keyboardType="numeric"
-              />
+        <InputFloatingLabel
+          label="Cédula o RUC"
+          keyboardType="numeric"
+          onChange={formik.handleChange('user_id')}
+          error={formik.errors.user_id}
+          value={formik.values.user_id}
+        />
 
-              <FormikFloatingLabelInput
-                name="fullname"
-                label="Nombre completo"
-                autoCapitalize="words"
-                autoComplete="name"
-              />
+        <InputFloatingLabel
+          label="Nombre completo"
+          autoCapitalize="words"
+          autoComplete="name"
+          onChange={formik.handleChange('fullname')}
+          error={formik.errors.fullname}
+          value={formik.values.fullname}
+        />
 
-              <FormikFloatingLabelInput
-                name="phone"
-                label="Teléfono"
-                keyboardType="phone-pad"
-                autoComplete="tel"
-              />
+        <InputFloatingLabel
+          label="Teléfono"
+          keyboardType="numeric"
+          autoComplete="tel"
+          onChange={formik.handleChange('phone')}
+          error={formik.errors.phone}
+          value={formik.values.phone}
+        />
 
-              <FormikFloatingLabelInput
-                name="email"
-                label="Correo electrónico"
-                autoComplete="email"
-              />
+        <InputFloatingLabel
+          label="Correo electrónico"
+          autoComplete="email"
+          onChange={formik.handleChange('email')}
+          error={formik.errors.email}
+          value={formik.values.email}
+        />
 
-              <FormikFloatingLabelInput
-                name="password"
-                label="Contraseña"
-                secureTextEntry
-                onSubmitEditing={handleSubmit}
-              />
+        <InputFloatingLabel
+          label="Contraseña"
+          secureTextEntry
+          onChange={formik.handleChange('password')}
+          error={formik.errors.password}
+          value={formik.values.password}
+          onSubmitEditing={formik.handleSubmit}
+        />
 
-              <ButtonLongButton
-                isValid={isValid}
-                onPress={handleSubmit}
-                text="REGISTRAR"
-              />
+        <View style={{marginTop: 20}}>
+          <ButtonLongButton
+            isValid={formik.isValid}
+            onPress={formik.handleSubmit}
+            text="REGISTRAR"
+          />
+        </View>
 
-              <ButtonChangeScreenAuth
-                onPress={() => {
-                  navigation.navigate('LOGIN')
-                }}
-                text="Iniciar sesión"
-                label="¿Ya tienes una cuenta?"
-              />
-            </>
-          )}
-        </Formik>
+        <ButtonChangeScreenAuth
+          onPress={() => {
+            navigation.navigate('LOGIN')
+          }}
+          text="Iniciar sesión"
+          label="¿Ya tienes una cuenta?"
+        />
 
         <FooterUTM />
       </Animated.View>
@@ -105,7 +114,6 @@ const Register = ({navigation}: NativeStackScreenProps<AuthStackProps>) => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: AppStyles.padding.xlarge,
-    alignItems: 'center',
     paddingBottom: AppStyles.padding.large,
   },
 })

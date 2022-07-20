@@ -42,4 +42,11 @@ export const phone = yup.string()
     .max(10, 'El teléfono es muy largo')
     .required('Digita un teléfono')
 
+export const province = yup.string()
+    .required('Selecciona una provincia')
 
+export const canton = yup.string()
+    .required('Selecciona un cantón')
+
+export const parish = yup.string()
+    .required('Selecciona una parroquia')

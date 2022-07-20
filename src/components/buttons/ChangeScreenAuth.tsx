@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     marginTop: AppStyles.margin.medium,
   },
   text: {

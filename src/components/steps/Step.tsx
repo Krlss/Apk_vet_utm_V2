@@ -2,43 +2,19 @@ import React from 'react'
 import {customStyles} from './customStyles'
 import StepIndicator from 'react-native-step-indicator'
 import {View} from 'react-native'
-import IconSwitch from '@src/components/icons/IconSwitch'
-
-interface IProps {
-  position: number
-  stepStatus: string
-}
-
-export const getStepIndicatorIconConfig = ({position, stepStatus}: IProps) => {
-  const iconConfig = {
-    name: 'feed',
-    active: stepStatus === 'finished' ? true : false,
-  }
-  switch (position) {
-    case 0:
-      iconConfig.name = 'photo'
-      break
-    case 1:
-      iconConfig.name = 'map'
-      break
-    default:
-      iconConfig.name = 'Home'
-      break
-  }
-  return iconConfig
-}
-
-const renderStepIndicator = (params: any) => (
-  <IconSwitch {...getStepIndicatorIconConfig(params)} />
-)
-
 interface StepProps {
   currentPosition: number
   labels: string[]
   absolutePosition?: boolean
+  renderStepIndicator?: (params: any) => JSX.Element
 }
 
-const Step = ({currentPosition, labels, absolutePosition}: StepProps) => {
+const Step = ({
+  currentPosition,
+  labels,
+  absolutePosition,
+  renderStepIndicator,
+}: StepProps) => {
   return (
     <View
       style={{
@@ -49,7 +25,7 @@ const Step = ({currentPosition, labels, absolutePosition}: StepProps) => {
         width: '100%',
       }}>
       <StepIndicator
-        stepCount={2}
+        stepCount={labels.length}
         customStyles={customStyles}
         currentPosition={currentPosition}
         renderStepIndicator={renderStepIndicator}

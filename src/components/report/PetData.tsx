@@ -54,9 +54,19 @@ const PetDataReport = ({
   })
 
   const handleChange = (name: string, value?: string) => {
-    formik.setFieldValue(name, value)
-    setPet({...pet, [name]: value})
+    if (value === 'Si') {
+      setPet({...pet, [name]: true})
+      formik.setFieldValue(name, true)
+    } else if (value === 'No') {
+      setPet({...pet, [name]: false})
+      formik.setFieldValue(name, false)
+    } else {
+      setPet({...pet, [name]: value})
+      formik.setFieldValue(name, value)
+    }
   }
+
+  console.log(pet)
 
   const handleChangeSelect = (name: string, value: string) => {
     if (name === 'specie') {
@@ -190,10 +200,10 @@ const PetDataReport = ({
         </TouchableOpacity>
 
         <TouchableOpacity
-          disabled={!formik.isValid}
+          disabled={!(formik.isValid && pet)}
           onPress={formik.handleSubmit}
           style={{
-            opacity: formik.isValid ? 1 : 0.5,
+            opacity: formik.isValid && pet ? 1 : 0.5,
             alignItems: 'flex-end',
             alignSelf: 'flex-end',
             marginVertical: 20,

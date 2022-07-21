@@ -1,14 +1,13 @@
 import React from 'react'
-import {View} from 'react-native'
+import {View, Switch} from 'react-native'
 import {InputFloatingLabel} from '@src/components'
 import AppStyles from '@src/themes/AppStyles'
-import Checkbox from 'react-native-bouncy-checkbox'
 interface Props {
   label: string
   editable?: boolean
   value?: boolean
   children?: JSX.Element
-  onPress?: (value: boolean) => void
+  onPress: (value: boolean) => void
   disabled?: boolean
   [key: string]: any
 }
@@ -22,6 +21,9 @@ const InputFloatingWithCheckRight = ({
   disabled,
   ...props
 }: Props) => {
+  const handlePress = (value: boolean) => {
+    onPress(value)
+  }
   return (
     <View
       style={{
@@ -35,7 +37,18 @@ const InputFloatingWithCheckRight = ({
         label={label}
         {...props}
       />
-      <Checkbox isChecked={false} onPress={onPress} />
+      <Switch
+        value={value}
+        onValueChange={handlePress}
+        style={{
+          marginTop: 15,
+        }}
+        thumbColor={AppStyles.color.yellow}
+        trackColor={{
+          false: AppStyles.color.low_gray,
+          true: AppStyles.color.yellow,
+        }}
+      />
     </View>
   )
 }

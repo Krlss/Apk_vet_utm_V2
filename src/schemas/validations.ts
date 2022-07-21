@@ -68,5 +68,5 @@ export const birth = yup.string()
 export const sex = yup.string()
     .required('El sexo es requerido')
 
-export const castrated = yup.string()
+export const castrated = yup.bool()
     .required('Este campo es requerido')

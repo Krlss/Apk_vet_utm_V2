@@ -12,12 +12,12 @@ import {
   StyleSheet,
 } from 'react-native'
 import {Results} from '@baronha/react-native-multiple-image-picker'
-
-interface IProps extends NativeStackScreenProps<{Photos: any}> {
+interface IProps extends NativeStackScreenProps<any> {
   filePath?: Results[]
+  routeTo: 'Photos' | 'Photos_'
 }
 
-const Photos = ({filePath, navigation}: IProps) => {
+const Photos = ({filePath, navigation, routeTo}: IProps) => {
   return (
     <ScrollView>
       {filePath && filePath.length > 0 && (
@@ -33,7 +33,7 @@ const Photos = ({filePath, navigation}: IProps) => {
             <TouchableWithoutFeedback
               key={index}
               onPress={() => {
-                navigation.navigate('Photos', {
+                navigation.navigate(routeTo, {
                   filePath: filePath,
                   index,
                 })

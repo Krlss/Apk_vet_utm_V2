@@ -19,7 +19,7 @@ const Unknown = (props: any) => {
     location,
     setLocation,
     requestLocationPermission,
-    send,
+    sendUnknown,
   } = useReport()
 
   return (
@@ -38,7 +38,9 @@ const Unknown = (props: any) => {
         renderStepIndicator={renderStepIndicatorUnknown}
         absolutePosition={currentPosition === 1}
       />
-      {currentPosition === 0 && <PhotosReport filePath={filePath} {...props} />}
+      {currentPosition === 0 && (
+        <PhotosReport filePath={filePath} routeTo="Photos" {...props} />
+      )}
       {currentPosition === 1 && (
         <MapReport
           latitude={location.latitude}
@@ -56,7 +58,7 @@ const Unknown = (props: any) => {
         next={nextPosition}
         prev={prevPosition}
         nextActive={filePath && filePath.length > 0}
-        send={send}
+        send={sendUnknown}
       />
     </ScrollView>
   )

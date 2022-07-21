@@ -1,12 +1,11 @@
 import React from 'react'
-import {ScrollView, Text, TouchableOpacity, View} from 'react-native'
+import {ScrollView} from 'react-native'
 import Step from '@src/components/steps/Step'
 import useReport from '@src/hooks/useReport'
 import renderStepIndicatorknown from '@src/components/steps/StepKnown'
 import PhotosReport from '@src/components/report/Photos'
 import MapReport from '@src/components/report/Map'
-import {Formik} from 'formik'
-import {FormikFloatingLabelInput} from '@src/components'
+import KnownFooter from '@src/components/footer/Known'
 import UserDataReport from '@src/components/report/UserData'
 import PetDataReport from '@src/components/report/PetData'
 const labels = ['Datos del dueño', 'Datos de la mascota', 'Fotos', 'Ubicación']
@@ -21,14 +20,13 @@ const Unknown = (props: any) => {
     setLocation,
     location,
     requestLocationPermission,
-    send,
+    sendKnown,
     cantons,
     parishes,
     provinces,
     handleProvinceChange,
     handleCantonChange,
     handleParisheChange,
-    furs,
     races,
     species,
     handleRaceChange,
@@ -44,7 +42,7 @@ const Unknown = (props: any) => {
       style={{
         flex: 1,
         paddingTop: isPaddingTop ? 20 : 0,
-        paddingHorizontal: 20,
+        paddingHorizontal: isPaddingTop ? 20 : 0,
       }}
       contentContainerStyle={{
         height: '100%',
@@ -54,7 +52,7 @@ const Unknown = (props: any) => {
         currentPosition={currentPosition}
         labels={labels}
         renderStepIndicator={renderStepIndicatorknown}
-        absolutePosition={currentPosition === 4}
+        absolutePosition={currentPosition === 3}
       />
       {currentPosition === 0 && (
         <UserDataReport
@@ -78,16 +76,39 @@ const Unknown = (props: any) => {
         />
       )}
 
-      {currentPosition === 2 && <PhotosReport filePath={filePath} {...props} />}
+      {currentPosition === 2 && (
+        <>
+          <PhotosReport filePath={filePath} routeTo="Photos_" {...props} />
+          <KnownFooter
+            chooseFile={chooseFile}
+            nextActive={filePath.length > 0}
+            currentPosition={currentPosition}
+            next={nextPosition}
+            prev={prevPosition}
+            send={() => {}}
+          />
+        </>
+      )}
       {currentPosition === 3 && (
-        <MapReport
-          latitude={location.latitude}
-          latitudeDelta={1}
-          longitude={location.longitude}
-          longitudeDelta={1}
-          requestLocationPermission={requestLocationPermission}
-          setLocation={setLocation}
-        />
+        <>
+          <MapReport
+            latitude={location.latitude}
+            latitudeDelta={1}
+            longitude={location.longitude}
+            longitudeDelta={1}
+            currentPosition={currentPosition}
+            requestLocationPermission={requestLocationPermission}
+            setLocation={setLocation}
+          />
+          <KnownFooter
+            chooseFile={chooseFile}
+            nextActive={filePath.length > 0}
+            currentPosition={currentPosition}
+            next={nextPosition}
+            prev={prevPosition}
+            send={sendKnown}
+          />
+        </>
       )}
     </ScrollView>
   )

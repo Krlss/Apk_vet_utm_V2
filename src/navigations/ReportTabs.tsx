@@ -22,6 +22,18 @@ const UnknownStack = () => {
     </Stack.Navigator>
   )
 }
+const KnownStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        animation: 'fade_from_bottom',
+      }}>
+      <Stack.Screen name="Known" component={Known} />
+      <Stack.Screen name="Photos_" component={Photos} />
+    </Stack.Navigator>
+  )
+}
 
 const ReportTabs = () => {
   return (
@@ -44,14 +56,14 @@ const ReportTabs = () => {
           component={UnknownStack}
         />
         <Tab.Screen
-          name="Known"
+          name="KnownStack"
           options={{
             tabBarLabel: 'Conocida',
             tabBarIndicatorStyle: {
               backgroundColor: AppStyles.color.yellow,
             },
           }}
-          component={Known}
+          component={KnownStack}
         />
       </Tab.Navigator>
     </ReportProvider>

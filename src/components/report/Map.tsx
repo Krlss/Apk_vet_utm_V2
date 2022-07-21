@@ -11,6 +11,7 @@ interface IProps {
   longitudeDelta: number
   requestLocationPermission: () => void
   setLocation: (location: any) => void
+  currentPosition?: number
 }
 
 const MapReport = ({
@@ -20,6 +21,7 @@ const MapReport = ({
   longitudeDelta,
   requestLocationPermission,
   setLocation,
+  currentPosition = 0,
 }: IProps) => {
   const {ConfigState} = useContext(ConfigContext)
   return (
@@ -30,7 +32,7 @@ const MapReport = ({
         style={{
           position: 'absolute',
           zIndex: 1,
-          top: 15,
+          top: currentPosition === 3 ? 105 : 15,
           right: 15,
           opacity: ConfigState.loading ? 0.5 : 1,
         }}>

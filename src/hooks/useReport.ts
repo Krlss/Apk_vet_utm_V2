@@ -3,17 +3,17 @@ import MultipleImagePicker, {
     Results,
 } from '@baronha/react-native-multiple-image-picker'
 import { options } from '@src/constants/multiple-image-picker'
-import { ReportUnknown } from '@src/services/report'
+import { ReportUnknown, ReportKnown } from '@src/services/report'
 import AuthContext from '@src/contexts/auth/AuthContext';
 import ConfigContext from '@src/contexts/config/ConfigContext';
 import ReportContext from '@src/contexts/report/ReportContext';
 import { getDataFromStatus } from '@src/utils/utils'
-
-import { races_select, furs_select, cantons_select, species_select, parishes_select, provinces_select } from '@src/types/declare'
+import { separateFullname } from '@src/utils/utils'
+import { races_select, cantons_select, species_select, parishes_select, provinces_select } from '@src/types/declare'
 
 
 const useReport = () => {
-    const { ReportState, setImages, setPet, setUser, setLocation, requestLocationPermission } = useContext(ReportContext);
+    const { ReportState, setPet, setUser, setLocation, requestLocationPermission } = useContext(ReportContext);
     const { user, location, pet } = ReportState
     const [currentPosition, setCurrentPosition] = useState(0)
     const [filePath, setFilePath] = useState<Results[]>([])
@@ -35,7 +35,6 @@ const useReport = () => {
     const [parishes, setParishes] = useState<parishes_select[]>(ConfigState.parishes)
     const [species, setSpecies] = useState<species_select[]>(ConfigState.species)
     const [races, setRaces] = useState<races_select[]>(ConfigState.races)
-    const [furs, setFurs] = useState<furs_select[]>(ConfigState.furs)
 
     const nextPosition = () => {
         setCurrentPosition(currentPosition + 1)
@@ -45,7 +44,7 @@ const useReport = () => {
         setCurrentPosition(currentPosition - 1)
     }
 
-    const send = async () => {
+    const sendUnknown = async () => {
         KeyboardDismiss() // Hide keyboard
         toggleLoading(true)
         const data = new FormData()
@@ -62,7 +61,41 @@ const useReport = () => {
         toggleLoading(false)
         if (res.status === 200) {
             getDataFromStatus(res)
-            resetData()
+            resetDataUnknown()
+        } else {
+            getDataFromStatus(res)
+        }
+    }
+
+    const sendKnown = async () => {
+        KeyboardDismiss() // Hide keyboard
+        toggleLoading(true)
+        const data = new FormData()
+        filePath.forEach((item) => {
+            data.append('images[]', {
+                uri: item.path,
+                name: item.fileName,
+                type: 'image/jpeg',
+            })
+        })
+        data.append('location', JSON.stringify(location))
+        const [name, last_name1, last_name2] = separateFullname(user?.fullname ?? '')
+        const new_user = {
+            ...user,
+            name,
+            last_name1,
+            last_name2,
+            responsable: AuthState?.user?.user_id ?? user?.user_id,
+        }
+        data.append('user', JSON.stringify(new_user))
+        data.append('pet', JSON.stringify(pet))
+        const res = await ReportKnown(data)
+        toggleLoading(false)
+        if (res.status === 200) {
+            getDataFromStatus(res)
+            resetDataKnown()
+        } else {
+            getDataFromStatus(res)
         }
     }
 
@@ -150,10 +183,23 @@ const useReport = () => {
 
     }
 
-    const resetData = () => {
+    const resetDataUnknown = () => {
         setFilePath([])
         requestLocationPermission()
         setCurrentPosition(0)
+    }
+
+    const resetDataKnown = () => {
+        setFilePath([])
+        requestLocationPermission()
+        setCurrentPosition(0)
+        setUser(undefined)
+        setPet(undefined)
+        setProvinces(ConfigState.provinces)
+        setCantons(ConfigState.cantons)
+        setParishes(ConfigState.parishes)
+        setSpecies(ConfigState.species)
+        setRaces(ConfigState.races)
     }
 
     return {
@@ -165,18 +211,18 @@ const useReport = () => {
         location,
         setLocation,
         requestLocationPermission,
-        send,
+        sendUnknown,
         provinces,
         cantons,
         parishes,
         species,
         races,
-        furs,
         handleProvinceChange,
         handleCantonChange,
         handleParisheChange,
         handleSpeciesChange,
-        handleRaceChange
+        handleRaceChange,
+        sendKnown
     }
 }
 

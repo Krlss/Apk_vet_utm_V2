@@ -20,11 +20,6 @@ export default (state: ReportContextType, action: ReportActionType) => {
                 ...state,
                 location: payload,
             };
-        case "SET_IMAGES":
-            return {
-                ...state,
-                images: payload,
-            };
         default:
             return state;
     }

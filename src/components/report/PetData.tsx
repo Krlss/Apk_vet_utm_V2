@@ -66,8 +66,6 @@ const PetDataReport = ({
     }
   }
 
-  console.log(pet)
-
   const handleChangeSelect = (name: string, value: string) => {
     if (name === 'specie') {
       formik.setFieldValue('race', undefined)

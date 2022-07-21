@@ -7,7 +7,6 @@ export type ReportContextProps = {
   setUser: (user: ReportContextType['user']) => void
   setPet: (pet: ReportContextType['pet']) => void
   setLocation: (location: ReportContextType['location']) => void
-  setImages: (images: ReportContextType['images']) => void
   requestLocationPermission: () => void
 }
 

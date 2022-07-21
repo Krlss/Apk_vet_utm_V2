@@ -199,7 +199,7 @@ export interface parish extends basic {
 }
 
 export type ConfigActionType = | { type: "SET_KEYBOARD_STATUS"; payload: boolean } | { type: "SET_KEYBOARD"; payload: KeyboardType } | { type: "SET_LOADING"; payload: boolean } | typeof SELECTS
-export type ReportActionType = | { type: "SET_USER"; payload: user | undefined } | { type: "SET_PET"; payload: pet | undefined } | { type: "SET_LOCATION"; payload: location } | { type: "SET_IMAGES"; payload: images[] | undefined }
+export type ReportActionType = | { type: "SET_USER"; payload: user | undefined } | { type: "SET_PET"; payload: pet | undefined } | { type: "SET_LOCATION"; payload: location }
 export interface IconProps {
     width?: number;
     height?: number;

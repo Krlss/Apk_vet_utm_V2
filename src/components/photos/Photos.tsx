@@ -10,8 +10,6 @@ import {
 } from 'react-native'
 import ArrowBack from '@src/assets/icon/arrow-back.svg'
 import AppStyles from '@src/themes/AppStyles'
-import {GestureDetector} from 'react-native-gesture-handler'
-import Animated from 'react-native-reanimated'
 
 import usePhotos from '@src/hooks/usePhotos'
 

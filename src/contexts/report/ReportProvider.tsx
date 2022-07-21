@@ -31,13 +31,6 @@ const ReportProvider = (props: props) => {
     })
   }
 
-  const setImages = (images: images[] | undefined) => {
-    dispatch({
-      type: 'SET_IMAGES',
-      payload: images,
-    })
-  }
-
   const requestLocationPermission = async () => {
     try {
       const granted = await PermissionsAndroid.request(
@@ -65,14 +58,31 @@ const ReportProvider = (props: props) => {
             })
           },
           error => {
-            // See error code charts below.
+            Alert.alert(
+              'Ubicación',
+              'No permitiste acceder a tu ubicación, por defecto la ubicación es el cantón Portoviejo. Si no deseas usarla, puedes cambiarla manteniendo presionado el icono de ubicación y arrastrandolo a la ubicación que desees',
+              [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+            )
+            dispatch({
+              type: 'SET_LOCATION',
+              payload: {
+                latitude: -1.0523174,
+                longitude: -80.4588391,
+                latitudeDelta: 1,
+                longitudeDelta: 1,
+              },
+            })
             console.log(error.code, error.message)
           },
           {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
         )
       } else {
-        Alert.alert('Permiso de ubicación', 'No se puede obtener tu ubicación')
-
+        console.log('Location permission denied')
+        Alert.alert(
+          'Ubicación',
+          'No permitiste acceder a tu ubicación, por defecto la ubicación es el cantón Portoviejo',
+          [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+        )
         dispatch({
           type: 'SET_LOCATION',
           payload: {
@@ -84,7 +94,16 @@ const ReportProvider = (props: props) => {
         })
       }
     } catch (err) {
-      console.warn(err)
+      dispatch({
+        type: 'SET_LOCATION',
+        payload: {
+          latitude: -1.0523174,
+          longitude: -80.4588391,
+          latitudeDelta: 1,
+          longitudeDelta: 1,
+        },
+      })
+      console.warn({err})
     }
   }
 
@@ -99,7 +118,6 @@ const ReportProvider = (props: props) => {
         setUser,
         setPet,
         setLocation,
-        setImages,
         requestLocationPermission,
       }}>
       {props.children}

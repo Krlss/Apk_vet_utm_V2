@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, TouchableOpacity} from 'react-native'
+import {View, TouchableOpacity, TouchableWithoutFeedback} from 'react-native'
 import {InputFloatingLabel} from '@src/components'
 import AppStyles from '@src/themes/AppStyles'
 
@@ -29,12 +29,20 @@ const InputFloatingWithIconRight = ({
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      <InputFloatingLabel
-        editable={editable}
-        value={value}
-        label={label}
-        {...props}
-      />
+      {!editable ? (
+        <TouchableWithoutFeedback onPress={onPress}>
+          <View style={{flex: 1}}>
+            <InputFloatingLabel
+              editable={editable}
+              value={value}
+              label={label}
+              {...props}
+            />
+          </View>
+        </TouchableWithoutFeedback>
+      ) : (
+        <InputFloatingLabel value={value} label={label} {...props} />
+      )}
       <TouchableOpacity
         onPress={onPress}
         disabled={disabled}

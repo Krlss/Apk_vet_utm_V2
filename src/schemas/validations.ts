@@ -50,3 +50,23 @@ export const canton = yup.string()
 
 export const parish = yup.string()
     .required('Selecciona una parroquia')
+
+export const name = yup.string()
+    .min(3, 'El nombre es muy corto')
+    .max(50, 'El nombre es muy largo')
+    .required('Digita un nombre')
+
+export const specie = yup.string()
+    .required('Selecciona una especie')
+
+export const race = yup.string()
+    .required('Selecciona una raza')
+
+export const birth = yup.string()
+    .required('Selecciona una fecha de nacimiento')
+
+export const sex = yup.string()
+    .required('El sexo es requerido')
+
+export const castrated = yup.string()
+    .required('Este campo es requerido')

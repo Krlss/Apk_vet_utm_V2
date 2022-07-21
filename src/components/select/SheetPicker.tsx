@@ -25,7 +25,7 @@ interface Props {
   }[]
 }
 
-const YourComponent = ({
+const SheetPicker = ({
   modalVisible,
   closeModal,
   onPress,
@@ -57,7 +57,6 @@ const YourComponent = ({
   return (
     <Modal
       animationType="slide"
-      style={{flex: 0, width: 250, height: 100}}
       visible={modalVisible}
       onRequestClose={() => closeModal(false)}>
       <SafeAreaView style={{flex: 1}}>
@@ -146,4 +145,4 @@ const YourComponent = ({
     </Modal>
   )
 }
-export default YourComponent
+export default SheetPicker

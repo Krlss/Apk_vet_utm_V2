@@ -8,6 +8,7 @@ import MapReport from '@src/components/report/Map'
 import {Formik} from 'formik'
 import {FormikFloatingLabelInput} from '@src/components'
 import UserDataReport from '@src/components/report/UserData'
+import PetDataReport from '@src/components/report/PetData'
 const labels = ['Datos del dueño', 'Datos de la mascota', 'Fotos', 'Ubicación']
 
 const Unknown = (props: any) => {
@@ -30,7 +31,9 @@ const Unknown = (props: any) => {
     furs,
     races,
     species,
-  } = useReport(props.location)
+    handleRaceChange,
+    handleSpeciesChange,
+  } = useReport()
 
   const isPaddingTop =
     currentPosition === 0 || currentPosition === 1 || currentPosition === 2
@@ -65,75 +68,14 @@ const Unknown = (props: any) => {
         />
       )}
       {currentPosition === 1 && (
-        <Formik
-          validationSchema={null}
-          initialValues={{}}
-          onSubmit={values => console.log(values)}>
-          {({handleSubmit, isValid}) => (
-            <ScrollView
-              nestedScrollEnabled
-              contentContainerStyle={{paddingBottom: 10}}>
-              <FormikFloatingLabelInput
-                name="name"
-                label="Nombre"
-                autoCapitalize="words"
-                autoComplete="name"
-              />
-
-              <FormikFloatingLabelInput name="specie" label="Especie" />
-
-              <FormikFloatingLabelInput name="race" label="Raza" />
-              <FormikFloatingLabelInput
-                name="birth"
-                label="Fecha de nacimiento"
-              />
-              <FormikFloatingLabelInput name="sex" label="Sexo" />
-              <FormikFloatingLabelInput name="castrated" label="Castrado" />
-              <FormikFloatingLabelInput
-                name="characteristics"
-                label="Características"
-                style={{
-                  height: 100,
-                  textAlignVertical: 'top',
-                  paddingHorizontal: 10,
-                }}
-                multiline={true}
-                numberOfLines={10}
-              />
-
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  marginTop: 50,
-                }}>
-                <TouchableOpacity
-                  onPress={prevPosition}
-                  style={{
-                    marginVertical: 10,
-                    padding: 20,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    alignSelf: 'flex-end',
-                  }}>
-                  <Text style={{color: 'black'}}>Anterior</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  onPress={nextPosition}
-                  style={{
-                    marginVertical: 10,
-                    padding: 20,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    alignSelf: 'flex-end',
-                  }}>
-                  <Text style={{color: 'black'}}>Siguiente</Text>
-                </TouchableOpacity>
-              </View>
-            </ScrollView>
-          )}
-        </Formik>
+        <PetDataReport
+          species={species}
+          races={races}
+          nextPosition={nextPosition}
+          prevPosition={prevPosition}
+          handleSpecieChange={handleSpeciesChange}
+          handleRaceChange={handleRaceChange}
+        />
       )}
 
       {currentPosition === 2 && <PhotosReport filePath={filePath} {...props} />}

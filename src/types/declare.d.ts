@@ -151,19 +151,19 @@ export interface user {
 }
 
 export interface pet {
-    pet_id: string,
-    name: string,
-    birth: string,
-    sex: string,
-    castrated: boolean,
-    lost: false,
-    n_lost: number,
-    published: boolean,
+    pet_id?: string,
+    name?: string,
+    birth?: string,
+    sex?: string,
+    castrated?: boolean,
+    lost?: false,
+    n_lost?: number,
+    published?: boolean,
     id_pet_pather?: string,
     id_pet_mother?: string,
-    id_specie?: number,
-    id_race?: number,
-    id_fur?: number,
+    specie?: basic,
+    race?: race
+    fur?: basic,
     user_id?: string,
     characteristic?: string
     images?: [image]
@@ -180,6 +180,10 @@ export interface specie {
 export interface basic {
     id: number,
     name: string
+}
+
+export interface race extends basic {
+    id_specie?: number,
 }
 
 export interface province extends basic {

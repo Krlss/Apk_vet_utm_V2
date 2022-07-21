@@ -155,10 +155,10 @@ const UserDataReport = ({
       />
 
       <TouchableOpacity
-        disabled={!formik.isValid}
+        disabled={!(formik.isValid && user)}
         onPress={formik.handleSubmit}
         style={{
-          opacity: formik.isValid ? 1 : 0.5,
+          opacity: formik.isValid && user ? 1 : 0.5,
           alignItems: 'flex-end',
           alignSelf: 'flex-end',
           marginVertical: 20,

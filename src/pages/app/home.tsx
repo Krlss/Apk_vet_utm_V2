@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text} from 'react-native'
+import {View} from 'react-native'
 import useData from '@src/hooks/useData'
 import HeaderSpecies from '@src/components/headers/Species'
 const Home = () => {

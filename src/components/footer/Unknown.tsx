@@ -40,7 +40,7 @@ const UnknownFooter = ({
             onPress={chooseFile}
             disabled={ConfigState.loading}
             style={{
-              backgroundColor: '#FFB509',
+              backgroundColor: AppStyles.color.yellow,
               padding: 10,
               borderRadius: 10,
               alignItems: 'center',
@@ -58,12 +58,12 @@ const UnknownFooter = ({
               padding: 10,
               backgroundColor: AppStyles.color.info,
               borderRadius: 10,
+              opacity: nextActive ? 1 : 0.5,
             }}>
             <Text
               style={{
                 color: 'white',
                 fontWeight: 'bold',
-                opacity: nextActive ? 1 : 0.5,
               }}>
               Siguiente
             </Text>
@@ -76,14 +76,14 @@ const UnknownFooter = ({
             disabled={ConfigState.loading}
             style={{
               padding: 10,
-              backgroundColor: '#F44335',
+              backgroundColor: AppStyles.color.error,
               borderRadius: 10,
+              opacity: ConfigState.loading ? 0.5 : 1,
             }}>
             <Text
               style={{
                 color: 'white',
                 fontWeight: 'bold',
-                opacity: ConfigState.loading ? 0.5 : 1,
               }}>
               Anterior
             </Text>
@@ -92,7 +92,7 @@ const UnknownFooter = ({
             onPress={send}
             disabled={ConfigState.loading}
             style={{
-              backgroundColor: '#FFB509',
+              backgroundColor: AppStyles.color.yellow,
               padding: 10,
               borderRadius: 10,
               opacity: ConfigState.loading ? 0.5 : 1,

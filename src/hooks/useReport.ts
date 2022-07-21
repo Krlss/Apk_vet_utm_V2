@@ -14,7 +14,7 @@ import { races_select, furs_select, cantons_select, species_select, parishes_sel
 
 const useReport = () => {
     const { ReportState, setImages, setPet, setUser, setLocation, requestLocationPermission } = useContext(ReportContext);
-    const { user, location } = ReportState
+    const { user, location, pet } = ReportState
     const [currentPosition, setCurrentPosition] = useState(0)
     const [filePath, setFilePath] = useState<Results[]>([])
 
@@ -117,6 +117,39 @@ const useReport = () => {
         setParishes(new_parishs)
     }
 
+    const handleSpeciesChange = (id: number, text: string) => {
+
+        const new_species = species.map(item => {
+            item.active = false;
+            if (item.id === id) {
+                return { ...item, active: true }
+            } else
+                return item
+        })
+
+        setSpecies(new_species)
+
+        setPet({ ...pet, specie: { id, name: text }, race: undefined })
+        const races_ = ConfigState.races.filter(item => item.id_specie === id)
+        setRaces(races_)
+    }
+
+    const handleRaceChange = (id: number, text: string) => {
+
+        const new_races = races.map(item => {
+            item.active = false;
+            if (item.id === id) {
+                return { ...item, active: true }
+            } else
+                return item
+        })
+
+        setRaces(new_races)
+
+        setPet({ ...pet, race: { id, name: text } })
+
+    }
+
     const resetData = () => {
         setFilePath([])
         requestLocationPermission()
@@ -142,6 +175,8 @@ const useReport = () => {
         handleProvinceChange,
         handleCantonChange,
         handleParisheChange,
+        handleSpeciesChange,
+        handleRaceChange
     }
 }
 

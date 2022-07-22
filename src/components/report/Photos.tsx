@@ -1,16 +1,6 @@
-import React, {useState} from 'react'
-import ArrowBack from '@src/assets/icon/arrow-back.svg'
+import React from 'react'
 import {NativeStackScreenProps} from '@react-navigation/native-stack'
-import {
-  Modal,
-  TouchableWithoutFeedback,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-  FlatList,
-  View,
-  StyleSheet,
-} from 'react-native'
+import {TouchableWithoutFeedback, ScrollView, Image, View} from 'react-native'
 import {Results} from '@baronha/react-native-multiple-image-picker'
 interface IProps extends NativeStackScreenProps<any> {
   filePath?: Results[]

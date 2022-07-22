@@ -169,6 +169,42 @@ export interface pet {
     images?: [image]
 }
 
+export interface petLost {
+    pet_id: string,
+    name: string,
+    birth?: string,
+    sex?: string,
+    castrated?: boolean,
+    lost?: false,
+    n_lost?: number,
+    published?: boolean,
+    id_pet_pather?: string,
+    id_pet_mother?: string,
+    id_specie?: number
+    id_race?: number
+    id_fur?: number
+    specie_name?: string,
+    race_name?: string
+    fur_name?: string,
+    user_id?: string,
+    characteristic?: string
+    images?: [image]
+    report?: report
+    report_date: string
+}
+
+export interface report {
+    id: number
+    latitude: number
+    longitude: number
+    active: boolean
+    pet_id: string
+    user_id?: string
+    created_at?: string
+    updated_at?: string
+}
+
+
 export interface specie {
     id: number,
     name: string,
@@ -205,6 +241,7 @@ export interface IconProps {
     height?: number;
     fill?: string;
     active?: boolean;
+    stroke?: string;
 }
 
 export type DrawerContentProps = DrawerContentComponentProps & {

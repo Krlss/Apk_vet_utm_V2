@@ -4,21 +4,18 @@ import {specie} from '@src/types/declare'
 import AppStyles from '@src/themes/AppStyles'
 import {ScrollView} from 'react-native-gesture-handler'
 interface Props {
-  data: [specie] | undefined
+  data: specie[] | undefined
   onPress: (id: number) => void
 }
 
 const HeaderSpecies = ({data, onPress}: Props) => {
   return (
     <View style={{paddingLeft: 20}}>
-      <Text style={{fontSize: 20, fontWeight: 'bold', color: 'black'}}>
-        Especies
-      </Text>
-      <ScrollView horizontal contentContainerStyle={{paddingVertical: 10}}>
-        {data?.map((item, index) => (
+      <ScrollView horizontal contentContainerStyle={{paddingTop: 10}}>
+        {data?.map(item => (
           <TouchableOpacity
-            key={index}
-            onPress={() => onPress(index)}
+            key={item.id}
+            onPress={() => onPress(item.id)}
             style={{
               marginRight: 10,
               paddingHorizontal: 15,

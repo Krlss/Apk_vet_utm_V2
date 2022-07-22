@@ -26,7 +26,6 @@ const CustomDrawer = () => {
           drawerType: 'slide',
           overlayColor: AppStyles.color.transparent,
           drawerStyle: {
-            flex: 1,
             width: '65%',
             backgroundColor: AppStyles.color.transparent,
           },

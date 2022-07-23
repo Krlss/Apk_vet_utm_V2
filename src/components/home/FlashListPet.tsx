@@ -11,7 +11,8 @@ import {
 import {petLost} from '@src/types/declare'
 import {FlashList} from '@shopify/flash-list'
 import AppStyles from '@src/themes/AppStyles'
-import {getDateDiff} from '@src/utils/date'
+import {getDateDiffBirth} from '@src/utils/date'
+import {getSex} from '@src/utils/format'
 import {nColumns} from '@src/utils/grid'
 import * as Animatable from 'react-native-animatable'
 
@@ -20,11 +21,13 @@ const FlatListPet = ({
   onRefresh,
   isFetching,
   onEndReached,
+  navigation,
 }: {
   data: petLost[]
   onRefresh: () => void
   isFetching: boolean
   onEndReached: () => void
+  navigation: any
 }) => {
   const {width} = useWindowDimensions()
 
@@ -54,48 +57,46 @@ const FlatListPet = ({
         }
         renderItem={({item, index}) => (
           <Animatable.View
+            key={item.pet_id}
             style={{
               flex: 1,
+              margin: 5,
+              padding: 10,
+              borderRadius: 10,
+              backgroundColor: AppStyles.color.bg_low_gray,
+              elevation: 2,
             }}
-            animation="zoomInRight"
+            animation="zoomIn"
             duration={1000}
             delay={index * 300}>
             <TouchableOpacity
-              style={{
-                margin: 5,
-                padding: 15,
-                backgroundColor: AppStyles.color.bg_low_gray,
-                justifyContent: 'center',
-                alignItems: 'center',
+              onPress={() => {
+                navigation.navigate('PET_DETAIL', {
+                  pet: item,
+                  index: index,
+                })
               }}>
-              {item.report_date ? (
-                <Text
-                  style={{
-                    color: 'gray',
-                    alignSelf: 'flex-start',
-                    fontSize: 13,
-                  }}>
-                  {getDateDiff(item.report_date)}
-                </Text>
-              ) : (
-                <View style={{paddingTop: 20}} />
-              )}
               <Image
                 source={
                   item.images?.length
                     ? {uri: item.images[0].url}
                     : require('../../assets/img/photo.png')
                 }
-                style={{width: 100, height: 100, marginVertical: 10}}
+                style={{
+                  width: '100%',
+                  height: 200,
+                  marginBottom: 10,
+                  borderRadius: 10,
+                }}
               />
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <View>
                 <Text
                   numberOfLines={1}
                   style={{
                     color: 'black',
                     fontWeight: 'bold',
                     fontSize: 16,
-                    textTransform: 'uppercase',
+                    textTransform: 'capitalize',
                   }}>
                   {item.name}
                 </Text>
@@ -106,22 +107,25 @@ const FlatListPet = ({
                     fontSize: 13,
                     fontWeight: 'bold',
                   }}>
-                  #{item.pet_id}
+                  {item.pet_id}
                 </Text>
-
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    color: 'black',
-                    marginTop: 10,
-                  }}>
-                  {item?.race_name}
-                </Text>
+                {item?.sex || item?.birth ? (
+                  <Text
+                    style={{
+                      color: 'gray',
+                      fontSize: 11,
+                    }}>
+                    {item?.sex ? getSex(item?.sex) : null}
+                    {item?.sex && item?.birth ? <> ● </> : null}
+                    {getDateDiffBirth(item?.birth ?? '')}
+                  </Text>
+                ) : null}
               </View>
             </TouchableOpacity>
           </Animatable.View>
         )}
-        estimatedItemSize={100}
+        estimatedItemSize={250}
+        bounces={false}
         keyExtractor={item => item?.pet_id}
       />
     </View>

@@ -14,16 +14,15 @@ const HeaderSpecies = ({data, onPress}: Props) => {
   const {ConfigState} = useContext(ConfigContext)
 
   return (
-    <View style={{paddingLeft: 20}}>
+    <View style={{paddingLeft: 10}}>
       <ScrollView
         horizontal
-        contentContainerStyle={{paddingTop: 10}}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{padding: 10}}
         scrollEnabled={!ConfigState.loading}>
         {data?.map(item => (
-          <TouchableOpacity
+          <View
             key={item.id}
-            disabled={ConfigState.loading}
-            onPress={() => onPress(item.id)}
             style={{
               marginRight: 10,
               paddingHorizontal: 15,
@@ -32,33 +31,40 @@ const HeaderSpecies = ({data, onPress}: Props) => {
               backgroundColor: item.active
                 ? AppStyles.color.yellow
                 : AppStyles.color.bg_low_gray,
-              flexDirection: 'row',
-              alignItems: 'center',
               opacity: ConfigState.loading ? 0.5 : 1,
+              elevation: ConfigState.loading ? 0 : 2,
             }}>
-            {item.uri && (
-              <Image
-                source={{
-                  uri: item.uri,
-                }}
-                style={{
-                  width: 35,
-                  height: 35,
-                }}
-              />
-            )}
-            <Text
+            <TouchableOpacity
+              disabled={ConfigState.loading}
+              onPress={() => onPress(item.id)}
               style={{
-                fontSize: 16,
-                fontWeight: 'bold',
-                color: item.active
-                  ? AppStyles.color.white
-                  : AppStyles.color.black,
-                marginLeft: 5,
+                flexDirection: 'row',
+                alignItems: 'center',
               }}>
-              {item.name}
-            </Text>
-          </TouchableOpacity>
+              {item.uri && (
+                <Image
+                  source={{
+                    uri: item.uri,
+                  }}
+                  style={{
+                    width: 35,
+                    height: 35,
+                  }}
+                />
+              )}
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                  color: item.active
+                    ? AppStyles.color.white
+                    : AppStyles.color.black,
+                  marginLeft: 5,
+                }}>
+                {item.name}
+              </Text>
+            </TouchableOpacity>
+          </View>
         ))}
       </ScrollView>
     </View>

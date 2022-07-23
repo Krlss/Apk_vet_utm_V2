@@ -2,7 +2,7 @@ import React, {useContext} from 'react'
 import {View} from 'react-native'
 import {createDrawerNavigator} from '@react-navigation/drawer'
 
-import Home from '@src/pages/app/home'
+import StackHome from '@src/navigations/StackHome'
 import AppStyles from '@src/themes/AppStyles'
 import CustomDrawerContent from './content/CustomDrawerContent'
 
@@ -18,7 +18,7 @@ const CustomDrawer = () => {
   return (
     <View style={{flex: 1, backgroundColor: AppStyles.color.bg_low_gray}}>
       <Drawer.Navigator
-        initialRouteName="HOME"
+        initialRouteName="HOME_STACK"
         drawerContent={props => {
           return <CustomDrawerContent {...props} />
         }}
@@ -38,11 +38,9 @@ const CustomDrawer = () => {
           },
         }}>
         <Drawer.Screen
-          name="HOME"
-          component={Home}
-          options={{
-            title: 'INICIO',
-          }}
+          name="HOME_STACK"
+          options={{headerShown: false}}
+          component={StackHome}
         />
         <Drawer.Screen
           name="REPORT"

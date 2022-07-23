@@ -10,7 +10,7 @@ import LabelHomeSkeleton from '@src/components/skeleton/LabelHome'
 import CardLostPetSkeleton from '@src/components/skeleton/CardLostPets'
 import {formatNumber} from '@src/utils/format'
 
-const Home = () => {
+const Home = (props: any) => {
   const {
     species,
     pressSpecie,
@@ -29,7 +29,7 @@ const Home = () => {
   } = useData()
 
   return (
-    <ScrollView contentContainerStyle={{backgroundColor: '#fff', flex: 1}}>
+    <ScrollView contentContainerStyle={{flex: 1}}>
       <SearchHome
         value={query}
         onPressSearch={search}
@@ -54,6 +54,7 @@ const Home = () => {
           style={{
             flexDirection: 'row',
             alignItems: 'center',
+            marginBottom: 10,
           }}>
           <Text
             style={{
@@ -61,7 +62,6 @@ const Home = () => {
               fontWeight: 'bold',
               color: 'black',
               paddingLeft: 20,
-              marginVertical: 10,
             }}>
             Mascotas perdidas
           </Text>
@@ -84,6 +84,7 @@ const Home = () => {
               nextLink && getMoreData()
             }}
             onRefresh={() => setNRefresh(nRefresh + 1)}
+            {...props}
           />
         ) : loading || isFetching ? (
           <CardLostPetSkeleton />

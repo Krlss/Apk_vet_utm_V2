@@ -95,8 +95,13 @@ export type AuthStackProps = {
     LOADING
 }
 
-export type HomeDrawerProps = {
+export type HomeStackProps = {
     HOME,
+    PET_DETAIL,
+}
+
+export type HomeDrawerProps = {
+    HOME_STACK,
     REPORT,
     PROFILE,
     MAP,

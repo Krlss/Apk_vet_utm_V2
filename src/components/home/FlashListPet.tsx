@@ -14,7 +14,6 @@ import AppStyles from '@src/themes/AppStyles'
 import {getDateDiffBirth} from '@src/utils/date'
 import {getSex} from '@src/utils/format'
 import {nColumns} from '@src/utils/grid'
-import * as Animatable from 'react-native-animatable'
 
 const FlatListPet = ({
   data,
@@ -56,7 +55,7 @@ const FlatListPet = ({
           />
         }
         renderItem={({item, index}) => (
-          <Animatable.View
+          <View
             key={item.pet_id}
             style={{
               flex: 1,
@@ -65,10 +64,7 @@ const FlatListPet = ({
               borderRadius: 10,
               backgroundColor: AppStyles.color.bg_low_gray,
               elevation: 2,
-            }}
-            animation="zoomIn"
-            duration={1000}
-            delay={index * 300}>
+            }}>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('PET_DETAIL', {
@@ -122,9 +118,9 @@ const FlatListPet = ({
                 ) : null}
               </View>
             </TouchableOpacity>
-          </Animatable.View>
+          </View>
         )}
-        estimatedItemSize={250}
+        estimatedItemSize={data.length}
         bounces={false}
         keyExtractor={item => item?.pet_id}
       />

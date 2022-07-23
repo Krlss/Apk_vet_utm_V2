@@ -1,5 +1,4 @@
 export const nColumns = (width: number) => {
-    console.log(width)
     if (width < 200) return 1
     if (width < 425) return 2
     if (width < 600) return 3

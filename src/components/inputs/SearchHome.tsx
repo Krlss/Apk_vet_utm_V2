@@ -1,13 +1,13 @@
-import React from 'react'
-import {View, TouchableOpacity, TextInput} from 'react-native'
+import React, {useContext} from 'react'
+import {View, TouchableOpacity, TextInput, Text} from 'react-native'
 import AppStyles from '@src/themes/AppStyles'
 import SearchIcon from '../icons/Search'
-import FilterIcon from '../icons/filter'
 import CrossLightIcon from '../icons/CrossLight'
+import ConfigContext from '@src/contexts/config/ConfigContext'
 
 interface Props {
   onChangeText?: (value: string) => void
-  onPressFilter?: () => void
+  onPressSearch: () => void
   value?: string
   cleanValue?: () => void
 }
@@ -15,9 +15,11 @@ interface Props {
 const SearchHome = ({
   value,
   onChangeText,
-  onPressFilter,
+  onPressSearch,
   cleanValue,
 }: Props) => {
+  const {ConfigState} = useContext(ConfigContext)
+
   return (
     <View style={{paddingHorizontal: 20, marginBottom: 10}}>
       <View
@@ -33,9 +35,10 @@ const SearchHome = ({
         <SearchIcon fill={AppStyles.color.gray} width={20} height={20} />
         <TextInput
           selectionColor={AppStyles.color.yellow}
-          placeholder="Buscar"
+          placeholder="Busca una mascota perdida"
           placeholderTextColor={AppStyles.color.gray}
           onChangeText={onChangeText}
+          editable={!ConfigState.loading}
           value={value}
           style={{
             flex: 1,
@@ -46,7 +49,13 @@ const SearchHome = ({
           }}
         />
         {value ? (
-          <TouchableOpacity onPress={cleanValue} style={{marginRight: 10}}>
+          <TouchableOpacity
+            disabled={ConfigState.loading}
+            onPress={cleanValue}
+            style={{
+              marginRight: 10,
+              paddingVertical: 5,
+            }}>
             <CrossLightIcon
               stroke={AppStyles.color.gray}
               fill={AppStyles.color.black}
@@ -55,8 +64,18 @@ const SearchHome = ({
             />
           </TouchableOpacity>
         ) : null}
-        <TouchableOpacity onPress={onPressFilter}>
-          <FilterIcon fill={AppStyles.color.black} width={20} height={20} />
+        <TouchableOpacity
+          disabled={!value || ConfigState.loading}
+          style={{paddingVertical: 10}}
+          onPress={onPressSearch}>
+          <Text
+            style={{
+              color: 'black',
+              opacity: value ? 1 : 0.5,
+              fontWeight: value ? 'bold' : 'normal',
+            }}>
+            Buscar
+          </Text>
         </TouchableOpacity>
       </View>
     </View>

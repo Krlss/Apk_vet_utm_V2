@@ -14,30 +14,42 @@ const Home = () => {
   const {
     species,
     pressSpecie,
-    pets,
     query,
     setQuery,
     loading,
     data,
     nRefresh,
     setNRefresh,
+    isFetching,
+    nextLink,
+    totalData,
+    getMoreData,
+    search,
+    pressSearch,
   } = useData()
 
   return (
     <ScrollView contentContainerStyle={{backgroundColor: '#fff', flex: 1}}>
       <SearchHome
         value={query}
-        onChangeText={(value: string) => setQuery(value)}
-        cleanValue={() => setQuery('')}
+        onPressSearch={search}
+        onChangeText={(value: string) => {
+          if (!value && pressSearch) setNRefresh(nRefresh + 1)
+          setQuery(value)
+        }}
+        cleanValue={() => {
+          if (pressSearch) setNRefresh(nRefresh + 1)
+          setQuery('')
+        }}
       />
 
-      {loading ? (
+      {loading && isFetching ? (
         <SpeciesHomeSkeleton />
       ) : (
         <HeaderSpecies data={species} onPress={pressSpecie} />
       )}
 
-      {pets.length > 0 ? (
+      {data.length > 0 ? (
         <View
           style={{
             flexDirection: 'row',
@@ -53,21 +65,27 @@ const Home = () => {
             }}>
             Mascotas perdidas
           </Text>
-          <Text style={{fontSize: 14, color: 'gray', marginLeft: 5}}>
-            [{formatNumber(data.length)}]
-          </Text>
+          {totalData || data.length ? (
+            <Text style={{fontSize: 14, color: 'gray', marginLeft: 5}}>
+              [{formatNumber(totalData || data.length)}]
+            </Text>
+          ) : null}
         </View>
-      ) : loading ? (
+      ) : loading || isFetching ? (
         <LabelHomeSkeleton />
       ) : null}
 
       <ScrollView contentContainerStyle={{paddingHorizontal: 15, flex: 1}}>
-        {pets.length ? (
+        {data.length ? (
           <FlashListPet
-            data={pets}
+            data={data}
+            isFetching={isFetching}
+            onEndReached={() => {
+              nextLink && getMoreData()
+            }}
             onRefresh={() => setNRefresh(nRefresh + 1)}
           />
-        ) : loading ? (
+        ) : loading || isFetching ? (
           <CardLostPetSkeleton />
         ) : (
           <NotPets />

@@ -4,11 +4,11 @@ import Home from '@src/pages/app/home'
 import PetDetailLost from '@src/pages/app/pet/detail_pet_lost'
 import {HomeStackProps} from '@src/types/declare'
 import Header from '@src/components/headers/Header'
-
+import AppStyles from '@src/themes/AppStyles'
+import Photos from '@src/components/photos/Photos'
 const Stack = createNativeStackNavigator<HomeStackProps>()
 
-const StackAuth = (route: any) => {
-  console.log(route)
+const StackAuth = () => {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -25,6 +25,15 @@ const StackAuth = (route: any) => {
       <Stack.Screen
         name="PET_DETAIL"
         component={PetDetailLost}
+        options={{
+          headerTransparent: true,
+          title: '',
+          headerTintColor: AppStyles.color.yellow,
+        }}
+      />
+      <Stack.Screen
+        name="IMAGES"
+        component={Photos}
         options={{headerTransparent: true, title: ''}}
       />
     </Stack.Navigator>

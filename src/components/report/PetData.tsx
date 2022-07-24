@@ -164,8 +164,16 @@ const PetDataReport = ({
       <InputFloatingWithCheckRight
         label="Castrado"
         editable={false}
-        value={pet?.castrated}
-        onPress={value => handleChange('castrated', value ? 'Si' : 'No')}
+        value={
+          pet?.castrated != undefined
+            ? pet?.castrated === true
+              ? 'Si'
+              : 'No'
+            : ''
+        }
+        onPress={value =>
+          handleChange('castrated', value === true ? 'Si' : 'No')
+        }
       />
 
       <InputFloatingLabel

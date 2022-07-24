@@ -5,7 +5,7 @@ import AppStyles from '@src/themes/AppStyles'
 interface Props {
   label: string
   editable?: boolean
-  value?: boolean
+  value?: string
   children?: JSX.Element
   onPress: (value: boolean) => void
   disabled?: boolean
@@ -22,6 +22,7 @@ const InputFloatingWithCheckRight = ({
   ...props
 }: Props) => {
   const handlePress = (value: boolean) => {
+    console.log(value)
     onPress(value)
   }
   return (
@@ -33,12 +34,12 @@ const InputFloatingWithCheckRight = ({
       }}>
       <InputFloatingLabel
         editable={editable}
-        value={value ? 'Si' : 'No'}
+        value={value === 'Si' ? 'Si' : value === 'No' ? 'No' : ''}
         label={label}
         {...props}
       />
       <Switch
-        value={value}
+        value={value === 'Si' ? true : false}
         onValueChange={handlePress}
         style={{
           marginTop: 15,

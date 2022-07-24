@@ -1,48 +1,35 @@
 import { useState, useRef, useEffect } from 'react'
-import { Dimensions, FlatList } from 'react-native'
+import { Dimensions, Animated, FlatList } from 'react-native'
 
 const usePhotos = (index: number) => {
-    const { width, height } = Dimensions.get('screen')
-    const IMAGE_SIZE = 80
-    const SPACING = 10
+    const { width, height } = Dimensions.get('window')
 
-    const topRef = useRef<FlatList>(null)
-    const bottomRef = useRef<FlatList>(null)
+    const ScrollX = useRef(new Animated.Value(0)).current
+    const slideRef = useRef<FlatList>(null)
+    const [currentIndex, setCurrentIndex] = useState(0)
 
-    const [currentIndex, setCurrentIndex] = useState(index)
-
-    const scrollToActiveIndex = (index: number) => {
-        setCurrentIndex(index)
-        topRef?.current?.scrollToOffset({
-            offset: index * width,
-            animated: true,
-        })
-        if (index * (IMAGE_SIZE + SPACING) - IMAGE_SIZE / 2 > width / 2) {
-            bottomRef?.current?.scrollToOffset({
-                offset: index * (IMAGE_SIZE + SPACING) - width / 2 + IMAGE_SIZE / 2,
-                animated: true,
-            })
-        } else {
-            bottomRef?.current?.scrollToOffset({
-                offset: 0,
-                animated: true,
-            })
-        }
-    }
+    const viewableItemsChanged = useRef(({ viewableItems }: { viewableItems: any }) => {
+        setCurrentIndex(viewableItems[0]?.index ?? 0)
+    }).current
 
     useEffect(() => {
-        scrollToActiveIndex(index)
+        setCurrentIndex(index)
+        slideRef.current?.scrollToOffset({
+            animated: true,
+            offset: index * width
+        })
     }, [])
+
+    const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current
 
     return {
         currentIndex,
-        scrollToActiveIndex,
         width,
         height,
-        topRef,
-        bottomRef,
-        IMAGE_SIZE,
-        SPACING,
+        ScrollX,
+        viewableItemsChanged,
+        viewConfig,
+        slideRef
     }
 }
 

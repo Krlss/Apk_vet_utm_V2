@@ -98,6 +98,7 @@ export type AuthStackProps = {
 export type HomeStackProps = {
     HOME,
     PET_DETAIL,
+    IMAGES
 }
 
 export type HomeDrawerProps = {
@@ -193,7 +194,7 @@ export interface petLost {
     fur_name?: string,
     user_id?: string,
     characteristic?: string
-    images?: [image]
+    images: image[]
     report?: report
     report_date: string
 }

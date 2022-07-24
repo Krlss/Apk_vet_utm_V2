@@ -66,6 +66,13 @@ const ConfigProvider = (props: props) => {
     Keyboard.dismiss()
   }
 
+  const headerShown = (status: boolean) => {
+    dispatch({
+      type: 'SET_HEADER_SHOWN',
+      payload: status,
+    })
+  }
+
   return (
     <ConfigContext.Provider
       value={{
@@ -74,6 +81,7 @@ const ConfigProvider = (props: props) => {
         toggleKeyboard,
         KeyboardDismiss: KeyboardDismiss,
         toggleLoading,
+        headerShown,
       }}>
       {props.children}
     </ConfigContext.Provider>

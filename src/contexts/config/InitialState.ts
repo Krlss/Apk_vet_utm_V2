@@ -11,7 +11,8 @@ const InitialState: ConfigContextType = {
     parishes: [],
     species: [],
     races: [],
-    furs: []
+    furs: [],
+    headerShown: false
 }
 
 export default InitialState

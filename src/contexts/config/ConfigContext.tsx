@@ -8,6 +8,7 @@ export type ConfigContextProps = {
   toggleKeyboard: (Keyboard: KeyboardType) => void
   KeyboardDismiss: () => void
   toggleLoading: (status: boolean) => void
+  headerShown: (status: boolean) => void
 }
 
 const ConfigContext = createContext<ConfigContextProps>(

@@ -30,6 +30,11 @@ export default (state: ConfigContextType, action: ConfigActionType) => {
                 races: payload.races,
                 species: payload.species,
             };
+        case "SET_HEADER_SHOWN":
+            return {
+                ...state,
+                headerShown: payload
+            }
         default:
             return state;
     }

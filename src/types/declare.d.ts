@@ -19,6 +19,7 @@ export interface ConfigContextType {
     species: species_select[],
     races: races_select[]
     furs: furs_select[]
+    headerShown: boolean
 }
 
 export interface ReportContextType {
@@ -240,7 +241,7 @@ export interface parish extends basic {
     id_canton: number | undefined;
 }
 
-export type ConfigActionType = | { type: "SET_KEYBOARD_STATUS"; payload: boolean } | { type: "SET_KEYBOARD"; payload: KeyboardType } | { type: "SET_LOADING"; payload: boolean } | typeof SELECTS
+export type ConfigActionType = | { type: "SET_KEYBOARD_STATUS"; payload: boolean } | { type: "SET_KEYBOARD"; payload: KeyboardType } | { type: "SET_LOADING"; payload: boolean } | { type: "SET_HEADER_SHOWN"; payload: boolean } | typeof SELECTS
 export type ReportActionType = | { type: "SET_USER"; payload: user | undefined } | { type: "SET_PET"; payload: pet | undefined } | { type: "SET_LOCATION"; payload: location }
 export interface IconProps {
     width?: number;

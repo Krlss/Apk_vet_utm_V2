@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import Known from '@src/pages/app/report/Known'
@@ -6,7 +6,7 @@ import Unknown from '@src/pages/app/report/Unknown'
 import AppStyles from '@src/themes/AppStyles'
 import Photos from '@src/components/photos/Photos'
 import ReportProvider from '@src/contexts/report/ReportProvider'
-
+import ConfigContext from '@src/contexts/config/ConfigContext'
 const Tab = createMaterialTopTabNavigator()
 const Stack = createNativeStackNavigator()
 
@@ -36,6 +36,7 @@ const KnownStack = () => {
 }
 
 const ReportTabs = () => {
+  const {ConfigState} = useContext(ConfigContext)
   return (
     <ReportProvider>
       <Tab.Navigator
@@ -44,6 +45,7 @@ const ReportTabs = () => {
           tabBarIndicatorContainerStyle: {
             backgroundColor: AppStyles.color.bg_low_gray,
           },
+          swipeEnabled: !ConfigState.loading,
         }}>
         <Tab.Screen
           name="UnknownStack"

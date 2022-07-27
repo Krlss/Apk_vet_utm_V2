@@ -10,18 +10,21 @@ import {
   Animated,
 } from 'react-native'
 import {Results} from '@baronha/react-native-multiple-image-picker'
-import ArrowBack from '@src/assets/icon/arrow-back.svg'
+import ArrowBackIcon from '@src/components/icons/ArrowBack'
 import AppStyles from '@src/themes/AppStyles'
 import PhotosReportsPaginator from '@src/components/paginations/photosReports'
 import usePhotos from '@src/hooks/usePhotos'
+import {petLost} from '@src/types/declare'
+
 import {
   GestureHandlerRootView,
   PinchGestureHandler,
 } from 'react-native-gesture-handler'
 const Photos = ({navigation, route}: any) => {
-  const {filePath, index} = route.params as {
+  const {filePath, index, pet} = route.params as {
     filePath: Results[] | any[]
     index: number
+    pet?: petLost
   }
   const {
     currentIndex,
@@ -39,22 +42,53 @@ const Photos = ({navigation, route}: any) => {
   return (
     <Modal
       transparent
+      animationType="fade"
       style={{
         position: 'relative',
         justifyContent: 'center',
         alignItems: 'center',
       }}>
       <GestureHandlerRootView>
-        <View style={{position: 'absolute', zIndex: 1, flexDirection: 'row'}}>
+        <View
+          style={{
+            position: 'absolute',
+            zIndex: 1,
+            flexDirection: 'row',
+            alignItems: 'center',
+            width: '100%',
+            top: 20,
+          }}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
-            style={{top: 25, left: 20}}>
-            <ArrowBack fill={AppStyles.color.yellow} width={35} height={30} />
+            style={{
+              padding: 5,
+              marginLeft: 20,
+              backgroundColor: 'rgba(0, 0, 0, 0.6)',
+              borderRadius: 20,
+            }}>
+            <ArrowBackIcon fill="white" width={20} height={20} />
           </TouchableOpacity>
-          <Text style={{color: 'white', top: 30, left: width / 2 - 40}}>
+          <Text style={{color: 'white', left: width / 2 - 65}}>
             {currentIndex + 1}/{filePath.length}
           </Text>
         </View>
+        {pet && (
+          <View
+            style={{
+              position: 'absolute',
+              zIndex: 1,
+              width: '100%',
+              top: 60,
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+              backgroundColor: 'rgba(0, 0, 0, 0.6)',
+            }}>
+            <Text style={{color: 'white', textTransform: 'uppercase'}}>
+              {pet?.name}
+            </Text>
+            <Text style={{color: 'white'}}>{pet?.pet_id}</Text>
+          </View>
+        )}
         <FlatList
           data={filePath}
           style={{

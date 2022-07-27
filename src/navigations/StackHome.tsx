@@ -26,9 +26,7 @@ const StackAuth = () => {
         name="PET_DETAIL"
         component={PetDetailLost}
         options={{
-          headerTransparent: true,
-          title: '',
-          headerTintColor: AppStyles.color.yellow,
+          headerShown: false,
         }}
       />
       <Stack.Screen

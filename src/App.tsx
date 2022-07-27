@@ -8,6 +8,8 @@ import StackAuth from '@src/navigations/stackAuth'
 import SplashScreen from 'react-native-splash-screen'
 import Toast from 'react-native-toast-message'
 import {toastConfig} from '@src/components/toast/Custom'
+import {SafeAreaProvider} from 'react-native-safe-area-context'
+
 const MyTheme = {
   ...DefaultTheme,
   colors: {
@@ -21,14 +23,16 @@ const Application = () => {
     SplashScreen.hide()
   }, [])
   return (
-    <ConfigProvider>
-      <AuthProvider>
-        <NavigationContainer theme={MyTheme}>
-          <StackAuth />
-        </NavigationContainer>
-        <Toast config={toastConfig} />
-      </AuthProvider>
-    </ConfigProvider>
+    <SafeAreaProvider>
+      <ConfigProvider>
+        <AuthProvider>
+          <NavigationContainer theme={MyTheme}>
+            <StackAuth />
+          </NavigationContainer>
+          <Toast config={toastConfig} />
+        </AuthProvider>
+      </ConfigProvider>
+    </SafeAreaProvider>
   )
 }
 export default Application

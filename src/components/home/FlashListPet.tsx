@@ -112,7 +112,7 @@ const FlatListPet = ({
                       fontSize: 11,
                     }}>
                     {item?.sex ? getSex(item?.sex) : null}
-                    {item?.sex && item?.birth ? <> ● </> : null}
+                    {item?.sex && item?.birth ? <> - </> : null}
                     {getDateDiffBirth(item?.birth ?? '')}
                   </Text>
                 ) : null}

@@ -136,7 +136,7 @@ export interface RAuth extends LAuth {
 export interface user {
     user_id?: string,
     profile_photo_path?: string,
-    name?: string,
+    name: string,
     last_name1?: string,
     last_name2?: string,
     fullname?: string,
@@ -198,12 +198,13 @@ export interface petLost {
     images: image[]
     report?: report
     report_date: string
+    user?: user
 }
 
 export interface report {
     id: number
-    latitude: number
-    longitude: number
+    latitude: string
+    longitude: string
     active: boolean
     pet_id: string
     user_id?: string

@@ -10,6 +10,7 @@ import {getDateDiff, getDateDiffBirth} from '@src/utils/date'
 import {getSex} from '@src/utils/format'
 import CardsInfoPetLost from '@src/components/labels/CardsInfoPetLost'
 import UserCardPetLost from '@src/components/labels/UserCardPetLost'
+import PingGoogleMaps from '@src/components/icons/PingGoogleMaps'
 
 const PetDetailLost = ({navigation, route}: any) => {
   const {pet} = route.params as {pet: petLost}
@@ -57,8 +58,8 @@ const PetDetailLost = ({navigation, route}: any) => {
           onPress={() => navigation.goBack()}
           style={{
             marginLeft: 20,
-            width: 25,
-            height: 25,
+            width: 35,
+            height: 35,
             borderRadius: 20,
             backgroundColor: 'rgba(0, 0, 0, 0.6)',
             justifyContent: 'center',
@@ -76,10 +77,10 @@ const PetDetailLost = ({navigation, route}: any) => {
               })
             }}
             style={{
-              marginRight: 20,
-              width: 25,
-              height: 25,
-              borderRadius: 5,
+              marginRight: 15,
+              width: 35,
+              height: 35,
+              borderRadius: 10,
               backgroundColor: 'rgba(0, 0, 0, 0.6)',
               justifyContent: 'center',
               alignItems: 'center',
@@ -88,6 +89,26 @@ const PetDetailLost = ({navigation, route}: any) => {
           </TouchableOpacity>
         ) : null}
       </View>
+
+      {report ? (
+        <TouchableOpacity
+          onPress={() => navigation.navigate('MAP_PET_LOST', {pet, report})}
+          style={{
+            zIndex: 3,
+            position: 'absolute',
+            top: HEADER_HEIGHT_EXPANDED - 50,
+            bottom: HEADER_HEIGHT_EXPANDED,
+            right: 20,
+            width: 35,
+            height: 35,
+            borderRadius: 20,
+            backgroundColor: '#fff',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <PingGoogleMaps width={25} height={25} />
+        </TouchableOpacity>
+      ) : null}
 
       {/* Name + petID scroll view animated */}
       <Animated.View
@@ -163,7 +184,7 @@ const PetDetailLost = ({navigation, route}: any) => {
           ],
           {useNativeDriver: true},
         )}>
-        <View style={{paddingVertical: 20}}>
+        <View style={{paddingVertical: 20, flex: 1}}>
           <View style={{paddingHorizontal: 20}}>
             {/* Name pet */}
             <Text
@@ -229,9 +250,9 @@ const PetDetailLost = ({navigation, route}: any) => {
                         uri: specie_image,
                       }}
                       style={{
-                        width: 30,
-                        height: 30,
-                        marginRight: 10,
+                        width: 25,
+                        height: 25,
+                        marginRight: 5,
                       }}
                     />
                   ) : null}
@@ -244,9 +265,9 @@ const PetDetailLost = ({navigation, route}: any) => {
                   <Image
                     source={require('@src/assets/img/sexo.png')}
                     style={{
-                      width: 30,
-                      height: 30,
-                      marginRight: 10,
+                      width: 25,
+                      height: 25,
+                      marginRight: 5,
                     }}
                   />
                 </CardsInfoPetLost>
@@ -259,9 +280,9 @@ const PetDetailLost = ({navigation, route}: any) => {
                   <Image
                     source={require('@src/assets/img/calendar.png')}
                     style={{
-                      width: 30,
-                      height: 30,
-                      marginRight: 10,
+                      width: 25,
+                      height: 25,
+                      marginRight: 5,
                     }}
                   />
                 </CardsInfoPetLost>

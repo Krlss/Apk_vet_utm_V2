@@ -10,7 +10,7 @@ import {HomeDrawerProps} from '@src/types/declare'
 import Header from '@src/components/headers/Header'
 import ReportTabs from './ReportTabs'
 import ConfigContext from '@src/contexts/config/ConfigContext'
-import MapPage from '@src/pages/app/maps/map'
+import MapPage from '@src/pages/app/maps/map_pet_lost'
 
 const Drawer = createDrawerNavigator<HomeDrawerProps>()
 

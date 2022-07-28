@@ -100,6 +100,7 @@ export type HomeStackProps = {
     HOME,
     PET_DETAIL,
     IMAGES
+    MAP_PET_LOST
 }
 
 export type HomeDrawerProps = {

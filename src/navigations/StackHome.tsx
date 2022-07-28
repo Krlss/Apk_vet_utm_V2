@@ -4,7 +4,7 @@ import Home from '@src/pages/app/home'
 import PetDetailLost from '@src/pages/app/pet/detail_pet_lost'
 import {HomeStackProps} from '@src/types/declare'
 import Header from '@src/components/headers/Header'
-import AppStyles from '@src/themes/AppStyles'
+import MapPage from '@src/pages/app/maps/map_pet_lost'
 import Photos from '@src/components/photos/Photos'
 const Stack = createNativeStackNavigator<HomeStackProps>()
 
@@ -27,6 +27,14 @@ const StackAuth = () => {
         component={PetDetailLost}
         options={{
           headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="MAP_PET_LOST"
+        component={MapPage}
+        options={{
+          headerTransparent: true,
+          title: 'Ultima ubicación',
         }}
       />
       <Stack.Screen

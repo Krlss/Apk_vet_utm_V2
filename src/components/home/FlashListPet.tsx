@@ -64,6 +64,7 @@ const FlatListPet = ({
               borderRadius: 10,
               backgroundColor: AppStyles.color.bg_low_gray,
               elevation: 2,
+              minHeight: 285,
             }}>
             <TouchableOpacity
               onPress={() => {
@@ -113,7 +114,7 @@ const FlatListPet = ({
                     }}>
                     {item?.sex ? getSex(item?.sex) : null}
                     {item?.sex && item?.birth ? <> - </> : null}
-                    {getDateDiffBirth(item?.birth ?? '')}
+                    {item?.birth && getDateDiffBirth(item?.birth ?? '')}
                   </Text>
                 ) : null}
               </View>

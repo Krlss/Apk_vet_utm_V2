@@ -13,7 +13,7 @@ const CardLostPetSkeleton = () => {
         <View
           style={{
             width: width / 2 - 35,
-            height: 185,
+            height: 285,
             marginRight: 10,
             borderRadius: 10,
             margin: 10,
@@ -22,7 +22,7 @@ const CardLostPetSkeleton = () => {
         <View
           style={{
             width: width / 2 - 35,
-            height: 185,
+            height: 285,
             marginRight: 10,
             borderRadius: 10,
             margin: 10,
@@ -36,7 +36,7 @@ const CardLostPetSkeleton = () => {
         <View
           style={{
             width: width / 2 - 35,
-            height: 185,
+            height: 285,
             marginRight: 10,
             borderRadius: 10,
             margin: 10,
@@ -45,7 +45,7 @@ const CardLostPetSkeleton = () => {
         <View
           style={{
             width: width / 2 - 35,
-            height: 185,
+            height: 285,
             marginRight: 10,
             borderRadius: 10,
             margin: 10,
@@ -60,7 +60,7 @@ const CardLostPetSkeleton = () => {
         <View
           style={{
             width: width / 2 - 35,
-            height: 185,
+            height: 285,
             marginRight: 10,
             borderRadius: 10,
             margin: 10,
@@ -69,7 +69,7 @@ const CardLostPetSkeleton = () => {
         <View
           style={{
             width: width / 2 - 35,
-            height: 185,
+            height: 285,
             marginRight: 10,
             borderRadius: 10,
             margin: 10,

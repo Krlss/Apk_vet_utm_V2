@@ -140,7 +140,7 @@ export interface user {
     last_name1?: string,
     last_name2?: string,
     fullname?: string,
-    email?: string,
+    email: string,
     id_parish?: number,
     id_canton?: number,
     id_province?: number,
@@ -198,6 +198,7 @@ export interface petLost {
     images: image[]
     report?: report
     report_date: string
+    specie_image?: null
     user?: user
 }
 

@@ -60,7 +60,9 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
             label="Mapa"
             nameIcon="map"
             active={false}
-            onPress={() => console.log('Mapa')}
+            onPress={() => {
+              props.navigation.navigate('MAP')
+            }}
           />
 
           {!AuthState?.user?.user_id ? (

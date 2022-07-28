@@ -1,38 +1,15 @@
 import React, {useRef} from 'react'
-import {
-  View,
-  Text,
-  Animated,
-  StyleSheet,
-  ImageBackground,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native'
-import MapView, {Marker} from 'react-native-maps'
+import {View, Text, Animated, TouchableOpacity, Image} from 'react-native'
 import {petLost} from '@src/types/declare'
 import usePhotos from '@src/hooks/usePhotos'
 import FlatListDetailPetLost from './FlatListDetailPetLost'
 import AppStyles from '@src/themes/AppStyles'
-import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import ArrowBack from '@src/components/icons/ArrowBack'
 import ImageExpandIcon from '@src/components/icons/ImageExpand'
 import {getDateDiff, getDateDiffBirth} from '@src/utils/date'
 import {getSex} from '@src/utils/format'
-
-function generateTweets(limit: number) {
-  return new Array(limit).fill(0).map((_, index) => {
-    const repetitions = Math.floor(Math.random() * 3) + 1
-
-    return {
-      key: index.toString(),
-      text: 'Lorem ipsum dolor amet '.repeat(repetitions),
-      author: 'Arnaud',
-      tag: 'eveningkid',
-    }
-  })
-}
-
-const TWEETS = generateTweets(30)
+import CardsInfoPetLost from '@src/components/labels/CardsInfoPetLost'
+import UserCardPetLost from '@src/components/labels/UserCardPetLost'
 
 const PetDetailLost = ({navigation, route}: any) => {
   const {pet} = route.params as {pet: petLost}
@@ -50,25 +27,22 @@ const PetDetailLost = ({navigation, route}: any) => {
     specie_name,
     report,
     user,
+    specie_image,
   } = pet
 
-  const {
-    ScrollX,
-    currentIndex,
-    width,
-    height,
-    slideRef,
-    viewConfig,
-    viewableItemsChanged,
-  } = usePhotos(0)
+  const {width, height} = usePhotos(0)
 
-  const HEADER_HEIGHT_EXPANDED = 200,
-    HEADER_HEIGHT_NARROWED = 100
+  const HEADER_HEIGHT_EXPANDED = height / 2
   const scrollY = useRef(new Animated.Value(0)).current
-  console.log(report)
 
   return (
-    <View style={{backgroundColor: AppStyles.color.bg_low_gray, flex: 1}}>
+    <View
+      style={{
+        flex: 1,
+        position: 'relative',
+        backgroundColor: AppStyles.color.bg_low_gray,
+      }}>
+      {/* Arrow back + expanded button image */}
       <View
         style={{
           zIndex: 2,
@@ -115,11 +89,12 @@ const PetDetailLost = ({navigation, route}: any) => {
         ) : null}
       </View>
 
+      {/* Name + petID scroll view animated */}
       <Animated.View
         style={{
           zIndex: 2,
           position: 'absolute',
-          top: HEADER_HEIGHT_EXPANDED,
+          top: HEADER_HEIGHT_EXPANDED - 75,
           left: 20,
           width: '100%',
           alignItems: 'flex-start',
@@ -165,7 +140,6 @@ const PetDetailLost = ({navigation, route}: any) => {
         images={images}
         navigation={navigation}
         HEADER_HEIGHT_EXPANDED={HEADER_HEIGHT_EXPANDED}
-        HEADER_HEIGHT_NARROWED={HEADER_HEIGHT_NARROWED}
       />
 
       <Animated.ScrollView
@@ -173,14 +147,11 @@ const PetDetailLost = ({navigation, route}: any) => {
         style={{
           flex: 1,
           position: 'absolute',
-          top: HEADER_HEIGHT_NARROWED + HEADER_HEIGHT_EXPANDED - 15,
-          width: '100%',
-          height: '100%',
+          top: HEADER_HEIGHT_EXPANDED,
+          bottom: 0,
+          left: 0,
+          right: 0,
           backgroundColor: AppStyles.color.bg_low_gray,
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
-          zIndex: 1,
-          padding: 20,
         }}
         onScroll={Animated.event(
           [
@@ -192,181 +163,134 @@ const PetDetailLost = ({navigation, route}: any) => {
           ],
           {useNativeDriver: true},
         )}>
-        <View>
-          <Text
-            numberOfLines={1}
-            style={[
-              styles.text,
-              {
+        <View style={{paddingVertical: 20}}>
+          <View style={{paddingHorizontal: 20}}>
+            {/* Name pet */}
+            <Text
+              numberOfLines={1}
+              style={{
                 fontSize: 24,
                 fontWeight: 'bold',
-                marginTop: 10,
                 textTransform: 'capitalize',
-              },
-            ]}>
-            {name}
-          </Text>
-
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <Text
-              style={[
-                styles.text,
-                {
-                  fontSize: 15,
-                  color: 'gray',
-                },
-              ]}>
-              {pet_id}
+                color: 'black',
+              }}>
+              {name}
             </Text>
 
-            {report_date ? (
-              <Text
-                style={[
-                  styles.text,
-                  {marginBottom: 15, fontSize: 15, color: 'gray'},
-                ]}>
-                {getDateDiff(report_date)}
-              </Text>
-            ) : null}
-          </View>
-
-          {specie_name || race_name ? (
-            <>
-              <View
-                style={{
-                  flexDirection: 'row',
-                }}>
-                <Text
-                  style={{
-                    color: 'gray',
-                    fontWeight: 'normal',
-                  }}>
-                  {specie_name}
-                </Text>
-                {specie_name && race_name ? (
-                  <Text style={{color: 'gray'}}>{' - '}</Text>
-                ) : null}
-                <Text
-                  style={{
-                    color: 'gray',
-                    fontWeight: 'normal',
-                  }}>
-                  {race_name}
-                </Text>
-              </View>
-            </>
-          ) : null}
-
-          {birth || sex ? (
-            <>
-              <View
-                style={{
-                  flexDirection: 'row',
-                }}>
-                {sex ? (
-                  <Text
-                    style={{
-                      color: 'gray',
-                      fontWeight: 'normal',
-                    }}>
-                    {getSex(sex)}
-                  </Text>
-                ) : null}
-                {birth && sex ? (
-                  <Text style={{color: 'gray'}}>{' - '}</Text>
-                ) : null}
-                {birth ? (
-                  <Text
-                    style={{
-                      color: 'gray',
-                      fontWeight: 'normal',
-                    }}>
-                    {getDateDiffBirth(birth)}
-                  </Text>
-                ) : null}
-              </View>
-            </>
-          ) : null}
-          <Text
-            style={{
-              color: 'black',
-              marginTop: 10,
-              textTransform: 'capitalize',
-            }}>
-            {characteristic}
-          </Text>
-          {user ? (
+            {/* ID and created report date */}
             <View
               style={{
                 flexDirection: 'row',
+                justifyContent: 'space-between',
                 alignItems: 'center',
-                marginTop: 20,
+                marginBottom: 10,
               }}>
               <Text
                 style={{
-                  backgroundColor: AppStyles.color.yellow,
-                  alignSelf: 'flex-start',
-                  paddingVertical: 10,
-                  paddingHorizontal: 15,
-                  textTransform: 'uppercase',
-                  fontWeight: 'bold',
-                  fontSize: 20,
-                  borderRadius: 50,
-                  marginRight: 10,
+                  fontSize: 15,
+                  color: 'gray',
                 }}>
-                {user?.name[0]}
+                {pet_id}
               </Text>
-              <View>
-                <Text
-                  numberOfLines={1}
-                  style={{color: 'black', fontWeight: 'bold'}}>
-                  {user?.email}
+
+              {report_date ? (
+                <Text style={{fontSize: 15, color: 'gray'}}>
+                  {getDateDiff(report_date)}
                 </Text>
-                <Text style={{color: 'gray'}}>Dueño</Text>
-              </View>
+              ) : null}
             </View>
-          ) : null}
-          <View
-            style={{
-              height: '100%',
-              width: '100%',
-              marginTop: user || characteristic ? 20 : 0,
-            }}>
-            {report ? (
-              <>
-                <Text
-                  style={{
-                    color: 'black',
-                    fontWeight: 'bold',
-                    textAlign: 'right',
-                    marginBottom: 5,
-                  }}>
-                  Última ubicación de la mascota
-                </Text>
-                <MapView
-                  style={{width: '100%', height: 200}}
-                  initialRegion={{
-                    latitude: parseFloat(report?.latitude),
-                    longitude: parseFloat(report?.longitude),
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
-                  }}>
-                  <Marker
-                    draggable={false}
-                    coordinate={{
-                      latitude: parseFloat(report?.latitude),
-                      longitude: parseFloat(report?.longitude),
+          </View>
+
+          {/* characteristic pet */}
+          <View style={{paddingHorizontal: 15}}>
+            {characteristic ? (
+              <Text
+                style={{
+                  color: 'gray',
+                  textTransform: 'capitalize',
+                  paddingHorizontal: 5,
+                  marginBottom: 10,
+                }}>
+                {characteristic}
+              </Text>
+            ) : null}
+
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+              }}>
+              {specie_name ? (
+                <CardsInfoPetLost label="Especie" value={specie_name}>
+                  {specie_image ? (
+                    <Image
+                      source={{
+                        uri: specie_image,
+                      }}
+                      style={{
+                        width: 30,
+                        height: 30,
+                        marginRight: 10,
+                      }}
+                    />
+                  ) : null}
+                </CardsInfoPetLost>
+              ) : (
+                <CardsInfoPetLost label="Especie" value="Sin especificar" />
+              )}
+              {sex ? (
+                <CardsInfoPetLost label="Sexo" value={getSex(sex)}>
+                  <Image
+                    source={require('@src/assets/img/sexo.png')}
+                    style={{
+                      width: 30,
+                      height: 30,
+                      marginRight: 10,
                     }}
                   />
-                </MapView>
-              </>
-            ) : null}
+                </CardsInfoPetLost>
+              ) : (
+                <CardsInfoPetLost label="Sexo" value="Sin especificar" />
+              )}
+
+              {birth ? (
+                <CardsInfoPetLost label="Edad" value={getDateDiffBirth(birth)}>
+                  <Image
+                    source={require('@src/assets/img/calendar.png')}
+                    style={{
+                      width: 30,
+                      height: 30,
+                      marginRight: 10,
+                    }}
+                  />
+                </CardsInfoPetLost>
+              ) : (
+                <CardsInfoPetLost label="Edad" value="Sin especificar" />
+              )}
+            </View>
+
+            {race_name ? (
+              <CardsInfoPetLost label="Raza" value={race_name}>
+                <Image
+                  source={require('@src/assets/img/breed.png')}
+                  style={{
+                    width: 30,
+                    height: 30,
+                    marginRight: 10,
+                  }}
+                />
+              </CardsInfoPetLost>
+            ) : (
+              <CardsInfoPetLost label="Raza" value="Sin especificar" />
+            )}
           </View>
+
+          {user ? (
+            <UserCardPetLost user={{email: user.email}} bool={true} />
+          ) : (
+            <UserCardPetLost user={{email: 'Sin especificar'}} bool={false} />
+          )}
         </View>
       </Animated.ScrollView>
     </View>
@@ -374,24 +298,3 @@ const PetDetailLost = ({navigation, route}: any) => {
 }
 
 export default PetDetailLost
-
-const styles = StyleSheet.create({
-  text: {
-    color: 'black',
-  },
-  username: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: -3,
-  },
-  tweetsCount: {
-    fontSize: 13,
-  },
-  tweet: {
-    flexDirection: 'row',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: 'rgba(255, 255, 255, 0.25)',
-  },
-})

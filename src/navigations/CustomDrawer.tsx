@@ -10,6 +10,7 @@ import {HomeDrawerProps} from '@src/types/declare'
 import Header from '@src/components/headers/Header'
 import ReportTabs from './ReportTabs'
 import ConfigContext from '@src/contexts/config/ConfigContext'
+import MapPage from '@src/pages/app/maps/map'
 
 const Drawer = createDrawerNavigator<HomeDrawerProps>()
 
@@ -47,6 +48,13 @@ const CustomDrawer = () => {
           component={ReportTabs}
           options={{
             title: 'REPORTE',
+          }}
+        />
+        <Drawer.Screen
+          name="MAP"
+          component={MapPage}
+          options={{
+            headerShown: false,
           }}
         />
       </Drawer.Navigator>

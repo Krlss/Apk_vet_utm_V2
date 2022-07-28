@@ -1,16 +1,7 @@
 import React from 'react'
-import {
-  ImageBackground,
-  TouchableWithoutFeedback,
-  Animated,
-  Image,
-  View,
-} from 'react-native'
+import {TouchableWithoutFeedback, Image} from 'react-native'
 import {image} from '@src/types/declare'
 import {petLost} from '@src/types/declare'
-
-const AnimatedImageBackground =
-  Animated.createAnimatedComponent(ImageBackground)
 
 const ImagesPetDetailLost = ({
   navigation,
@@ -19,7 +10,6 @@ const ImagesPetDetailLost = ({
   item,
   width,
   HEADER_HEIGHT_EXPANDED,
-  HEADER_HEIGHT_NARROWED,
   pet,
 }: {
   navigation: any
@@ -28,7 +18,6 @@ const ImagesPetDetailLost = ({
   item: image
   width: number
   HEADER_HEIGHT_EXPANDED: number
-  HEADER_HEIGHT_NARROWED: number
   pet: petLost
 }) => {
   return (
@@ -43,8 +32,9 @@ const ImagesPetDetailLost = ({
       }}>
       <Image
         style={{
+          flex: 1,
           width,
-          height: HEADER_HEIGHT_EXPANDED + HEADER_HEIGHT_NARROWED,
+          height: HEADER_HEIGHT_EXPANDED,
           backgroundColor: '#ddd',
         }}
         source={{uri: item.url}}

@@ -10,7 +10,8 @@ import {HomeDrawerProps} from '@src/types/declare'
 import Header from '@src/components/headers/Header'
 import ReportTabs from './ReportTabs'
 import ConfigContext from '@src/contexts/config/ConfigContext'
-import MapPage from '@src/pages/app/maps/map_pet_lost'
+import MapPage from '@src/pages/app/maps/map'
+import UserProfileStack from './UserProfile'
 
 const Drawer = createDrawerNavigator<HomeDrawerProps>()
 
@@ -38,6 +39,11 @@ const CustomDrawer = () => {
             enabled: !ConfigState.loading,
           },
         }}>
+        <Drawer.Screen
+          name="STACK_USER_PROFILE"
+          component={UserProfileStack}
+          options={{headerShown: false}}
+        />
         <Drawer.Screen
           name="HOME_STACK"
           options={{headerShown: false}}

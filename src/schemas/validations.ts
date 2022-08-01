@@ -12,10 +12,15 @@ export const password = yup.string().
     .max(50, 'La contraseña es muy larga')
     .required('Digita una contraseña')
 
+
 export const passwordRegex = password
     .matches(lowercase, 'La contraseña debe tener al menos una letra minúscula')
     .matches(uppercase, 'La contraseña debe tener al menos una letra mayúscula')
     .matches(number, 'La contraseña debe tener al menos un número')
+
+export const confirmPassword = password
+    .oneOf([yup.ref('password'), null], 'Las contraseñas no coinciden')
+    .required('Digita la contraseña nuevamente')
 
 export const user_id = yup.string()
     .matches(onlyNumber, 'La CI/RUC debe contener solo números')

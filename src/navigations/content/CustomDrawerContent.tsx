@@ -31,7 +31,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
           <ItemsDrawer
             label="Inicio"
             nameIcon="home"
-            active={props.state.index === 0}
+            active={props.state.index === 1}
             onPress={() => {
               props.navigation.navigate('HOME')
             }}
@@ -40,7 +40,7 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
           <ItemsDrawer
             label="Reporte"
             nameIcon="report"
-            active={props.state.index === 1}
+            active={props.state.index === 2}
             onPress={() => {
               props.navigation.navigate('REPORT')
             }}
@@ -64,19 +64,22 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
               props.navigation.navigate('MAP')
             }}
           />
+        </ContainerItemsDrawer>
 
-          {!AuthState?.user?.user_id ? (
+        <View style={{marginBottom: 30}}>
+          {AuthState?.user?.user_id ? (
+            <ItemsDrawer
+              label="Cerrar sesión"
+              nameIcon="logout"
+              active={false}
+              onPress={() => {
+                resetDataUser()
+                props.navigation.closeDrawer()
+                props.navigation.navigate('HOME')
+              }}
+            />
+          ) : (
             <>
-              {/* separate line */}
-              <View
-                style={{
-                  height: 1,
-                  backgroundColor: AppStyles.color.low_gray,
-                  marginVertical: AppStyles.padding.small,
-                  marginHorizontal: AppStyles.padding.small,
-                }}
-              />
-
               <ItemsDrawer
                 label="Iniciar Sesión"
                 nameIcon="login"
@@ -95,23 +98,8 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
                 }}
               />
             </>
-          ) : null}
-        </ContainerItemsDrawer>
-
-        {AuthState?.user?.user_id ? (
-          <View style={{marginBottom: 30}}>
-            <ItemsDrawer
-              label="Cerrar sesión"
-              nameIcon="logout"
-              active={false}
-              onPress={() => {
-                resetDataUser()
-                props.navigation.closeDrawer()
-                props.navigation.navigate('HOME_DRAWER')
-              }}
-            />
-          </View>
-        ) : null}
+          )}
+        </View>
       </View>
     </DrawerContentScrollView>
   )

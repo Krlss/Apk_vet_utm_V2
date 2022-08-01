@@ -3,7 +3,6 @@ import {View, Dimensions} from 'react-native'
 import MapView, {Marker} from 'react-native-maps'
 const MapPage = ({route}: {route?: any}) => {
   const {report, pet} = route.params
-  console.log(pet)
   const {width, height} = Dimensions.get('window')
   return (
     <View>

@@ -7,26 +7,29 @@ import AuthContext from '@src/contexts/auth/AuthContext'
 const ProfileDrawer = ({navigation}: DrawerContentComponentProps) => {
   const {AuthState} = useContext(AuthContext)
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate('STACK_USER_PROFILE')}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Image
-          source={{
-            uri: AuthState?.user?.profile_photo_path,
-          }}
+        <Text
           style={{
-            width: 50,
-            height: 50,
-            borderRadius: 15,
+            backgroundColor: AppStyles.color.yellow,
+            paddingVertical: 10,
+            paddingHorizontal: 17,
+            textTransform: 'uppercase',
+            fontWeight: 'bold',
+            fontSize: 20,
+            borderRadius: 50,
             marginRight: 10,
-          }}
-        />
+            color: 'white',
+          }}>
+          {AuthState.user.name ? AuthState.user.name[0] : 'S'}
+        </Text>
         <View style={{flex: 1}}>
           <Text style={styles.name} numberOfLines={1}>
-            {AuthState?.user?.name +
+            {AuthState?.user?.last_name1 +
               ' ' +
-              AuthState?.user?.last_name1 +
+              AuthState?.user?.last_name2 +
               ' ' +
-              AuthState?.user?.last_name2}
+              AuthState?.user?.name}
           </Text>
           <Text style={{fontSize: 16, color: 'black'}}>Ver perfil</Text>
         </View>

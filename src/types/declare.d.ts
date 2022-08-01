@@ -103,8 +103,19 @@ export type HomeStackProps = {
     MAP_PET_LOST
 }
 
+export type ProfileUserStackProps = {
+    USER_PROFILE,
+    NAME_USER,
+    EMAIL_USER,
+    PHONE_USER,
+    PASSWORD_USER,
+    ADDRESS_USER,
+    PETS_USER,
+}
+
 export type HomeDrawerProps = {
     HOME_STACK,
+    STACK_USER_PROFILE,
     REPORT,
     PROFILE,
     MAP,
@@ -137,11 +148,11 @@ export interface RAuth extends LAuth {
 export interface user {
     user_id?: string,
     profile_photo_path?: string,
-    name: string,
+    name?: string,
     last_name1?: string,
     last_name2?: string,
     fullname?: string,
-    email: string,
+    email?: string,
     id_parish?: number,
     id_canton?: number,
     id_province?: number,
@@ -273,4 +284,20 @@ export interface image {
     url: string,
     name: string,
     external_id: string
+}
+
+export interface reportAll {
+    id: number,
+    latitude: string,
+    longitude: string,
+    pet: {
+        pet_id: string,
+        name: string,
+        specie?: {
+            name: string
+            image?: {
+                url: string
+            }
+        }
+    }
 }

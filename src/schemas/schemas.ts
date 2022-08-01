@@ -1,6 +1,7 @@
 import { object } from 'yup';
 import {
     email, password, passwordRegex, fullname, phone, user_id, canton, parish, province,
+    confirmPassword,
     name, specie, race, birth, sex, castrated
 } from './validations'
 
@@ -16,3 +17,9 @@ export const KnownPetSchema = object().shape({
     sex,
     castrated
 })
+
+export const NameUserProfile = object().shape({ fullname })
+export const EmailUserProfile = object().shape({ email })
+export const PhoneUserProfile = object().shape({ phone })
+export const AddressUserProfile = object().shape({ province, canton, parish })
+export const PasswordUserProfile = object().shape({ password: passwordRegex, confirmPassword, currentPassword: password })

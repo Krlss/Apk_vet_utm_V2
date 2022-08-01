@@ -25,3 +25,8 @@ export const GET_PETS_SEARCH = async (query: string) => {
     const response = await fetch(api_url_default + 'petsLost/search/' + query, { method: 'GET', headers })
     return response;
 }
+
+export const GET_ALL_REPORTS = async () => {
+    const response = await fetch(api_url_default + 'getAllReports', { method: 'GET', headers })
+    return response;
+}

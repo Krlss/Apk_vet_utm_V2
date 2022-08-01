@@ -12,8 +12,7 @@ const AuthProvider = (props: props) => {
   const {removeItem, setItem, getItem} = useStorage()
 
   const setDataUser = (data: user) => {
-    const {canton, parish, province, pets, ...rest} = data
-    setItem('vet.utm.user', rest)
+    setItem('vet.utm.user', data)
     dispatch({
       type: 'SAVE',
       payload: data,

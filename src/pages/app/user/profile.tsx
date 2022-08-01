@@ -6,6 +6,7 @@ import InfoTouchables from '@src/components/profiles/InfoTouchables'
 import AuthContext from '@src/contexts/auth/AuthContext'
 import ConfigContext from '@src/contexts/config/ConfigContext'
 import {GET_USER_PROFILE} from '@src/services/user'
+import {formatNumber} from '@src/utils/format'
 
 const UserProfile = ({navigation, route}: any) => {
   const {AuthState, setDataUser} = useContext(AuthContext)
@@ -115,7 +116,9 @@ const UserProfile = ({navigation, route}: any) => {
 
         <InfoTouchables
           onPress={() => navigation.navigate('PETS_USER')}
-          title="Mis mascotas"
+          title={`Mis mascotas (${formatNumber(
+            AuthState.user.pets?.length ?? 0,
+          )})`}
         />
       </View>
 

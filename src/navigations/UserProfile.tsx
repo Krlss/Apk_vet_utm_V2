@@ -6,9 +6,10 @@ import EmailChange from '@src/pages/app/user/email_change'
 import PhoneChange from '@src/pages/app/user/phone_change'
 import AddressChange from '@src/pages/app/user/address_change'
 import PasswordChange from '@src/pages/app/user/password_change'
-import PetsUser from '@src/pages/app/user/pets_user'
 import UserProfile from '@src/pages/app/user/profile'
 import Header from '@src/components/headers/Header'
+import PetProfileStack from './PetProfile'
+
 const Stack = createNativeStackNavigator<ProfileUserStackProps>()
 
 const UserProfileStack = () => {
@@ -52,9 +53,9 @@ const UserProfileStack = () => {
         options={{title: 'Cambiar contraseña'}}
       />
       <Stack.Screen
-        name="PETS_USER"
-        component={PetsUser}
-        options={{title: 'Mis mascotas'}}
+        name="PetProfileStack"
+        component={PetProfileStack}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   )

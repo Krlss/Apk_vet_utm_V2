@@ -110,7 +110,19 @@ export type ProfileUserStackProps = {
     PHONE_USER,
     PASSWORD_USER,
     ADDRESS_USER,
+    PetProfileStack,
+}
+
+export type ProfilePetStackProps = {
     PETS_USER,
+    PET_PROFILE,
+    NAME_PET,
+    SPECIE_RACE_FUR_PET,
+    BIRTH_PET,
+    SEX_PET,
+    CASTRATED_PET,
+    LOST_PET,
+    CHARACTERISTIC_PET
 }
 
 export type HomeDrawerProps = {
@@ -163,7 +175,7 @@ export interface user {
     street_1_sec?: string,
     street_2_sec?: string,
     address_ref?: string,
-    pets?: [pet],
+    pets?: pet[],
     canton?: canton,
     province?: province,
     parish?: parish,

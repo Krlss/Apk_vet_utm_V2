@@ -32,7 +32,7 @@ const InfoTouchables = ({
             justifyContent: 'space-between',
             alignItems: 'center',
           }}>
-          <View>
+          <View style={{flex: 1}}>
             {value ? (
               <Text numberOfLines={1} style={{color: 'gray'}}>
                 {value}

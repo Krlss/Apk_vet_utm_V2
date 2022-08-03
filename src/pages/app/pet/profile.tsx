@@ -6,9 +6,12 @@ import InfoTouchables from '@src/components/profiles/InfoTouchables'
 import AuthContext from '@src/contexts/auth/AuthContext'
 import ConfigContext from '@src/contexts/config/ConfigContext'
 import {GET_USER_PROFILE} from '@src/services/user'
-import {formatNumber} from '@src/utils/format'
+import {formatNumber, getSex} from '@src/utils/format'
+import {getDateDiffBirth} from '@src/utils/date'
+import {pet} from '@src/types/declare'
 
 const UserProfile = ({navigation, route}: any) => {
+  const {pet} = route.params as {pet: pet}
   const {AuthState, setDataUser} = useContext(AuthContext)
   const {ConfigState, toggleLoading} = useContext(ConfigContext)
 
@@ -55,70 +58,65 @@ const UserProfile = ({navigation, route}: any) => {
               marginRight: 10,
               color: 'black',
             }}>
-            {AuthState.user.name ? AuthState.user.name[0] : '?'}
+            {pet.name ? pet.name[0] : 'N'}
           </Text>
 
           <View>
             <Text
               numberOfLines={1}
               style={{color: 'black', fontWeight: 'bold'}}>
-              {AuthState.user.last_name1 +
-                ' ' +
-                AuthState.user.last_name2 +
-                ' ' +
-                AuthState.user.name}
+              {pet.name}
             </Text>
-            <Text style={{color: 'gray'}}>{AuthState.user.email}</Text>
+            <Text style={{color: 'gray'}}>{pet.pet_id}</Text>
           </View>
         </View>
 
         <InfoTouchables
-          onPress={() => navigation.navigate('NAME_USER')}
-          title="Nombre completo"
+          onPress={() => navigation.navigate('NAME_PET')}
+          title="Nombre"
+          value={pet.name}
+        />
+
+        <InfoTouchables
+          onPress={() => navigation.navigate('SPECIE_RACE_FUR_PET')}
+          title="Especie, raza y pelaje"
           value={
-            AuthState.user.last_name1 +
-            ' ' +
-            AuthState.user.last_name2 +
-            ' ' +
-            AuthState.user.name
+            (pet.specie?.name || '----') +
+            ', ' +
+            (pet.race?.name || '----') +
+            ', ' +
+            (pet.fur?.name || '----')
           }
         />
 
         <InfoTouchables
-          onPress={() => navigation.navigate('EMAIL_USER')}
-          title="Correo"
-          value={AuthState.user.email}
+          onPress={() => navigation.navigate('BIRTH_PET')}
+          title="Edad"
+          value={pet.birth ? getDateDiffBirth(pet.birth) : 'Sin definir'}
         />
 
         <InfoTouchables
-          onPress={() => navigation.navigate('PHONE_USER')}
-          title="Celular"
-          value={AuthState.user.phone ?? 'No registrado'}
+          onPress={() => navigation.navigate('SEX_PET')}
+          title="Sexo"
+          value={pet.sex ? getSex(pet.sex) : 'Sin definir'}
         />
 
         <InfoTouchables
-          onPress={() => navigation.navigate('ADDRESS_USER')}
-          title="Dirección"
-          value={
-            (AuthState.user.province?.name ?? '- - - -') +
-            ', ' +
-            (AuthState.user.canton?.name ?? '- - - -') +
-            ', ' +
-            (AuthState.user.parish?.name ?? '- - - -')
-          }
+          onPress={() => navigation.navigate('CASTRATED_PET')}
+          title="Castrado"
+          value={pet.castrated ? 'Si' : 'No'}
         />
 
         <InfoTouchables
-          onPress={() => navigation.navigate('PASSWORD_USER')}
-          title="Contraseña"
-          value="*********"
+          onPress={() => navigation.navigate('LOST_PET')}
+          title="Perdido"
+          value={pet.lost ? 'Si' : 'No'}
         />
 
         <InfoTouchables
-          onPress={() => navigation.navigate('PetProfileStack')}
-          title={`Mis mascotas (${formatNumber(
-            AuthState.user.pets?.length ?? 0,
-          )})`}
+          onPress={() => navigation.navigate('CHARACTERISTIC_PET')}
+          title="Caratacteristicas"
+          value={pet.characteristic}
         />
       </View>
 

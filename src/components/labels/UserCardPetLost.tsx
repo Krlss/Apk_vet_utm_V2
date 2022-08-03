@@ -6,7 +6,7 @@ const UserCardPetLost = ({
   user,
   bool,
 }: {
-  user: {email: string}
+  user: {email?: string}
   bool: boolean
 }) => {
   return (
@@ -34,7 +34,7 @@ const UserCardPetLost = ({
             marginRight: 10,
             color: 'black',
           }}>
-          {user?.email[0]}
+          {user?.email ? user?.email[0] : 'N'}
         </Text>
       ) : null}
 

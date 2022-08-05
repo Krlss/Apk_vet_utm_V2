@@ -1,36 +1,14 @@
-import React, {useContext, useEffect} from 'react'
+import React from 'react'
 import {ScrollView, View, Text} from 'react-native'
 import AppStyles from '@src/themes/AppStyles'
 import {FooterUTM} from '@src/components'
 import InfoTouchables from '@src/components/profiles/InfoTouchables'
-import AuthContext from '@src/contexts/auth/AuthContext'
-import ConfigContext from '@src/contexts/config/ConfigContext'
-import {GET_USER_PROFILE} from '@src/services/user'
-import {formatNumber, getSex} from '@src/utils/format'
+import {getSex} from '@src/utils/format'
 import {getDateDiffBirth} from '@src/utils/date'
 import {pet} from '@src/types/declare'
 
 const UserProfile = ({navigation, route}: any) => {
   const {pet} = route.params as {pet: pet}
-  const {AuthState, setDataUser} = useContext(AuthContext)
-  const {ConfigState, toggleLoading} = useContext(ConfigContext)
-
-  const getProfile = async () => {
-    toggleLoading(true)
-    const res = await GET_USER_PROFILE(
-      AuthState.user.user_id,
-      AuthState.user.api_token,
-    )
-    if (res.status === 200) {
-      const data = await res.json()
-      setDataUser(data.user)
-    }
-    toggleLoading(false)
-  }
-
-  useEffect(() => {
-    getProfile()
-  }, [])
 
   return (
     <ScrollView style={{flex: 1, backgroundColor: AppStyles.color.bg_low_gray}}>
@@ -72,13 +50,25 @@ const UserProfile = ({navigation, route}: any) => {
         </View>
 
         <InfoTouchables
-          onPress={() => navigation.navigate('NAME_PET')}
+          onPress={() =>
+            navigation.navigate('NAME_PET', {
+              name: pet.name,
+              pet,
+            })
+          }
           title="Nombre"
           value={pet.name}
         />
 
         <InfoTouchables
-          onPress={() => navigation.navigate('SPECIE_RACE_FUR_PET')}
+          onPress={() =>
+            navigation.navigate('SPECIE_RACE_FUR_PET', {
+              specie: pet.specie,
+              race: pet.race,
+              fur: pet.fur,
+              pet,
+            })
+          }
           title="Especie, raza y pelaje"
           value={
             (pet.specie?.name || '----') +
@@ -90,25 +80,41 @@ const UserProfile = ({navigation, route}: any) => {
         />
 
         <InfoTouchables
-          onPress={() => navigation.navigate('BIRTH_PET')}
+          onPress={() =>
+            navigation.navigate('BIRTH_PET', {
+              pet,
+            })
+          }
           title="Edad"
           value={pet.birth ? getDateDiffBirth(pet.birth) : 'Sin definir'}
         />
 
         <InfoTouchables
-          onPress={() => navigation.navigate('SEX_PET')}
+          onPress={() =>
+            navigation.navigate('SEX_PET', {
+              pet,
+            })
+          }
           title="Sexo"
           value={pet.sex ? getSex(pet.sex) : 'Sin definir'}
         />
 
         <InfoTouchables
-          onPress={() => navigation.navigate('CASTRATED_PET')}
+          onPress={() =>
+            navigation.navigate('CASTRATED_PET', {
+              pet,
+            })
+          }
           title="Castrado"
           value={pet.castrated ? 'Si' : 'No'}
         />
 
         <InfoTouchables
-          onPress={() => navigation.navigate('LOST_PET')}
+          onPress={() =>
+            navigation.navigate('LOST_PET', {
+              pet,
+            })
+          }
           title="Perdido"
           value={pet.lost ? 'Si' : 'No'}
         />

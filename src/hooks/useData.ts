@@ -33,7 +33,17 @@ const useData = () => {
                 setIsFetching(false)
                 setPressSearch(false)
                 toggleLoading(false)
+            }).catch(err => {
+                console.log(err)
+                setLoading(false)
+                setIsFetching(false)
+                toggleLoading(false)
             })
+        }).catch(error => {
+            console.log(error)
+            setLoading(false)
+            setIsFetching(false)
+            toggleLoading(false)
         })
     }, [nRefresh])
 
@@ -52,7 +62,17 @@ const useData = () => {
                         setData([...data, ...pets.data])
                         setNextLink(pets.next_page_url || '')
                         setIsFetching(false)
+                    }).catch(err => {
+                        console.log(err)
+                        setLoading(false)
+                        setIsFetching(false)
+                        toggleLoading(false)
                     })
+                }).catch(error => {
+                    console.log(error)
+                    setLoading(false)
+                    setIsFetching(false)
+                    toggleLoading(false)
                 })
             } else {
                 GET_NEXT_PAGE_PETS_LOST(nextLink).then(response => {
@@ -62,7 +82,17 @@ const useData = () => {
                         setData([...data, ...pets.data])
                         setNextLink(pets.next_page_url || '')
                         setIsFetching(false)
+                    }).catch(err => {
+                        console.log(err)
+                        setLoading(false)
+                        setIsFetching(false)
+                        toggleLoading(false)
                     })
+                }).catch(error => {
+                    console.log(error)
+                    setLoading(false)
+                    setIsFetching(false)
+                    toggleLoading(false)
                 })
             }
         }
@@ -89,7 +119,17 @@ const useData = () => {
                         setLoading(false)
                         setIsFetching(false)
                         toggleLoading(false)
+                    }).catch(err => {
+                        console.log(err)
+                        setLoading(false)
+                        setIsFetching(false)
+                        toggleLoading(false)
                     })
+                }).catch(error => {
+                    console.log(error)
+                    setLoading(false)
+                    setIsFetching(false)
+                    toggleLoading(false)
                 })
             } else {
                 specie.active = false
@@ -105,7 +145,17 @@ const useData = () => {
                             setTotalData(pets.total || 0)
                             setIsFetching(false)
                             toggleLoading(false)
+                        }).catch(err => {
+                            console.log(err)
+                            setLoading(false)
+                            setIsFetching(false)
+                            toggleLoading(false)
                         })
+                    }).catch(error => {
+                        console.log(error)
+                        setLoading(false)
+                        setIsFetching(false)
+                        toggleLoading(false)
                     })
                 }
             }
@@ -129,7 +179,17 @@ const useData = () => {
                 setTotalData(pets.total)
                 toggleLoading(false)
                 setIsFetching(false)
+            }).catch(err => {
+                console.log(err)
+                setLoading(false)
+                setIsFetching(false)
+                toggleLoading(false)
             })
+        }).catch(error => {
+            console.log(error)
+            setLoading(false)
+            setIsFetching(false)
+            toggleLoading(false)
         })
     }
 

@@ -122,6 +122,7 @@ export type ProfilePetStackProps = {
     SEX_PET,
     CASTRATED_PET,
     LOST_PET,
+    PHOTOS_PET,
     CHARACTERISTIC_PET
 }
 
@@ -197,7 +198,7 @@ export interface pet {
     fur?: basic,
     user_id?: string,
     characteristic?: string
-    images?: [image]
+    images?: image[]
 }
 
 export interface petLost {
@@ -206,7 +207,7 @@ export interface petLost {
     birth?: string,
     sex?: string,
     castrated?: boolean,
-    lost?: false,
+    lost?: boolean,
     n_lost?: number,
     published?: boolean,
     id_pet_pather?: string,

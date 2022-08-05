@@ -3,34 +3,37 @@ import {View, ScrollView} from 'react-native'
 import {useFormik} from 'formik'
 import InputNormal from '@src/components/inputs/InputNormal'
 import LongButton from '@src/components/buttons/LongButton'
-import {NameUserProfile} from '@src/schemas/schemas'
-import AuthContext from '@src/contexts/auth/AuthContext'
-import {separateFullname} from '@src/utils/utils'
+import {NamePetProfile} from '@src/schemas/schemas'
+import {pet} from '@src/types/declare'
 import useAuth from '@src/hooks/useAuth'
+import AuthContext from '@src/contexts/auth/AuthContext'
 
 const NameChange = ({navigation, route}: any) => {
+  const {pet} = route.params as {pet: pet}
   const {AuthState} = useContext(AuthContext)
-  const fullname = `${AuthState.user.last_name1} ${AuthState.user.last_name2} ${AuthState.user.name}`
   const {UPDATED_PET} = useAuth()
+
   const formik = useFormik({
     initialValues: {
-      fullname: fullname,
+      name: pet.name,
     },
-    validationSchema: NameUserProfile,
+    validationSchema: NamePetProfile,
     onSubmit: async values => {
-      if (fullname != values.fullname) {
-        const [name, last_name1, last_name2] = separateFullname(values.fullname)
+      if (pet.name != values.name) {
+        const {name, ...otherValues} = pet
         const data = {
-          ...AuthState.user,
-          name,
-          last_name1,
-          last_name2,
+          ...otherValues,
+          name: values.name,
         }
-        UPDATED_PET(data, AuthState.user.api_token).then((res: any) => {
-          if (res.type === 'success') {
-            navigation.goBack()
-          }
-        })
+        UPDATED_PET(data, AuthState.user.api_token)
+          .then((res: any) => {
+            if (res.type === 'success') {
+              navigation.navigate('USER_PROFILE')
+            }
+          })
+          .catch((err: any) => {
+            console.log(err)
+          })
       }
     },
   })
@@ -42,16 +45,16 @@ const NameChange = ({navigation, route}: any) => {
       }}>
       <View style={{flex: 1}}>
         <InputNormal
-          value={formik.values.fullname}
+          value={formik.values.name}
           placeholder="Nombre"
-          onChangeText={formik.handleChange('fullname')}
-          error={formik.errors.fullname}
+          onChangeText={formik.handleChange('name')}
+          error={formik.errors.name}
         />
       </View>
       <LongButton
         text="Guardar"
         onPress={formik.handleSubmit}
-        isValid={formik.isValid && fullname != formik.values.fullname}
+        isValid={formik.isValid && pet.name != formik.values.name}
       />
     </ScrollView>
   )

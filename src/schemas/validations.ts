@@ -75,3 +75,6 @@ export const sex = yup.string()
 
 export const castrated = yup.bool()
     .required('Este campo es requerido')
+
+export const lost = yup.bool()
+    .required('Este campo es requerido')

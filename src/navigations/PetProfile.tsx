@@ -10,6 +10,7 @@ import SexPage from '@src/pages/app/pet/sex'
 import LostPage from '@src/pages/app/pet/lost'
 import CharateristicPage from '@src/pages/app/pet/characteristic'
 import CastratedPage from '@src/pages/app/pet/castrated'
+import Photos from '@src/components/photos/Photos'
 
 const Stack = createNativeStackNavigator<ProfilePetStackProps>()
 
@@ -36,7 +37,7 @@ const PetProfileStack = () => {
       <Stack.Screen
         name="NAME_PET"
         component={NameChange}
-        options={{title: 'Cambiar nombres completos'}}
+        options={{title: 'Cambiar nombre de la mascota'}}
       />
       <Stack.Screen
         name="SPECIE_RACE_FUR_PET"
@@ -62,6 +63,11 @@ const PetProfileStack = () => {
         name="LOST_PET"
         component={LostPage}
         options={{title: 'Cambiar a perdido'}}
+      />
+      <Stack.Screen
+        name="PHOTOS_PET"
+        component={Photos}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="CHARACTERISTIC_PET"

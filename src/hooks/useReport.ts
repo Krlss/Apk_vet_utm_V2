@@ -9,7 +9,7 @@ import ConfigContext from '@src/contexts/config/ConfigContext';
 import ReportContext from '@src/contexts/report/ReportContext';
 import { getDataFromStatus } from '@src/utils/utils'
 import { separateFullname } from '@src/utils/utils'
-import { races_select, cantons_select, species_select, parishes_select, provinces_select } from '@src/types/declare'
+import { races_select, cantons_select, species_select, parishes_select, provinces_select, furs_select } from '@src/types/declare'
 
 
 const useReport = () => {
@@ -35,6 +35,7 @@ const useReport = () => {
     const [parishes, setParishes] = useState<parishes_select[]>(ConfigState.parishes)
     const [species, setSpecies] = useState<species_select[]>(ConfigState.species)
     const [races, setRaces] = useState<races_select[]>(ConfigState.races)
+    const [furs, setFurs] = useState<furs_select[]>(ConfigState.furs)
 
     const nextPosition = () => {
         setCurrentPosition(currentPosition + 1)
@@ -162,8 +163,8 @@ const useReport = () => {
 
         setSpecies(new_species)
 
-        setPet({ ...pet, specie: { id, name: text }, race: undefined })
-        const races_ = ConfigState.races.filter(item => item.id_specie === id)
+        setPet({ ...pet, specie: { id, name: text }, race: undefined, fur: undefined })
+        const races_ = ConfigState.races.filter((e) => e.id_specie === Number(id))
         setRaces(races_)
     }
 
@@ -179,7 +180,22 @@ const useReport = () => {
 
         setRaces(new_races)
 
-        setPet({ ...pet, race: { id, name: text } })
+        setPet({ ...pet, race: { id, name: text }, fur: undefined })
+
+    }
+
+    const handleFurChange = (id: number, text: string) => {
+
+        const new_furs = furs.map(item => {
+            item.active = false;
+            if (item.id === id) {
+                return { ...item, active: true }
+            } else
+                return item
+        })
+
+        setPet({ ...pet, fur: { id, name: text } })
+        setFurs(new_furs)
 
     }
 
@@ -222,7 +238,8 @@ const useReport = () => {
         handleParisheChange,
         handleSpeciesChange,
         handleRaceChange,
-        sendKnown
+        sendKnown,
+        handleFurChange
     }
 }
 

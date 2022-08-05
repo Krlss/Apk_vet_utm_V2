@@ -3,8 +3,8 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack'
 import {TouchableWithoutFeedback, ScrollView, Image, View} from 'react-native'
 import {Results} from '@baronha/react-native-multiple-image-picker'
 interface IProps extends NativeStackScreenProps<any> {
-  filePath?: Results[]
-  routeTo: 'Photos' | 'Photos_'
+  filePath?: any[]
+  routeTo: 'Photos' | 'Photos_' | 'PHOTOS_PET'
 }
 
 const Photos = ({filePath, navigation, routeTo}: IProps) => {
@@ -30,7 +30,7 @@ const Photos = ({filePath, navigation, routeTo}: IProps) => {
               }}>
               <View style={{margin: 5}}>
                 <Image
-                  source={{uri: item.path}}
+                  source={{uri: item.path ? item.path : item.url}}
                   style={{width: 125, height: 125}}
                 />
               </View>

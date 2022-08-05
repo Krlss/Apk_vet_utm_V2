@@ -25,6 +25,9 @@ const ConfigProvider = (props: props) => {
           payload: res.data,
         })
       })
+      .catch(err => {
+        console.log(err)
+      })
 
     return () => {
       keyboardDidShow.remove()

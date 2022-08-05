@@ -2,7 +2,7 @@ import { object } from 'yup';
 import {
     email, password, passwordRegex, fullname, phone, user_id, canton, parish, province,
     confirmPassword,
-    name, specie, race, birth, sex, castrated
+    name, specie, race, birth, sex, castrated, lost
 } from './validations'
 
 export const loginSchema = object().shape({ email, password })
@@ -23,3 +23,13 @@ export const EmailUserProfile = object().shape({ email })
 export const PhoneUserProfile = object().shape({ phone })
 export const AddressUserProfile = object().shape({ province, canton, parish })
 export const PasswordUserProfile = object().shape({ password: passwordRegex, confirmPassword, currentPassword: password })
+
+export const NamePetProfile = object().shape({ name })
+export const SpecieRaceFurPetProfile = object().shape({
+    id_specie: specie,
+    id_race: race
+})
+export const BirthPetProfile = object().shape({ birth })
+export const SexPetProfile = object().shape({ sex })
+export const CastratedPetProfile = object().shape({ castrated })
+export const LostPetProfile = object().shape({ lost })

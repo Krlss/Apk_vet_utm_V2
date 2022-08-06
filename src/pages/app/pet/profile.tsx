@@ -120,7 +120,11 @@ const UserProfile = ({navigation, route}: any) => {
         />
 
         <InfoTouchables
-          onPress={() => navigation.navigate('CHARACTERISTIC_PET')}
+          onPress={() =>
+            navigation.navigate('CHARACTERISTIC_PET', {
+              pet,
+            })
+          }
           title="Caratacteristicas"
           value={pet.characteristic}
         />

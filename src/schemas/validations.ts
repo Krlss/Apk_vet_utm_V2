@@ -78,3 +78,6 @@ export const castrated = yup.bool()
 
 export const lost = yup.bool()
     .required('Este campo es requerido')
+
+export const characteristic = yup.string()
+    .required('Este campo es requerido')

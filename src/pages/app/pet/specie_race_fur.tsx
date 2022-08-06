@@ -45,13 +45,13 @@ const SpecieRaceFur = ({navigation, route}: any) => {
     },
     validationSchema: SpecieRaceFurPetProfile,
     onSubmit: async values => {
-      const {specie, race, fur, ...otherValues} = pet
-      const data_ = {
-        ...otherValues,
-        id_specie: data.id_specie,
-        id_race: data.id_race,
-        id_fur: data.id_fur,
-      }
+      const data_ = new FormData()
+      data_.append('id_specie', data.id_specie)
+      data_.append('id_race', data.id_race)
+      data_.append('id_fur', data.id_fur)
+      data_.append('pet_id', pet.pet_id)
+      data_.append('user_id', AuthState.user.user_id)
+
       UPDATED_PET(data_, AuthState.user.api_token)
         .then((res: any) => {
           if (res.type === 'success') {

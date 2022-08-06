@@ -2,11 +2,11 @@ import { api_url_default } from '@src/constants/globals'
 import { pet, Response } from '@src/types/declare'
 
 const headers = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'multipart/form-data'
 }
 
-export const UPDATED_PET_PROFILE = async (data: pet, token?: string) => {
-    const response = await fetch(api_url_default + 'updatedPet', { method: 'PUT', headers: { ...headers, 'Authorization': token ?? '' }, body: JSON.stringify(data) })
+
+export const UPDATED_PET_PROFILE = async (data: FormData, token?: string) => {
+    const response = await fetch(api_url_default + 'updatedPet', { method: 'POST', headers: { ...headers, 'Authorization': token ?? '' }, body: data })
     return response;
-}; 
+};

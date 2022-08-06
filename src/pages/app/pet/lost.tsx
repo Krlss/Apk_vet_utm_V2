@@ -1,5 +1,12 @@
 import React, {useContext, useState} from 'react'
-import {View, ScrollView, TextStyle, Text, TouchableOpacity} from 'react-native'
+import {
+  View,
+  ScrollView,
+  TextStyle,
+  Text,
+  TouchableOpacity,
+  Modal,
+} from 'react-native'
 import {useFormik} from 'formik'
 import LongButton from '@src/components/buttons/LongButton'
 import {LostPetProfile} from '@src/schemas/schemas'
@@ -13,6 +20,7 @@ import MultipleImagePicker from '@baronha/react-native-multiple-image-picker'
 import {options} from '@src/constants/multiple-image-picker'
 import ConfigContext from '@src/contexts/config/ConfigContext'
 import ReportContext from '@src/contexts/report/ReportContext'
+import MapView, {Marker} from 'react-native-maps'
 
 const dataCheck: {
   id: number
@@ -44,11 +52,14 @@ const LostPage = ({navigation, route}: any) => {
   const {pet} = route.params as {pet: any}
   const {AuthState} = useContext(AuthContext)
   const {ConfigState} = useContext(ConfigContext)
-  const {setLocation, ReportState} = useContext(ReportContext)
-  console.log(ReportState)
+  const {setLocation, ReportState, requestLocationPermission} =
+    useContext(ReportContext)
+  const [modalVisible, setModalVisible] = useState(false)
 
   const {UPDATED_PET} = useAuth()
   const [filePath, setFilePath] = useState<any>(pet.images)
+  const [maxFiles, setMaxFiles] = useState(6 - pet?.images.length)
+  const [isChanged, setIsChanged] = useState(false)
   const selected =
     pet.lost === undefined
       ? undefined
@@ -60,16 +71,26 @@ const LostPage = ({navigation, route}: any) => {
     },
     validationSchema: LostPetProfile,
     onSubmit: async values => {
-      if (pet.lost != values.lost) {
-        const {name, ...otherValues} = pet
-        const data = {
-          ...otherValues,
-          lost: values.lost,
-        }
-        UPDATED_PET(data, AuthState.user.api_token)
+      if (pet.lost != values.lost || isChanged) {
+        const formData = new FormData()
+        filePath.forEach((item: any) => {
+          formData.append('images[]', {
+            uri: item.path ? item.path : item.url,
+            name: item.fileName ? item.fileName : item.id_image,
+            type: item.path ? 'image/jpeg' : 'unknown/unknown',
+          })
+        })
+
+        formData.append('location', JSON.stringify(ReportState.location))
+        formData.append('lost', values.lost)
+        formData.append('pet_id', pet.pet_id)
+        formData.append('user_id', AuthState.user.user_id)
+
+        UPDATED_PET(formData, AuthState.user.api_token)
           .then((res: any) => {
-            if (res.type === 'success') {
+            if (res?.type === 'success') {
               navigation.navigate('USER_PROFILE')
+              requestLocationPermission()
             }
           })
           .catch((err: any) => {
@@ -80,12 +101,15 @@ const LostPage = ({navigation, route}: any) => {
   })
 
   const chooseFile = async () => {
+    const {maxSelectedAssets, ...otherOptions} = options
     const response = await MultipleImagePicker.openPicker({
-      ...options,
-      selectedAssets: filePath,
+      ...otherOptions,
+      maxSelectedAssets: maxFiles,
     })
     if (response) {
-      setFilePath(response)
+      setFilePath([...filePath, ...response])
+      setMaxFiles(maxFiles - response.length)
+      setIsChanged(true)
     } else {
       setFilePath([])
     }
@@ -103,14 +127,21 @@ const LostPage = ({navigation, route}: any) => {
           initial={selected}
           style={{
             flexDirection: 'row',
-            flex: 1,
             justifyContent: 'space-evenly',
+            marginBottom: 10,
           }}
           onChange={(selectedItem: any) => {
             {
               formik.setFieldValue('lost', selectedItem.value)
               if (!selectedItem.value) {
-                setFilePath([])
+                setFilePath(pet.images)
+              } else {
+                requestLocationPermission()
+              }
+              if (selectedItem.value != pet.lost) {
+                setIsChanged(true)
+              } else {
+                setIsChanged(false)
               }
             }
           }}
@@ -134,9 +165,33 @@ const LostPage = ({navigation, route}: any) => {
               navigation={navigation}
               route={route}
               routeTo="PHOTOS_PET"
+              deleteFile={index => {
+                setFilePath(
+                  filePath.filter((item: any, i: number) => i !== index),
+                )
+                setMaxFiles(maxFiles + 1)
+                setIsChanged(true)
+              }}
             />
             <TouchableOpacity
               onPress={chooseFile}
+              disabled={ConfigState.loading || filePath.length === 6}
+              style={{
+                backgroundColor: AppStyles.color.yellow,
+                padding: 10,
+                borderRadius: 10,
+                alignItems: 'center',
+                justifyContent: 'center',
+                opacity: ConfigState.loading || filePath.length === 6 ? 0.5 : 1,
+              }}>
+              <Text style={{color: 'white', fontWeight: 'bold'}}>
+                {!ConfigState.loading && filePath.length === 6
+                  ? 'Solo se pueden 6 fotos'
+                  : 'Seleccionar fotos'}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setModalVisible(true)}
               disabled={ConfigState.loading}
               style={{
                 backgroundColor: AppStyles.color.yellow,
@@ -145,13 +200,65 @@ const LostPage = ({navigation, route}: any) => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 opacity: ConfigState.loading ? 0.5 : 1,
+                marginTop: 10,
               }}>
               <Text style={{color: 'white', fontWeight: 'bold'}}>
-                Seleccionar fotos
+                Abrir el mapa
               </Text>
             </TouchableOpacity>
           </>
         ) : null}
+
+        <Modal visible={modalVisible}>
+          <TouchableOpacity
+            onPress={() => setModalVisible(false)}
+            style={{
+              position: 'absolute',
+              top: 20,
+              left: 25,
+              zIndex: 1,
+              backgroundColor: AppStyles.color.yellow,
+              paddingHorizontal: 10,
+              paddingVertical: 5,
+              borderRadius: 10,
+            }}>
+            <Text style={{color: 'black', fontWeight: 'bold'}}>Listo</Text>
+          </TouchableOpacity>
+          <View
+            style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <MapView
+              moveOnMarkerPress={true}
+              style={{
+                width: '100%',
+                height: '100%',
+              }}
+              initialRegion={{
+                latitude: ReportState.location.latitude,
+                longitude: ReportState.location.longitude,
+                latitudeDelta: ReportState.location.latitudeDelta,
+                longitudeDelta: ReportState.location.longitudeDelta,
+              }}>
+              <Marker
+                draggable={!ConfigState.loading}
+                coordinate={{
+                  latitude: ReportState.location.latitude,
+                  longitude: ReportState.location.longitude,
+                }}
+                title="Ubicación"
+                description="Ubicación actual"
+                onDragEnd={e => {
+                  setLocation({
+                    latitude: e.nativeEvent.coordinate.latitude,
+                    longitude: e.nativeEvent.coordinate.longitude,
+                    latitudeDelta: ReportState.location.latitudeDelta,
+                    longitudeDelta: ReportState.location.longitudeDelta,
+                  })
+                  setIsChanged(true)
+                }}
+              />
+            </MapView>
+          </View>
+        </Modal>
       </View>
 
       <LongButton
@@ -159,8 +266,8 @@ const LostPage = ({navigation, route}: any) => {
         onPress={formik.handleSubmit}
         isValid={
           formik.isValid &&
-          pet.lost != formik.values.lost &&
-          (formik.values.lost ? filePath.length > 0 : true)
+          (pet.lost != formik.values.lost || isChanged) &&
+          (formik.values.lost ? filePath.length > 0 : false)
         }
       />
     </ScrollView>

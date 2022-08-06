@@ -50,11 +50,11 @@ const SexPage = ({navigation, route}: any) => {
     validationSchema: SexPetProfile,
     onSubmit: async values => {
       if (pet.name != values.sex) {
-        const {name, ...otherValues} = pet
-        const data = {
-          ...otherValues,
-          sex: values.sex,
-        }
+        const data = new FormData()
+        data.append('sex', values.sex)
+        data.append('pet_id', pet.pet_id)
+        data.append('user_id', AuthState.user.user_id)
+
         UPDATED_PET(data, AuthState.user.api_token)
           .then((res: any) => {
             if (res.type === 'success') {

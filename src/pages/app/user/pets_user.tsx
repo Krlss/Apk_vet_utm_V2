@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect} from 'react'
-import {View, Text, FlatList, TouchableOpacity, TextInput} from 'react-native'
+import {View, Text, TouchableOpacity, TextInput} from 'react-native'
 import {FlashList} from '@shopify/flash-list'
 import AuthContext from '@src/contexts/auth/AuthContext'
 import NotPets from '@src/components/images/NotPets'
@@ -55,7 +55,8 @@ const PetsUser = ({navigation, route}: any) => {
         placeholder="Buscar..."
       />
       {pets && pets.length > 0 ? (
-        <FlatList
+        <FlashList
+          estimatedItemSize={50}
           data={searchResult}
           renderItem={({item}) => (
             <TouchableOpacity

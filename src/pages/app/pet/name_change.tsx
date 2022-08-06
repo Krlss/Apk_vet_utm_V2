@@ -20,11 +20,10 @@ const NameChange = ({navigation, route}: any) => {
     validationSchema: NamePetProfile,
     onSubmit: async values => {
       if (pet.name != values.name) {
-        const {name, ...otherValues} = pet
-        const data = {
-          ...otherValues,
-          name: values.name,
-        }
+        const data = new FormData()
+        data.append('name', values.name)
+        data.append('pet_id', pet.pet_id)
+        data.append('user_id', AuthState.user.user_id)
         UPDATED_PET(data, AuthState.user.api_token)
           .then((res: any) => {
             if (res.type === 'success') {

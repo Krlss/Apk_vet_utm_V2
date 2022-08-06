@@ -81,7 +81,7 @@ const useAuth = () => {
         }
     }
 
-    const UPDATED_PET = async (data: pet, api_token?: string) => {
+    const UPDATED_PET = async (data: FormData, api_token?: string) => {
         KeyboardDismiss() // Hide keyboard
         toggleLoading(true)
         try {

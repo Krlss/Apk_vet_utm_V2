@@ -1,14 +1,21 @@
-import React from 'react'
-import {ScrollView, View, Text} from 'react-native'
+import React, {useContext} from 'react'
+import {ScrollView, View, Text, TouchableOpacity, Alert} from 'react-native'
 import AppStyles from '@src/themes/AppStyles'
 import {FooterUTM} from '@src/components'
 import InfoTouchables from '@src/components/profiles/InfoTouchables'
 import {getSex} from '@src/utils/format'
 import {getDateDiffBirth} from '@src/utils/date'
 import {pet} from '@src/types/declare'
+import RowDeleteIcon from '@src/components/icons/RowDelete'
+import AuthContext from '@src/contexts/auth/AuthContext'
+import ConfigContext from '@src/contexts/config/ConfigContext'
+import useAuth from '@src/hooks/useAuth'
 
 const UserProfile = ({navigation, route}: any) => {
   const {pet} = route.params as {pet: pet}
+  const {AuthState} = useContext(AuthContext)
+  const {ConfigState} = useContext(ConfigContext)
+  const {UPDATED_PET} = useAuth()
 
   return (
     <ScrollView style={{flex: 1, backgroundColor: AppStyles.color.bg_low_gray}}>
@@ -39,13 +46,63 @@ const UserProfile = ({navigation, route}: any) => {
             {pet.name ? pet.name[0] : 'N'}
           </Text>
 
-          <View>
-            <Text
-              numberOfLines={1}
-              style={{color: 'black', fontWeight: 'bold'}}>
-              {pet.name}
-            </Text>
-            <Text style={{color: 'gray'}}>{pet.pet_id}</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              flex: 1,
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <View style={{flex: 1}}>
+              <Text
+                numberOfLines={1}
+                style={{color: 'black', fontWeight: 'bold'}}>
+                {pet.name}
+              </Text>
+              <Text style={{color: 'gray'}}>{pet.pet_id}</Text>
+            </View>
+            <TouchableOpacity
+              disabled={ConfigState.loading}
+              onPress={() => {
+                Alert.alert(
+                  'Eliminar',
+                  '¿Desea eliminar este animal?\n' +
+                    'Nombre: ' +
+                    pet.name +
+                    '\n' +
+                    'Identificación: ' +
+                    pet.pet_id,
+                  [
+                    {text: 'Cancelar', style: 'cancel'},
+                    {
+                      text: 'Eliminar',
+                      onPress: () => {
+                        const data = new FormData()
+                        data.append('pet_id', pet.pet_id)
+                        data.append('user_id', AuthState.user.user_id)
+                        data.append('new_user_id', null)
+                        UPDATED_PET(data, AuthState.user.api_token)
+                          .then((res: any) => {
+                            if (res.type === 'success') {
+                              navigation.navigate('USER_PROFILE')
+                            }
+                          })
+                          .catch((err: any) => {
+                            console.log(err)
+                          })
+                      },
+                    },
+                  ],
+                )
+              }}>
+              <View style={{paddingHorizontal: 10}}>
+                <RowDeleteIcon
+                  width={20}
+                  height={20}
+                  fill={AppStyles.color.error}
+                />
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
 

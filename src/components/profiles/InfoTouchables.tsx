@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {View, Text, TouchableWithoutFeedback} from 'react-native'
 import ArrowRightIcon from '@src/components/icons/ArrowRight'
+import ConfigContext from '@src/contexts/config/ConfigContext'
 
 const InfoTouchables = ({
   onPress,
@@ -11,8 +12,9 @@ const InfoTouchables = ({
   title: string
   value?: string
 }) => {
+  const {ConfigState} = useContext(ConfigContext)
   return (
-    <TouchableWithoutFeedback onPress={onPress}>
+    <TouchableWithoutFeedback disabled={ConfigState.loading} onPress={onPress}>
       <View
         style={{
           flexDirection: 'row',

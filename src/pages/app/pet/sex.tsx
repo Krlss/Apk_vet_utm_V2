@@ -8,32 +8,7 @@ import useAuth from '@src/hooks/useAuth'
 import AuthContext from '@src/contexts/auth/AuthContext'
 import AppStyles from '@src/themes/AppStyles'
 import BouncyCheckboxGroup from 'react-native-bouncy-checkbox-group'
-
-const dataCheck: {
-  id: number
-  text: string
-  value: string
-  fillColor: string
-  unfillColor: string
-  textStyle: TextStyle
-}[] = [
-  {
-    id: 0,
-    text: 'Masculino',
-    value: 'M',
-    fillColor: '#00A0FF',
-    unfillColor: '#77CDFF',
-    textStyle: {textDecorationLine: 'none', fontSize: 15},
-  },
-  {
-    id: 1,
-    text: 'Feminino',
-    value: 'F',
-    fillColor: '#FF00FF',
-    unfillColor: '#FF77FF',
-    textStyle: {textDecorationLine: 'none', fontSize: 15},
-  },
-]
+import {SEX_CHECK} from '@src/constants/globals'
 
 const SexPage = ({navigation, route}: any) => {
   const {pet} = route.params as {pet: pet}
@@ -41,7 +16,7 @@ const SexPage = ({navigation, route}: any) => {
   const {UPDATED_PET} = useAuth()
   const selected = !pet.sex
     ? undefined
-    : dataCheck.findIndex(item => item.value === pet.sex)
+    : SEX_CHECK.findIndex(item => item.value === pet.sex)
 
   const formik = useFormik({
     initialValues: {
@@ -76,7 +51,7 @@ const SexPage = ({navigation, route}: any) => {
       }}>
       <View style={{flex: 1}}>
         <BouncyCheckboxGroup
-          data={dataCheck}
+          data={SEX_CHECK}
           initial={selected}
           style={{
             flexDirection: 'row',

@@ -79,8 +79,6 @@ const SpecieRaceFur = ({navigation, route}: any) => {
     )
   }
 
-  console.log(data)
-
   useEffect(() => {
     if (specie?.id) {
       setRaces(
@@ -200,7 +198,7 @@ const SpecieRaceFur = ({navigation, route}: any) => {
               textAlignVertical: 'center',
               marginVertical: 5,
             }}>
-            {formik.values.id_fur ?? 'Selecciona una parroquia'}
+            {formik.values.id_fur ?? 'Selecciona un pelaje'}
           </Text>
         </TouchableOpacity>
         {formik.errors.id_fur && (

@@ -10,6 +10,7 @@ import UserProfile from '@src/pages/app/user/profile'
 import Header from '@src/components/headers/Header'
 import PetProfileStack from './PetProfile'
 import ReportProvider from '@src/contexts/report/ReportProvider'
+import AddNewPet from '@src/pages/app/pet/AddNewPet'
 
 const Stack = createNativeStackNavigator<ProfileUserStackProps>()
 
@@ -53,6 +54,11 @@ const UserProfileStack = () => {
           name="PASSWORD_USER"
           component={PasswordChange}
           options={{title: 'Cambiar contraseña'}}
+        />
+        <Stack.Screen
+          name="ADD_NEW_PET"
+          component={AddNewPet}
+          options={{title: 'Agregar nueva mascota'}}
         />
         <Stack.Screen
           name="PetProfileStack"

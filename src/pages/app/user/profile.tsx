@@ -127,6 +127,11 @@ const UserProfile = ({navigation, route}: any) => {
           />
 
           <InfoTouchables
+            onPress={() => navigation.navigate('ADD_NEW_PET')}
+            title="Agregar nueva mascota"
+          />
+
+          <InfoTouchables
             onPress={() => navigation.navigate('PetProfileStack')}
             title={`Mis mascotas (${formatNumber(
               AuthState.user.pets?.length ?? 0,

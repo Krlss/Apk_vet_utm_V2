@@ -21,32 +21,7 @@ import {options} from '@src/constants/multiple-image-picker'
 import ConfigContext from '@src/contexts/config/ConfigContext'
 import ReportContext from '@src/contexts/report/ReportContext'
 import MapView, {Marker} from 'react-native-maps'
-
-const dataCheck: {
-  id: number
-  text: string
-  value: boolean
-  fillColor: string
-  unfillColor: string
-  textStyle: TextStyle
-}[] = [
-  {
-    id: 0,
-    text: 'Si',
-    value: true,
-    fillColor: '#FF3838',
-    unfillColor: '#FF8282',
-    textStyle: {textDecorationLine: 'none', fontSize: 15},
-  },
-  {
-    id: 1,
-    text: 'No',
-    value: false,
-    fillColor: '#5BD321',
-    unfillColor: '#8BE65F',
-    textStyle: {textDecorationLine: 'none', fontSize: 15},
-  },
-]
+import {LOST_CHECK} from '@src/constants/globals'
 
 const LostPage = ({navigation, route}: any) => {
   const {pet} = route.params as {pet: any}
@@ -63,7 +38,7 @@ const LostPage = ({navigation, route}: any) => {
   const selected =
     pet.lost === undefined
       ? undefined
-      : dataCheck.findIndex(item => item.value === pet.lost)
+      : LOST_CHECK.findIndex(item => item.value === pet.lost)
 
   const formik = useFormik({
     initialValues: {
@@ -123,7 +98,7 @@ const LostPage = ({navigation, route}: any) => {
       }}>
       <View style={{flex: 1}}>
         <BouncyCheckboxGroup
-          data={dataCheck}
+          data={LOST_CHECK}
           initial={selected}
           style={{
             flexDirection: 'row',

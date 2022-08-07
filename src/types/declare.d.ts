@@ -110,6 +110,7 @@ export type ProfileUserStackProps = {
     PHONE_USER,
     PASSWORD_USER,
     ADDRESS_USER,
+    ADD_NEW_PET,
     PetProfileStack,
 }
 

@@ -34,3 +34,12 @@ export const SexPetProfile = object().shape({ sex })
 export const CastratedPetProfile = object().shape({ castrated })
 export const LostPetProfile = object().shape({ lost })
 export const CharacteristicPetProfile = object().shape({ characteristic })
+export const NewPet = object().shape({
+    name,
+    id_specie: specie,
+    id_race: race,
+    birth,
+    sex,
+    castrated,
+    characteristic
+})

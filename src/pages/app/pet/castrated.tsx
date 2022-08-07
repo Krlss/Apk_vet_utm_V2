@@ -8,32 +8,7 @@ import useAuth from '@src/hooks/useAuth'
 import AuthContext from '@src/contexts/auth/AuthContext'
 import AppStyles from '@src/themes/AppStyles'
 import BouncyCheckboxGroup from 'react-native-bouncy-checkbox-group'
-
-const dataCheck: {
-  id: number
-  text: string
-  value: boolean
-  fillColor: string
-  unfillColor: string
-  textStyle: TextStyle
-}[] = [
-  {
-    id: 0,
-    text: 'Si',
-    value: true,
-    fillColor: '#5BD321',
-    unfillColor: '#8BE65F',
-    textStyle: {textDecorationLine: 'none', fontSize: 15},
-  },
-  {
-    id: 1,
-    text: 'No',
-    value: false,
-    fillColor: '#FF3838',
-    unfillColor: '#FF8282',
-    textStyle: {textDecorationLine: 'none', fontSize: 15},
-  },
-]
+import {CASTRATED_CHECK} from '@src/constants/globals'
 
 const CastratedPage = ({navigation, route}: any) => {
   const {pet} = route.params as {pet: pet}
@@ -42,7 +17,7 @@ const CastratedPage = ({navigation, route}: any) => {
   const selected =
     pet.castrated === undefined
       ? undefined
-      : dataCheck.findIndex(item => item.value === pet.castrated)
+      : CASTRATED_CHECK.findIndex(item => item.value === pet.castrated)
 
   const formik = useFormik({
     initialValues: {
@@ -77,7 +52,7 @@ const CastratedPage = ({navigation, route}: any) => {
       }}>
       <View style={{flex: 1}}>
         <BouncyCheckboxGroup
-          data={dataCheck}
+          data={CASTRATED_CHECK}
           initial={selected}
           style={{
             flexDirection: 'row',

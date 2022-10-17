@@ -30,18 +30,20 @@ const Home = (props: any) => {
 
   return (
     <ScrollView contentContainerStyle={{flex: 1}}>
-      <SearchHome
-        value={query}
-        onPressSearch={search}
-        onChangeText={(value: string) => {
-          if (!value && pressSearch) setNRefresh(nRefresh + 1)
-          setQuery(value)
-        }}
-        cleanValue={() => {
-          if (pressSearch) setNRefresh(nRefresh + 1)
-          setQuery('')
-        }}
-      />
+      {data.length > 0 ? (
+        <SearchHome
+          value={query}
+          onPressSearch={search}
+          onChangeText={(value: string) => {
+            if (!value && pressSearch) setNRefresh(nRefresh + 1)
+            setQuery(value)
+          }}
+          cleanValue={() => {
+            if (pressSearch) setNRefresh(nRefresh + 1)
+            setQuery('')
+          }}
+        />
+      ) : null}
 
       {loading && isFetching ? (
         <SpeciesHomeSkeleton />

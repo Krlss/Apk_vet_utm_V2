@@ -84,7 +84,7 @@ const ConfigProvider = (props: props) => {
         toggleKeyboard,
         KeyboardDismiss: KeyboardDismiss,
         toggleLoading,
-        headerShown,
+        headerShown 
       }}>
       {props.children}
     </ConfigContext.Provider>

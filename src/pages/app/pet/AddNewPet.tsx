@@ -108,7 +108,9 @@ const CharacteristicPage = ({navigation, route}: any) => {
         error={formik.errors.name}
       />
 
-      <TouchableOpacity onPress={() => setModalSpecie(true)}>
+      <TouchableOpacity
+        onPress={() => setModalSpecie(true)}
+        disabled={ConfigState.loading}>
         <Text
           style={{
             height: 40,
@@ -120,6 +122,7 @@ const CharacteristicPage = ({navigation, route}: any) => {
             borderWidth: 1,
             textAlignVertical: 'center',
             marginVertical: 5,
+            opacity: ConfigState.loading ? 0.5 : 1,
           }}>
           {formik.values.id_specie ?? 'Selecciona una especie'}
         </Text>
@@ -151,7 +154,7 @@ const CharacteristicPage = ({navigation, route}: any) => {
 
       <TouchableOpacity
         onPress={() => setModalRace(true)}
-        disabled={!formik.values.id_specie}>
+        disabled={!formik.values.id_specie || ConfigState.loading}>
         <Text
           style={{
             height: 40,
@@ -163,6 +166,7 @@ const CharacteristicPage = ({navigation, route}: any) => {
             borderWidth: 1,
             textAlignVertical: 'center',
             marginVertical: 5,
+            opacity: ConfigState.loading ? 0.5 : 1,
           }}>
           {formik.values.id_race ?? 'Selecciona una raza'}
         </Text>
@@ -194,7 +198,7 @@ const CharacteristicPage = ({navigation, route}: any) => {
 
       <TouchableOpacity
         onPress={() => setModalFur(true)}
-        disabled={!formik.values.id_specie}>
+        disabled={!formik.values.id_specie || ConfigState.loading}>
         <Text
           style={{
             height: 40,
@@ -206,6 +210,7 @@ const CharacteristicPage = ({navigation, route}: any) => {
             borderWidth: 1,
             textAlignVertical: 'center',
             marginVertical: 5,
+            opacity: ConfigState.loading ? 0.5 : 1,
           }}>
           {formik.values.id_fur ?? 'Selecciona un pelaje'}
         </Text>
@@ -231,7 +236,9 @@ const CharacteristicPage = ({navigation, route}: any) => {
         label="Pelajes"
       />
 
-      <TouchableOpacity onPress={() => setModalBirth(true)}>
+      <TouchableOpacity
+        onPress={() => setModalBirth(true)}
+        disabled={ConfigState.loading}>
         <Text
           style={{
             height: 40,
@@ -243,6 +250,7 @@ const CharacteristicPage = ({navigation, route}: any) => {
             borderWidth: 1,
             textAlignVertical: 'center',
             marginVertical: 5,
+            opacity: ConfigState.loading ? 0.5 : 1,
           }}>
           {formik.values.birth ?? 'Selecciona una fecha de nacimiento'}
           {formik.values.birth &&
@@ -278,7 +286,9 @@ const CharacteristicPage = ({navigation, route}: any) => {
         />
       )}
 
-      <TouchableOpacity onPress={() => setModalSex(true)}>
+      <TouchableOpacity
+        onPress={() => setModalSex(true)}
+        disabled={ConfigState.loading}>
         <Text
           style={{
             height: 40,
@@ -290,6 +300,7 @@ const CharacteristicPage = ({navigation, route}: any) => {
             borderWidth: 1,
             textAlignVertical: 'center',
             marginVertical: 5,
+            opacity: ConfigState.loading ? 0.5 : 1,
           }}>
           {!formik.values.sex ? 'Selecciona un sexo' : null}
           {formik.values.sex && getSex(formik.values.sex)}
@@ -323,7 +334,9 @@ const CharacteristicPage = ({navigation, route}: any) => {
         />
       </Modal>
 
-      <TouchableOpacity onPress={() => setModalCastrated(true)}>
+      <TouchableOpacity
+        onPress={() => setModalCastrated(true)}
+        disabled={ConfigState.loading}>
         <Text
           style={{
             height: 40,
@@ -338,6 +351,7 @@ const CharacteristicPage = ({navigation, route}: any) => {
             borderWidth: 1,
             textAlignVertical: 'center',
             marginVertical: 5,
+            opacity: ConfigState.loading ? 0.5 : 1,
           }}>
           {formik.values.castrated == undefined ? '¿está castrado?' : null}
           {formik.values.castrated != undefined

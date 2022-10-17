@@ -16,7 +16,6 @@ const PhoneChange = ({navigation, route}: any) => {
     onSubmit: async values => {
       if (AuthState.user.phone != values.phone) {
         const data = {
-          ...AuthState.user,
           phone: values.phone,
         }
         UPDATED_USER(data, AuthState.user.api_token).then((res: any) => {

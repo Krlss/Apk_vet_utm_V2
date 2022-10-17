@@ -228,7 +228,6 @@ const PetDetailLost = ({navigation, route}: any) => {
               <Text
                 style={{
                   color: 'gray',
-                  textTransform: 'capitalize',
                   paddingHorizontal: 5,
                   marginBottom: 10,
                 }}>

@@ -9,10 +9,12 @@ import AuthContext from '@src/contexts/auth/AuthContext'
 import AppStyles from '@src/themes/AppStyles'
 import BouncyCheckboxGroup from 'react-native-bouncy-checkbox-group'
 import {SEX_CHECK} from '@src/constants/globals'
+import ConfigContext from '@src/contexts/config/ConfigContext'
 
 const SexPage = ({navigation, route}: any) => {
   const {pet} = route.params as {pet: pet}
   const {AuthState} = useContext(AuthContext)
+  const {ConfigState} = useContext(ConfigContext)
   const {UPDATED_PET} = useAuth()
   const selected = !pet.sex
     ? undefined
@@ -49,7 +51,7 @@ const SexPage = ({navigation, route}: any) => {
         padding: 20,
         flex: 1,
       }}>
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, position: 'relative'}}>
         <BouncyCheckboxGroup
           data={SEX_CHECK}
           initial={selected}
@@ -62,6 +64,16 @@ const SexPage = ({navigation, route}: any) => {
             formik.setFieldValue('sex', selectedItem.value)
           }
         />
+        {ConfigState.loading ? (
+          <View
+            style={{
+              position: 'absolute',
+              backgroundColor: 'transparent',
+              width: '100%',
+              height: '100%',
+            }}
+          />
+        ) : null}
         {formik.errors.sex && (
           <Text
             style={{

@@ -86,7 +86,7 @@ const useReport = () => {
             name,
             last_name1,
             last_name2,
-            responsable: AuthState?.user?.user_id ?? user?.user_id,
+            responsable: AuthState.user.user_id != "" ? AuthState.user?.user_id : user?.user_id,
         }
         data.append('user', JSON.stringify(new_user))
         data.append('pet', JSON.stringify(pet))

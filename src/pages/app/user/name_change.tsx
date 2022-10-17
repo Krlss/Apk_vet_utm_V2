@@ -21,7 +21,6 @@ const NameChange = ({navigation, route}: any) => {
       if (fullname != values.fullname) {
         const [name, last_name1, last_name2] = separateFullname(values.fullname)
         const data = {
-          ...AuthState.user,
           name,
           last_name1,
           last_name2,

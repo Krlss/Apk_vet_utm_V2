@@ -96,7 +96,7 @@ const LostPage = ({navigation, route}: any) => {
         padding: 20,
         flex: 1,
       }}>
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, position: 'relative'}}>
         <BouncyCheckboxGroup
           data={LOST_CHECK}
           initial={selected}
@@ -121,6 +121,16 @@ const LostPage = ({navigation, route}: any) => {
             }
           }}
         />
+        {ConfigState.loading ? (
+          <View
+            style={{
+              position: 'absolute',
+              backgroundColor: 'transparent',
+              width: '100%',
+              height: '100%',
+            }}
+          />
+        ) : null}
         {formik.errors.lost && (
           <Text
             style={{

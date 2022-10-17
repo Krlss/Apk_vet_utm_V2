@@ -55,15 +55,6 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
               marginHorizontal: AppStyles.padding.small,
             }}
           />
-
-          <ItemsDrawer
-            label="Mapa"
-            nameIcon="map"
-            active={false}
-            onPress={() => {
-              props.navigation.navigate('MAP')
-            }}
-          />
         </ContainerItemsDrawer>
 
         <View style={{marginBottom: 30}}>

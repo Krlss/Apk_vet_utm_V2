@@ -99,7 +99,9 @@ const SpecieRaceFur = ({navigation, route}: any) => {
         flex: 1,
       }}>
       <View style={{flex: 1}}>
-        <TouchableOpacity onPress={() => setModalSpecie(true)}>
+        <TouchableOpacity
+          onPress={() => setModalSpecie(true)}
+          disabled={ConfigState.loading}>
           <Text
             style={{
               height: 40,
@@ -111,6 +113,7 @@ const SpecieRaceFur = ({navigation, route}: any) => {
               borderWidth: 1,
               textAlignVertical: 'center',
               marginVertical: 5,
+              opacity: ConfigState.loading ? 0.5 : 1,
             }}>
             {formik.values.id_specie ?? 'Selecciona una especie'}
           </Text>
@@ -142,7 +145,7 @@ const SpecieRaceFur = ({navigation, route}: any) => {
 
         <TouchableOpacity
           onPress={() => setModalRace(true)}
-          disabled={!formik.values.id_specie}>
+          disabled={!formik.values.id_specie || ConfigState.loading}>
           <Text
             style={{
               height: 40,
@@ -154,6 +157,7 @@ const SpecieRaceFur = ({navigation, route}: any) => {
               borderWidth: 1,
               textAlignVertical: 'center',
               marginVertical: 5,
+              opacity: ConfigState.loading ? 0.5 : 1,
             }}>
             {formik.values.id_race ?? 'Selecciona una raza'}
           </Text>
@@ -185,7 +189,7 @@ const SpecieRaceFur = ({navigation, route}: any) => {
 
         <TouchableOpacity
           onPress={() => setModalFur(true)}
-          disabled={!formik.values.id_specie}>
+          disabled={!formik.values.id_specie || ConfigState.loading}>
           <Text
             style={{
               height: 40,
@@ -197,6 +201,7 @@ const SpecieRaceFur = ({navigation, route}: any) => {
               borderWidth: 1,
               textAlignVertical: 'center',
               marginVertical: 5,
+              opacity: ConfigState.loading ? 0.5 : 1,
             }}>
             {formik.values.id_fur ?? 'Selecciona un pelaje'}
           </Text>

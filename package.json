@@ -1,6 +1,6 @@
 {
-  "name": "vet_utm_v2",
-  "version": "0.0.1",
+  "name": "find_pets",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",

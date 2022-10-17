@@ -9,12 +9,15 @@ import {
 } from 'react-native'
 import {FlashList} from '@shopify/flash-list'
 import AuthContext from '@src/contexts/auth/AuthContext'
+import ConfigContext from '@src/contexts/config/ConfigContext'
 import NotPets from '@src/components/images/NotPets'
 import AppStyles from '@src/themes/AppStyles'
 import useAuth from '@src/hooks/useAuth'
+import Loading from '@src/components/splash/Loading'
 
 const PetsUser = ({navigation, route}: any) => {
   const {AuthState} = useContext(AuthContext)
+  const {ConfigState} = useContext(ConfigContext)
   const {pets} = AuthState.user
   const [focus, setFocus] = useState(false)
   const [query, setQuery] = useState('')
@@ -43,7 +46,13 @@ const PetsUser = ({navigation, route}: any) => {
 
   return (
     <SafeAreaView
-      style={{flex: 1, backgroundColor: AppStyles.color.bg_low_gray}}>
+      style={{
+        flex: 1,
+        backgroundColor: AppStyles.color.bg_low_gray,
+      }}>
+      {ConfigState.loading ? (
+        <Loading style={{backgroundColor: 'transparent'}} />
+      ) : null}
       <TextInput
         style={{
           height: 40,
@@ -66,7 +75,6 @@ const PetsUser = ({navigation, route}: any) => {
         value={query}
         placeholder="Buscar..."
       />
-
       {pets && pets.length > 0 ? (
         <FlashList
           estimatedItemSize={50}

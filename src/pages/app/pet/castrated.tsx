@@ -50,7 +50,7 @@ const CastratedPage = ({navigation, route}: any) => {
         padding: 20,
         flex: 1,
       }}>
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, position: 'relative'}}>
         <BouncyCheckboxGroup
           data={CASTRATED_CHECK}
           initial={selected}
@@ -62,6 +62,14 @@ const CastratedPage = ({navigation, route}: any) => {
           onChange={(selectedItem: any) =>
             formik.setFieldValue('castrated', selectedItem.value)
           }
+        />
+        <View
+          style={{
+            position: 'absolute',
+            backgroundColor: 'transparent',
+            width: '100%',
+            height: '100%',
+          }}
         />
         {formik.errors.castrated && (
           <Text

@@ -16,7 +16,6 @@ const EmailChange = ({navigation, route}: any) => {
     onSubmit: async values => {
       if (AuthState.user.email != values.email) {
         const data = {
-          ...AuthState.user,
           email: values.email,
         }
         UPDATED_USER(data, AuthState.user.api_token).then((res: any) => {

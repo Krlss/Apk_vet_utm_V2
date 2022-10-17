@@ -23,12 +23,12 @@ export default (state: ConfigContextType, action: ConfigActionType) => {
         case "SET_SELECTS":
             return {
                 ...state,
-                cantons: payload.cantons,
-                furs: payload.furs,
-                parishes: payload.parishes,
-                provinces: payload.provinces,
-                races: payload.races,
-                species: payload.species,
+                cantons: payload?.cantons,
+                furs: payload?.furs,
+                parishes: payload?.parishes,
+                provinces: payload?.provinces,
+                races: payload?.races,
+                species: payload?.species,
             };
         case "SET_HEADER_SHOWN":
             return {

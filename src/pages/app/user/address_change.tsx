@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native'
 import SheetPicker from '@src/components/select/SheetPicker'
 import AppStyles from '@src/themes/AppStyles'
@@ -7,6 +7,7 @@ import useAuth from '@src/hooks/useAuth'
 import {AddressUserProfile} from '@src/schemas/schemas'
 import useAddressUser from '@src/hooks/useAddressUser'
 import LongButton from '@src/components/buttons/LongButton'
+import ConfigContext from '@src/contexts/config/ConfigContext'
 
 const AddressChange = ({navigation, route}: any) => {
   const {
@@ -25,6 +26,7 @@ const AddressChange = ({navigation, route}: any) => {
     setModalProvince,
     AuthState,
   } = useAddressUser()
+  const {ConfigState} = useContext(ConfigContext)
 
   const {UPDATED_USER} = useAuth()
   const formik = useFormik({
@@ -36,7 +38,6 @@ const AddressChange = ({navigation, route}: any) => {
     validationSchema: AddressUserProfile,
     onSubmit: async values => {
       const data_ = {
-        ...AuthState.user,
         id_province: data.id_province,
         id_canton: data.id_canton,
         id_parish: data.id_parish,
@@ -56,7 +57,9 @@ const AddressChange = ({navigation, route}: any) => {
         flex: 1,
       }}>
       <View style={{flex: 1}}>
-        <TouchableOpacity onPress={() => setModalProvince(true)}>
+        <TouchableOpacity
+          onPress={() => setModalProvince(true)}
+          disabled={ConfigState.loading}>
           <Text
             style={{
               height: 40,
@@ -68,6 +71,7 @@ const AddressChange = ({navigation, route}: any) => {
               borderWidth: 1,
               textAlignVertical: 'center',
               marginVertical: 5,
+              opacity: ConfigState.loading ? 0.5 : 1,
             }}>
             {formik.values.province ?? 'Selecciona una provincia'}
           </Text>
@@ -101,7 +105,7 @@ const AddressChange = ({navigation, route}: any) => {
 
         <TouchableOpacity
           onPress={() => setModalCanton(true)}
-          disabled={!formik.values.province}>
+          disabled={!formik.values.province || ConfigState.loading}>
           <Text
             style={{
               height: 40,
@@ -113,6 +117,7 @@ const AddressChange = ({navigation, route}: any) => {
               borderWidth: 1,
               textAlignVertical: 'center',
               marginVertical: 5,
+              opacity: ConfigState.loading ? 0.5 : 1,
             }}>
             {formik.values.canton ?? 'Selecciona un cantón'}
           </Text>
@@ -145,7 +150,7 @@ const AddressChange = ({navigation, route}: any) => {
 
         <TouchableOpacity
           onPress={() => setModalParish(true)}
-          disabled={!formik.values.canton}>
+          disabled={!formik.values.canton || ConfigState.loading}>
           <Text
             style={{
               height: 40,
@@ -157,6 +162,7 @@ const AddressChange = ({navigation, route}: any) => {
               borderWidth: 1,
               textAlignVertical: 'center',
               marginVertical: 5,
+              opacity: ConfigState.loading ? 0.5 : 1,
             }}>
             {formik.values.parish ?? 'Selecciona una parroquia'}
           </Text>
